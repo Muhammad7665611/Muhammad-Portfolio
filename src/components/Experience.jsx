@@ -9,13 +9,11 @@ export default function Experience() {
     <section id="experience" className="section" ref={ref}>
       <div className="shell">
         <div className="section-head center reveal">
-          <span className="eyebrow">
-            <span className="dot" />
-            Where I&apos;ve worked
-          </span>
+          <span className="eyebrow">Where I&apos;ve worked</span>
           <h2 className="section-title">
             Experience<span className="accent">.</span>
           </h2>
+          <span className="title-rule" />
           <p className="section-sub">
             Three years of shipping — the roles, the responsibilities, and what came out of them.
           </p>
@@ -33,11 +31,12 @@ export default function Experience() {
                 {job.current && <span className="timeline-now">Current</span>}
               </div>
 
+              {/* Spine + diamond marker; purely decorative, the date carries the meaning */}
               <div className="timeline-marker" aria-hidden="true">
                 <span className={`timeline-dot ${job.current ? 'is-current' : ''}`} />
               </div>
 
-              <article className="timeline-card glass">
+              <article className="timeline-card card">
                 <header className="timeline-head">
                   <h3 className="timeline-role">{job.role}</h3>
                   <span className="timeline-company">{job.company}</span>

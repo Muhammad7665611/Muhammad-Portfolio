@@ -32,58 +32,76 @@ export default function Navbar() {
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
+  // The sheet is CSS-hidden on desktop — drop its state too so the body scroll
+  // lock can never survive a resize.
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 941px)')
+    const onChange = (e) => e.matches && setOpen(false)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+
   return (
     <header className={`nav ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="nav-inner shell">
+        {/* Plain wordmark, single orange letter — no container, no pill. */}
         <a href="#home" className="nav-brand" onClick={() => setOpen(false)}>
-          <span className="nav-mark">M</span>
-          <span className="nav-brand-text">
-            Muhammad<span className="nav-brand-dot">.</span>
-          </span>
+          Muhamm<span className="nav-brand-accent">a</span>d
         </a>
 
-        <nav className="nav-links" aria-label="Primary">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={active === link.href.slice(1) ? 'is-active' : ''}
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+        <div className="nav-end">
+          <nav className="nav-links" aria-label="Primary">
+            {navLinks.map((link) => {
+              const isActive = active === link.href.slice(1)
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={isActive ? 'is-active' : ''}
+                  aria-current={isActive ? 'true' : undefined}
+                >
+                  {link.label}
+                </a>
+              )
+            })}
+          </nav>
 
-        <a href="#contact" className="btn btn-primary btn-sm nav-cta">
-          Hire Me
-        </a>
+          <a href="#contact" className="nav-cta">
+            Hire Me!
+          </a>
 
-        <button
-          className="nav-toggle"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-        >
-          {open ? <Close /> : <Menu />}
-        </button>
+          <button
+            className="nav-toggle"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="nav-sheet"
+          >
+            {open ? <Close /> : <Menu />}
+          </button>
+        </div>
       </div>
 
-      <div className={`nav-sheet ${open ? 'is-open' : ''}`}>
+      <div id="nav-sheet" className={`nav-sheet ${open ? 'is-open' : ''}`}>
         <nav aria-label="Mobile">
-          {navLinks.map((link, i) => (
-            <a
-              key={link.href}
-              href={link.href}
-              style={{ '--i': i }}
-              className={active === link.href.slice(1) ? 'is-active' : ''}
-              onClick={() => setOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link, i) => {
+            const isActive = active === link.href.slice(1)
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                style={{ '--i': i }}
+                className={isActive ? 'is-active' : ''}
+                aria-current={isActive ? 'true' : undefined}
+                onClick={() => setOpen(false)}
+              >
+                {link.label}
+              </a>
+            )
+          })}
         </nav>
-        <a href="#contact" className="btn btn-primary" onClick={() => setOpen(false)}>
-          Hire Me
+        <a href="#contact" className="btn btn-primary nav-sheet-cta" onClick={() => setOpen(false)}>
+          Hire Me!
         </a>
       </div>
     </header>

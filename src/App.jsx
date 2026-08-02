@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
-import StarField from './components/StarField'
+import Decor from './components/Decor'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
 import Skills from './components/Skills'
 import Experience from './components/Experience'
-import Projects from './components/Projects'
 import Services from './components/Services'
+import Stats from './components/Stats'
+import Projects from './components/Projects'
 import TechStack from './components/TechStack'
 import Testimonials from './components/Testimonials'
+import CTABanner from './components/CTABanner'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import { ArrowDown } from './components/Icons'
@@ -43,18 +45,22 @@ export default function App() {
         Skip to content
       </a>
 
-      <StarField />
+      <Decor />
       <Navbar />
 
+      {/* Section order mirrors the reference layout:
+          hero → about → services → stats → portfolio → testimonials → cta */}
       <main id="main">
         <Hero />
         <About />
         <Skills />
         <Experience />
-        <Projects />
         <Services />
+        <Stats />
+        <Projects />
         <TechStack />
         <Testimonials />
+        <CTABanner />
         <Contact />
       </main>
 

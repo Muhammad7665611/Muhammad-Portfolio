@@ -1,89 +1,155 @@
+/* ==========================================================================
+   Navbar — slim black bar
+   Simple flex row: wordmark hard left, links + solid orange CTA hard right.
+   Transparent over the hero, opaque black once the page scrolls.
+   ========================================================================== */
+
 .nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  transition: background 0.35s var(--ease), border-color 0.35s var(--ease),
-    backdrop-filter 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  background: transparent;
   border-bottom: 1px solid transparent;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 
 .nav.is-scrolled {
-  background: rgba(6, 7, 13, 0.72);
-  border-bottom-color: var(--stroke);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
-  box-shadow: 0 12px 40px -24px rgba(0, 0, 0, 0.9);
+  background: var(--bg);
+  border-bottom-color: var(--line);
 }
 
 .nav-inner {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
+  gap: 24px;
   height: 72px;
 }
+
+/* ------------------------------------------------------------- 1. wordmark */
 
 .nav-brand {
   display: inline-flex;
   align-items: center;
-  gap: 11px;
-  font-family: Sora, sans-serif;
+  gap: 10px;
+  font-size: 21px;
   font-weight: 700;
-  font-size: 17px;
   letter-spacing: -0.01em;
-  margin-right: auto;
+  color: var(--text);
+  white-space: nowrap;
+  transition: color 0.25s var(--ease);
 }
 
+/* The one orange letter — the whole logo idea in a single span. */
+.nav-brand-accent {
+  color: var(--orange);
+}
+
+.nav-brand:hover {
+  color: var(--text);
+}
+
+.nav-brand:hover .nav-brand-accent {
+  color: var(--orange-300);
+}
+
+/* Sharp orange square mark. Rendered by the footer logo, kept here so the
+   two lockups stay in sync. */
 .nav-mark {
   display: grid;
   place-items: center;
+  flex: none;
   width: 34px;
   height: 34px;
-  border-radius: 11px;
-  background: var(--grad);
-  color: #06070d;
+  border-radius: var(--r);
+  background: var(--orange);
+  color: #fff;
   font-size: 17px;
-  font-weight: 800;
-  box-shadow: 0 8px 22px -10px rgba(124, 92, 255, 0.95);
+  font-weight: 700;
+  line-height: 1;
 }
 
-.nav-brand-dot {
-  color: var(--accent-2);
+/* ------------------------------------------------- 2. right-hand link group */
+
+.nav-end {
+  display: flex;
+  align-items: center;
+  gap: 26px;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 5px;
-  border-radius: 999px;
-  background: var(--glass);
-  border: 1px solid var(--stroke);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
+  gap: 26px;
 }
 
 .nav-links a {
   position: relative;
-  padding: 8px 15px;
-  border-radius: 999px;
+  padding: 6px 0;
   font-size: 14px;
   font-weight: 500;
-  color: var(--muted);
-  transition: color 0.25s var(--ease), background 0.25s var(--ease);
+  color: var(--text);
+  transition: color 0.22s var(--ease);
 }
 
 .nav-links a:hover {
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--orange);
 }
 
 .nav-links a.is-active {
-  color: var(--text);
-  background: var(--grad-soft);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  color: var(--orange);
 }
+
+/* Tight orange tick under the current section — no glow, no pill. */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s var(--ease);
+}
+
+.nav-links a.is-active::after {
+  transform: scaleX(1);
+}
+
+/* ------------------------------------------------------- 3. solid orange CTA */
+
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 24px;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--orange);
+  background: var(--orange);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+
+.nav-cta:hover {
+  background: var(--orange-600);
+  border-color: var(--orange-600);
+  transform: translateY(-2px);
+}
+
+.nav-cta:active {
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------- 4. toggle */
 
 .nav-toggle {
   display: none;
@@ -91,34 +157,36 @@
   justify-content: center;
   width: 42px;
   height: 42px;
-  border-radius: 13px;
-  background: var(--glass-strong);
-  border: 1px solid var(--stroke);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
   color: var(--text);
   cursor: pointer;
-  transition: background 0.25s var(--ease);
+  transition: background 0.22s var(--ease), border-color 0.22s var(--ease),
+    color 0.22s var(--ease);
 }
 
 .nav-toggle:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-3);
+  border-color: var(--orange);
+  color: var(--orange);
 }
 
-/* Mobile sheet */
+/* ---------------------------------------------------------- 5. mobile sheet */
+
 .nav-sheet {
   position: fixed;
   inset: 72px 0 auto 0;
-  padding: 24px;
+  padding: 22px 24px 28px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  background: rgba(6, 7, 13, 0.94);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
-  border-bottom: 1px solid var(--stroke);
-  transform: translateY(-12px);
+  gap: 6px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  transform: translateY(-10px);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
+  transition: opacity 0.28s var(--ease), transform 0.28s var(--ease), visibility 0.28s;
 }
 
 .nav-sheet.is-open {
@@ -133,20 +201,47 @@
 }
 
 .nav-sheet a {
-  padding: 14px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 16px;
+  padding: 15px 2px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--muted);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--line);
+  transform: translateY(-6px);
+  opacity: 0;
+  transition: color 0.22s var(--ease), opacity 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+
+/* Stagger the rows in behind the sheet itself. */
+.nav-sheet.is-open a {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(60ms + var(--i, 0) * 35ms);
+}
+
+.nav-sheet a:hover {
+  color: var(--text);
 }
 
 .nav-sheet a.is-active {
-  color: var(--accent-2);
+  color: var(--orange);
 }
 
-.nav-sheet .btn {
-  margin-top: 14px;
+.nav-sheet-cta {
+  margin-top: 18px;
+  width: 100%;
+}
+
+/* ------------------------------------------------------------- responsive */
+
+@media (max-width: 1080px) {
+  .nav-end,
+  .nav-links {
+    gap: 20px;
+  }
+  .nav-links a {
+    font-size: 13.5px;
+  }
 }
 
 @media (max-width: 940px) {
@@ -162,5 +257,11 @@
 @media (min-width: 941px) {
   .nav-sheet {
     display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-brand {
+    font-size: 19px;
   }
 }

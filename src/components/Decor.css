@@ -1,0 +1,194 @@
+/* ==========================================================================
+   Decor — fixed background furniture: flat orange geometry over the dark
+   canvas. Sharp edges only, no blur, no radial gradients, no twinkle.
+   ========================================================================== */
+
+.decor {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Faint technical grid, masked with linear fades on all four sides so it never
+   crowds the content column or collides with the blocks below. */
+.decor-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 20%, #000 80%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 20%, #000 80%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* --------------------------------------------------------------------------
+   Hairline orange rules
+   -------------------------------------------------------------------------- */
+
+.decor-rule {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--orange);
+  opacity: 0.12;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+
+.decor-rule-l {
+  left: 14%;
+}
+
+.decor-rule-r {
+  right: 11%;
+}
+
+/* --------------------------------------------------------------------------
+   Bleeding blocks — flat orange rectangles hanging past the viewport edges.
+   Opacity stays inside 0.06–0.12 so they read as architecture behind the
+   content rather than as foreground graphics.
+   -------------------------------------------------------------------------- */
+
+.decor-block {
+  position: absolute;
+  display: block;
+  background: var(--orange);
+  border-radius: var(--r);
+  will-change: transform;
+}
+
+.decor-block-l1 {
+  top: 7%;
+  left: -84px;
+  width: 260px;
+  height: 128px;
+  opacity: 0.1;
+  animation: decor-drift 64s var(--ease) infinite;
+}
+
+.decor-block-l2 {
+  top: 58%;
+  left: -56px;
+  width: 148px;
+  height: 300px;
+  opacity: 0.07;
+  animation: decor-drift 88s var(--ease) infinite reverse;
+}
+
+.decor-block-r1 {
+  top: 24%;
+  right: -110px;
+  width: 320px;
+  height: 168px;
+  opacity: 0.09;
+  animation: decor-drift 76s var(--ease) infinite reverse;
+}
+
+.decor-block-r2 {
+  bottom: 5%;
+  right: -60px;
+  width: 190px;
+  height: 210px;
+  opacity: 0.06;
+  animation: decor-drift 96s var(--ease) infinite;
+}
+
+/* One solid square and one hollow outline, both fully inside the viewport */
+.decor-chip {
+  position: absolute;
+  display: block;
+  top: 41%;
+  left: 6%;
+  width: 46px;
+  height: 46px;
+  background: var(--orange);
+  border-radius: var(--r);
+  opacity: 0.12;
+}
+
+.decor-outline {
+  position: absolute;
+  display: block;
+  bottom: 16%;
+  left: 22%;
+  width: 96px;
+  height: 96px;
+  border: 1px solid var(--orange);
+  border-radius: var(--r);
+  opacity: 0.1;
+}
+
+/* A single very slow vertical nudge — nothing else moves */
+@keyframes decor-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -22px, 0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — fewer, smaller, quieter shapes as the viewport narrows
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 960px) {
+  .decor-rule-l {
+    left: 8%;
+  }
+
+  .decor-rule-r {
+    right: 6%;
+  }
+
+  .decor-block-r1 {
+    width: 240px;
+    height: 140px;
+  }
+
+  .decor-outline {
+    left: 12%;
+  }
+}
+
+@media (max-width: 720px) {
+  .decor-grid {
+    background-size: 56px 56px;
+  }
+
+  .decor-block-l1 {
+    width: 180px;
+    height: 96px;
+  }
+
+  .decor-block-l2 {
+    width: 104px;
+    height: 200px;
+    opacity: 0.06;
+  }
+
+  .decor-block-r1 {
+    width: 170px;
+    height: 116px;
+  }
+
+  .decor-block-r2,
+  .decor-outline,
+  .decor-rule-l {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .decor-block {
+    animation: none;
+  }
+}

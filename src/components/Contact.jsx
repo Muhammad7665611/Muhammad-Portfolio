@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { profile, socials } from '../data/portfolio'
+import { useEffect, useRef, useState } from 'react'
+import { profile, socials, contactForm } from '../data/portfolio'
 import { useReveal } from '../hooks/useReveal'
 import { Icon, Send, Mail, Phone, MapPin, Check } from './Icons'
 import './Contact.css'
@@ -10,7 +10,12 @@ export default function Contact() {
   const ref = useReveal()
   const [form, setForm] = useState(EMPTY)
   const [errors, setErrors] = useState({})
-  const [sent, setSent] = useState(false)
+  // idle → sending → sent | error
+  const [status, setStatus] = useState('idle')
+  const [failure, setFailure] = useState('')
+  const [copied, setCopied] = useState(false)
+  // Honeypot: real people never see it, bots fill it in.
+  const botField = useRef(null)
 
   const update = (field) => (e) => {
     setForm((f) => ({ ...f, [field]: e.target.value }))
@@ -26,33 +31,86 @@ export default function Contact() {
     return next
   }
 
-  const handleSubmit = (e) => {
+  // Drop the confirmation after a beat so the button returns to "Contact" and
+  // the form reads as ready for another message. Cleared on unmount.
+  useEffect(() => {
+    if (status !== 'sent') return undefined
+    const timer = setTimeout(() => setStatus('idle'), 6000)
+    return () => clearTimeout(timer)
+  }, [status])
+
+  /** Copy the composed message so it can be pasted into any mail client. */
+  const copyMessage = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        `${form.message}\n\n— ${form.name} (${form.email})`
+      )
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    } catch {
+      setCopied(false)
+    }
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    if (status === 'sending') return
+
     const next = validate()
     setErrors(next)
     if (Object.keys(next).length) return
 
-    // No backend wired up — hand the message to the visitor's mail client.
-    const subject = encodeURIComponent(`Portfolio enquiry from ${form.name}`)
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`)
-    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`
+    // Silently accept and discard anything that tripped the honeypot.
+    if (botField.current?.value) {
+      setStatus('sent')
+      setForm(EMPTY)
+      return
+    }
 
-    setSent(true)
-    setForm(EMPTY)
-    setTimeout(() => setSent(false), 6000)
+    setStatus('sending')
+    setFailure('')
+
+    try {
+      const res = await fetch(contactForm.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          _subject: `Portfolio enquiry from ${form.name}`,
+          _template: 'table',
+          _captcha: 'false',
+          // Ignored by FormSubmit, required by Web3Forms — harmless either way.
+          access_key: contactForm.accessKey,
+        }),
+      })
+
+      const data = await res.json().catch(() => ({}))
+      // FormSubmit returns success as the string "true"; Web3Forms uses a boolean.
+      const ok = res.ok && (data.success === true || data.success === 'true')
+      if (!ok) throw new Error(data.message || `Server responded ${res.status}`)
+
+      // Wipe the fields and any leftover validation errors so the form is
+      // genuinely fresh, not just visually cleared.
+      setStatus('sent')
+      setForm(EMPTY)
+      setErrors({})
+    } catch (err) {
+      setFailure(err.message || '')
+      setStatus('error')
+    }
   }
 
   return (
     <section id="contact" className="section" ref={ref}>
       <div className="shell">
         <div className="section-head center reveal">
-          <span className="eyebrow">
-            <span className="dot" />
-            Let&apos;s build something
-          </span>
+          <span className="eyebrow">Let&apos;s build something</span>
           <h2 className="section-title">
             Contact<span className="accent">.</span>
           </h2>
+          <span className="title-rule" />
           <p className="section-sub">
             Need help? Fill in the form to get a quote and I&apos;ll get back to you soon — or
             reach me directly through the details on the right.
@@ -61,7 +119,7 @@ export default function Contact() {
 
         <div className="contact-grid">
           {/* Form */}
-          <form className="contact-form glass reveal" onSubmit={handleSubmit} noValidate>
+          <form className="contact-form card reveal" onSubmit={handleSubmit} noValidate>
             <div className="field">
               <label htmlFor="c-name">Name</label>
               <input
@@ -116,31 +174,70 @@ export default function Contact() {
               )}
             </div>
 
-            <button className="btn btn-primary contact-submit" type="submit">
-              {sent ? (
+            {/* Honeypot — off-screen and untabbable, so only bots ever fill it */}
+            <input
+              ref={botField}
+              type="text"
+              name="botcheck"
+              className="contact-honeypot"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+            />
+
+            <button
+              className="btn btn-primary contact-submit"
+              type="submit"
+              disabled={status === 'sending'}
+            >
+              {status === 'sending' && (
+                <>
+                  <span className="contact-spinner" aria-hidden="true" />
+                  Sending…
+                </>
+              )}
+              {status === 'sent' && (
                 <>
                   <Check width={18} height={18} />
-                  Opening your mail app
+                  Message sent
                 </>
-              ) : (
+              )}
+              {(status === 'idle' || status === 'error') && (
                 <>
                   <Send width={18} height={18} />
-                  Contact
+                  {status === 'error' ? 'Try again' : 'Contact'}
                 </>
               )}
             </button>
 
-            <p className="contact-note" role="status">
-              {sent
-                ? 'Your message was handed to your email client — hit send there and it reaches me.'
-                : 'Submitting opens your email client with the message pre-filled.'}
+            <p
+              className={`contact-note${status === 'sent' ? ' is-ok' : ''}${
+                status === 'error' ? ' is-error' : ''
+              }`}
+              role="status"
+              aria-live="polite"
+            >
+              {status === 'sent' &&
+                'Thanks — your message has been sent. I usually reply within 24 hours.'}
+              {status === 'sending' && 'Sending your message…'}
+              {status === 'error' && (
+                <>
+                  That didn&apos;t go through{failure ? ` (${failure})` : ''}. You can{' '}
+                  <button type="button" className="contact-copy" onClick={copyMessage}>
+                    {copied ? 'copied!' : 'copy your message'}
+                  </button>{' '}
+                  and email it to {profile.email}.
+                </>
+              )}
+              {status === 'idle' && 'I read every message personally — no auto-responders.'}
             </p>
           </form>
 
           {/* Details */}
           <aside className="contact-side reveal" style={{ '--reveal-delay': '120ms' }}>
-            <div className="contact-card glass">
+            <div className="contact-card card">
               <h3 className="contact-card-title">Contact details</h3>
+              <span className="contact-card-rule" />
 
               <ul className="contact-list">
                 <li>
@@ -174,6 +271,7 @@ export default function Contact() {
 
               <div className="contact-socials">
                 <span className="contact-label">Find me online</span>
+                {/* Uniform orange-fill squares — no per-network brand colouring. */}
                 <div className="social-row">
                   {socials.map((s) => (
                     <a
@@ -182,7 +280,6 @@ export default function Contact() {
                       target="_blank"
                       rel="noreferrer"
                       className="social-btn"
-                      style={{ '--s-accent': s.color }}
                       aria-label={s.name}
                       title={s.name}
                     >
@@ -193,7 +290,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="contact-cta glass">
+            <div className="contact-cta card">
               <span className="pulse" />
               <div>
                 <strong>{profile.availability}</strong>

@@ -1,0 +1,128 @@
+/* ==========================================================================
+   Stats — a bare band of four flat rectangles between two hairlines. Three sit
+   dark with a 1px line edge and take an orange border on hover; the second one
+   is filled solid orange. No heading, no glow, sharp corners throughout.
+   ========================================================================== */
+
+.stats {
+  position: relative;
+  padding: clamp(28px, 4.5vw, 56px) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* One box: big number, short rule, uppercase label */
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: clamp(22px, 3vw, 34px) 16px;
+  text-align: center;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+
+.stat-box:hover {
+  transform: translateY(-3px);
+  border-color: var(--orange);
+}
+
+.stat-value {
+  font-size: clamp(30px, 3.8vw, 44px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  /* keeps "18" and "25+" optically the same width as the row reflows */
+  font-variant-numeric: tabular-nums;
+}
+
+/* Short accent rule that grows on hover — the only motion in the band */
+.stat-rule {
+  width: 22px;
+  height: 2px;
+  background: var(--orange);
+  transition: width 0.25s var(--ease);
+}
+
+.stat-box:hover .stat-rule {
+  width: 38px;
+}
+
+.stat-label {
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.25s var(--ease);
+}
+
+.stat-box:hover .stat-label {
+  color: var(--text);
+}
+
+/* ------------------------------------------------ the single orange box */
+
+.stat-box.is-highlight {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+
+.stat-box.is-highlight:hover {
+  background: var(--orange-600);
+  border-color: var(--orange-600);
+}
+
+/* Inside the fill everything reads white, including the rule */
+.stat-box.is-highlight .stat-value,
+.stat-box.is-highlight .stat-label,
+.stat-box.is-highlight:hover .stat-label {
+  color: #fff;
+}
+
+.stat-box.is-highlight .stat-rule {
+  background: #fff;
+}
+
+/* ------------------------------------------------------------ responsive */
+
+/* Tablet — 2 x 2 */
+@media (max-width: 900px) {
+  .stats-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+/* Phone — stays 2 x 2, just tighter */
+@media (max-width: 600px) {
+  .stat-box {
+    gap: 8px;
+    padding: 22px 12px;
+  }
+
+  .stat-label {
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* Very narrow — one column so long labels stop wrapping awkwardly */
+@media (max-width: 380px) {
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+}

@@ -8,11 +8,13 @@ export const profile = {
   roles: ['Full Stack Developer', 'React Native Developer', 'AI Integration Specialist'],
   tagline:
     'I build modern web and mobile applications using React, React Native, Node.js, Firebase and AI technologies — fast, accessible products that feel great to use.',
-  location: 'Karachi, Pakistan',
-  email: 'muhammadalikhan@example.com',
-  phone: '+92 300 0000000',
+  // City only — the CV carries the full street address, which does not belong
+  // on a public page.
+  location: 'Bahawalpur, Pakistan',
+  email: 'alikhan.webdev.11@gmail.com',
+  phone: '+92 328 766 5611',
   availability: 'Available for freelance & full-time work',
-  cvUrl: '/cv/muhammad-ali-khan-cv.pdf',
+  cvUrl: '/cv/Muhammad-Ali-Khan-CV.pdf',
 }
 
 export const about = {
@@ -30,7 +32,7 @@ export const about = {
   ],
   details: [
     { label: 'Current role', value: 'React Native Developer' },
-    { label: 'Based in', value: 'Karachi, Pakistan' },
+  { label: 'Based in', value: 'Islamabad, Pakistan' },
     { label: 'Languages', value: 'English, Urdu' },
     { label: 'Open to', value: 'Remote / Contract' },
   ],
@@ -284,11 +286,48 @@ export const testimonials = [
 ]
 
 export const socials = [
-  { name: 'LinkedIn', icon: 'linkedin', url: 'https://linkedin.com/in/', color: '#0a66c2' },
-  { name: 'GitHub', icon: 'github', url: 'https://github.com/', color: '#ffffff' },
-  { name: 'WhatsApp', icon: 'whatsapp', url: 'https://wa.me/', color: '#25d366' },
-  { name: 'Instagram', icon: 'instagram', url: 'https://instagram.com/', color: '#e1306c' },
+  {
+    name: 'LinkedIn',
+    icon: 'linkedin',
+    url: 'https://www.linkedin.com/in/muhammad-ali-4677ba351/',
+    color: '#0a66c2',
+  },
+  {
+    name: 'GitHub',
+    icon: 'github',
+    url: 'https://github.com/Muhammad7665611',
+    color: '#ffffff',
+  },
+  {
+    // Derived from `profile.phone` — wa.me wants digits only, no +, no spaces.
+    name: 'WhatsApp',
+    icon: 'whatsapp',
+    url: 'https://wa.me/923287665611',
+    color: '#25d366',
+  },
+  {
+    name: 'Instagram',
+    icon: 'instagram',
+    url: 'https://www.instagram.com/m_ali_khan882',
+    color: '#e1306c',
+  },
 ]
+
+/**
+ * Contact form delivery — sends over the network, in the background. No mail
+ * client, no new tab, no API key, no server.
+ *
+ * FormSubmit posts directly to the address below. ONE-TIME STEP: the very first
+ * submission makes FormSubmit email you an activation link. Click it once and
+ * every message from then on lands in your inbox automatically.
+ *
+ * Prefer a different provider? Set `accessKey` to a Web3Forms key and change
+ * `endpoint` to https://api.web3forms.com/submit — the component handles both.
+ */
+export const contactForm = {
+  endpoint: `https://formsubmit.co/ajax/${profile.email}`,
+  accessKey: '',
+}
 
 export const navLinks = [
   { label: 'Home', href: '#home' },

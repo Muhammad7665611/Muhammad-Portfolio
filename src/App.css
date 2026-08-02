@@ -5,10 +5,10 @@
   top: -60px;
   left: 24px;
   z-index: 200;
-  padding: 11px 20px;
-  border-radius: 0 0 12px 12px;
-  background: var(--grad);
-  color: #06070d;
+  padding: 12px 22px;
+  border-radius: 0;
+  background: var(--orange);
+  color: #fff;
   font-size: 14px;
   font-weight: 600;
   transition: top 0.25s var(--ease);
@@ -27,19 +27,16 @@
   place-items: center;
   width: 46px;
   height: 46px;
-  border-radius: 50%;
+  border-radius: var(--r-xs);
   cursor: pointer;
-  color: var(--text);
-  background: rgba(9, 11, 20, 0.82);
-  border: 1px solid var(--stroke-strong);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
-  box-shadow: var(--shadow);
+  color: #fff;
+  background: var(--orange);
+  border: 1px solid var(--orange);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(14px) scale(0.9);
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease),
-    visibility 0.3s, border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  transform: translateY(14px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s,
+    background 0.25s var(--ease);
 }
 
 .to-top svg {
@@ -53,8 +50,8 @@
 }
 
 .to-top:hover {
-  border-color: rgba(124, 92, 255, 0.6);
-  box-shadow: var(--shadow), 0 0 30px -10px rgba(124, 92, 255, 0.95);
+  background: var(--orange-600);
+  border-color: var(--orange-600);
 }
 
 @media (max-width: 560px) {

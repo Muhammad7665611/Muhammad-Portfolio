@@ -1,5 +1,7 @@
 /* ==========================================================================
-   Abstract device previews. Everything scales off --mock-accent.
+   Abstract device previews — greyscale wireframes on black, orange as the
+   single highlight. Ignores the inline --mock-accent on purpose so every
+   preview stays on-system whatever the data file passes in.
    ========================================================================== */
 
 .mock {
@@ -7,24 +9,22 @@
   display: grid;
   place-items: center;
   aspect-ratio: 16 / 10;
-  padding: 22px;
+  /* Extra headroom keeps the card's tag/index overlays off the device chrome */
+  padding: 46px 22px 22px;
   overflow: hidden;
-  border-radius: var(--radius-md);
-  background: linear-gradient(
-    160deg,
-    color-mix(in srgb, var(--mock-accent) 22%, transparent),
-    rgba(6, 7, 13, 0.9) 62%
-  );
-  border: 1px solid var(--stroke);
+  border-radius: var(--r);
+  background: var(--bg);
+  border: 0;
 }
 
+/* Was a coloured radial glow — now a single orange tick on the baseline */
 .mock-glow {
   position: absolute;
-  inset: auto -20% -55% -20%;
-  height: 70%;
-  background: radial-gradient(ellipse at 50% 100%, var(--mock-accent), transparent 68%);
-  opacity: 0.4;
-  filter: blur(28px);
+  left: 0;
+  bottom: 0;
+  width: 54px;
+  height: 2px;
+  background: var(--orange);
   pointer-events: none;
 }
 
@@ -33,12 +33,12 @@
 .mock-line {
   display: block;
   height: 5px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.16);
+  border-radius: var(--r-xs);
+  background: var(--line-strong);
 }
 
 .mock-line.bright {
-  background: rgba(255, 255, 255, 0.4);
+  background: var(--dim);
 }
 
 .mock-line.tall {
@@ -71,12 +71,11 @@
   position: relative;
   height: 100%;
   aspect-ratio: 9 / 19;
-  padding: 6px;
-  border-radius: 22px;
-  background: linear-gradient(165deg, #23263a, #0b0d16);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 24px 50px -22px rgba(0, 0, 0, 0.9);
-  transition: transform 0.5s var(--ease);
+  padding: 5px;
+  border-radius: var(--r-sm);
+  background: var(--surface-3);
+  border: 1px solid var(--line-strong);
+  transition: transform 0.5s var(--ease), border-color 0.3s var(--ease);
 }
 
 .mock-phones .mock-phone:first-child {
@@ -96,6 +95,7 @@
 
 .project-card:hover .mock-phones .mock-phone:last-child {
   transform: rotate(2deg) translateY(-6px);
+  border-color: var(--orange);
 }
 
 .mock-notch {
@@ -103,10 +103,10 @@
   top: 8px;
   left: 50%;
   transform: translateX(-50%);
-  width: 34%;
-  height: 5px;
-  border-radius: 999px;
-  background: #05060b;
+  width: 30%;
+  height: 4px;
+  border-radius: var(--r-xs);
+  background: var(--bg);
   z-index: 2;
 }
 
@@ -116,13 +116,9 @@
   height: 100%;
   padding: 12px 8px 6px;
   gap: 7px;
-  border-radius: 17px;
+  border-radius: var(--r-xs);
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--mock-accent) 26%, #0a0c15),
-    #0a0c15 46%
-  );
+  background: var(--surface);
 }
 
 .mock-topbar {
@@ -136,7 +132,7 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
+  background: var(--line-strong);
   flex: none;
 }
 
@@ -144,8 +140,8 @@
   margin-left: auto;
   width: 16px;
   height: 6px;
-  border-radius: 999px;
-  background: var(--mock-accent);
+  border-radius: var(--r-xs);
+  background: var(--orange);
   flex: none;
 }
 
@@ -164,9 +160,9 @@
   flex-direction: column;
   gap: 5px;
   padding: 8px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
 }
 
 .mock-bars {
@@ -179,9 +175,8 @@
 
 .mock-bars span {
   flex: 1;
-  border-radius: 2px 2px 0 0;
-  background: linear-gradient(180deg, var(--mock-accent), transparent);
-  opacity: 0.85;
+  border-radius: var(--r-xs) var(--r-xs) 0 0;
+  background: linear-gradient(180deg, var(--amber), var(--orange));
 }
 
 .mock-tiles {
@@ -192,9 +187,9 @@
 
 .mock-tiles span {
   height: 26px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
 }
 
 .mock-rows {
@@ -205,8 +200,8 @@
 
 .mock-rows span {
   height: 11px;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
 }
 
 /* phone — chat variant */
@@ -222,13 +217,13 @@
 
 .bubble {
   height: 13px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.09);
+  border-radius: var(--r-xs);
+  background: var(--surface-3);
 }
 
 .bubble.out {
   align-self: flex-end;
-  background: color-mix(in srgb, var(--mock-accent) 70%, transparent);
+  background: var(--orange);
 }
 
 .mock-composer {
@@ -237,9 +232,9 @@
   gap: 5px;
   margin-top: auto;
   padding: 5px 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
 }
 
 .mock-send {
@@ -247,7 +242,7 @@
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background: var(--mock-accent);
+  background: var(--orange);
   flex: none;
 }
 
@@ -258,36 +253,39 @@
   gap: 8px;
   flex: none;
   padding-top: 6px;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid var(--line);
 }
 
 .mock-tabbar span {
   width: 9px;
   height: 9px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.14);
+  border-radius: var(--r-xs);
+  background: var(--line-strong);
 }
 
 .mock-tabbar span.is-active {
-  background: var(--mock-accent);
-  box-shadow: 0 0 8px var(--mock-accent);
+  background: var(--orange);
 }
 
 /* ---------------------------------------------------------------- desktop */
 
 .mock-desktop {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  border-radius: 12px;
+  /* Never taller than the stage — the window compresses instead of clipping */
+  max-height: 100%;
+  border-radius: var(--r-sm);
   overflow: hidden;
-  background: #0b0d16;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 26px 54px -24px rgba(0, 0, 0, 0.95);
-  transition: transform 0.5s var(--ease);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  transition: transform 0.5s var(--ease), border-color 0.3s var(--ease);
 }
 
 .project-card:hover .mock-desktop {
-  transform: translateY(-6px) scale(1.015);
+  transform: translateY(-6px);
+  border-color: var(--orange);
 }
 
 .mock-chrome {
@@ -295,29 +293,29 @@
   align-items: center;
   gap: 5px;
   padding: 8px 10px;
-  background: rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
 }
 
+/* Greyscale traffic lights — the wireframe never competes with the accent */
 .mock-chrome .dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
+  background: var(--line-strong);
 }
-
-.dot.r { background: #ff5f57; }
-.dot.y { background: #febc2e; }
-.dot.g { background: #28c840; }
 
 .mock-url {
   flex: 1;
-  height: 9px;
+  height: 8px;
   margin-left: 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-xs);
+  background: var(--surface-3);
 }
 
 .mock-window {
+  flex: 1;
+  min-height: 0;
   padding: 12px;
   aspect-ratio: 16 / 10;
 }
@@ -336,24 +334,24 @@
   flex-direction: column;
   gap: 6px;
   padding: 8px 6px;
-  border-radius: 9px;
-  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
 }
 
 .mock-side span {
   height: 7px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.12);
+  border-radius: var(--r-xs);
+  background: var(--line-strong);
 }
 
 .mock-side .mock-logo {
   height: 11px;
   margin-bottom: 4px;
-  background: var(--mock-accent);
+  background: var(--orange);
 }
 
 .mock-side span.is-active {
-  background: color-mix(in srgb, var(--mock-accent) 70%, transparent);
+  background: var(--orange-600);
 }
 
 .mock-main {
@@ -371,30 +369,34 @@
 
 .mock-kpis span {
   height: 30px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
 }
 
 .mock-kpis span:first-child {
-  background: color-mix(in srgb, var(--mock-accent) 20%, transparent);
-  border-color: color-mix(in srgb, var(--mock-accent) 40%, transparent);
+  border-color: var(--orange);
 }
 
 .mock-chart {
   flex: 1;
   min-height: 0;
   padding: 8px;
-  border-radius: 9px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  color: var(--mock-accent);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--orange);
 }
 
 .mock-chart svg {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+/* Keep the area fill a whisper so the orange stroke stays the highlight */
+.mock-chart svg path:last-of-type {
+  opacity: 0.09;
 }
 
 .mock-table {
@@ -405,8 +407,8 @@
 
 .mock-table span {
   height: 8px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.07);
+  border-radius: var(--r-xs);
+  background: var(--surface-3);
 }
 
 /* desktop — marketing site variant */
@@ -433,8 +435,8 @@
 .mock-site-links span {
   width: 18px;
   height: 5px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.14);
+  border-radius: var(--r-xs);
+  background: var(--line-strong);
 }
 
 .mock-site-hero {
@@ -459,13 +461,12 @@
 .mock-site-btns span {
   width: 40px;
   height: 12px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-xs);
+  background: var(--surface-3);
 }
 
 .mock-site-btns span.filled {
-  background: var(--mock-accent);
-  box-shadow: 0 0 14px -3px var(--mock-accent);
+  background: var(--orange);
 }
 
 .mock-site-cards {
@@ -477,14 +478,16 @@
 
 .mock-site-cards span {
   height: 34px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
 }
+
+/* ------------------------------------------------------------- responsive */
 
 @media (max-width: 480px) {
   .mock {
-    padding: 16px;
+    padding: 40px 16px 16px;
   }
   .mock-phones {
     gap: 8px;

@@ -1,0 +1,108 @@
+/* ==========================================================================
+   CTA banner — one wide textured band sitting between the testimonials and
+   the contact form. Flat opaque surface, diagonal hatch instead of a photo,
+   hairline border, solid orange edge and a single orange button.
+   ========================================================================== */
+
+.cta {
+  position: relative;
+  padding: clamp(32px, 5vw, 60px) 0;
+}
+
+.cta-panel {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(48px, 7.5vw, 92px) clamp(20px, 5vw, 56px);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+
+/* Diagonal hatch stands in for the reference's photographic panel */
+.cta-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.03) 0 2px,
+    transparent 2px 12px
+  );
+  pointer-events: none;
+}
+
+/* Solid orange edge so the band reads as deliberate, not as an empty box */
+.cta-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--orange);
+}
+
+.cta-content {
+  position: relative; /* above the hatch */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Small orange line above the headline, prefixed by a short rule */
+.cta-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.cta-kicker::before {
+  content: '';
+  width: 28px;
+  height: 2px;
+  background: var(--orange);
+}
+
+.cta-title {
+  margin-top: 16px;
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 700;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+.cta-btn {
+  margin-top: 30px;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ------------------------------------------------------------ responsive */
+
+@media (max-width: 600px) {
+  .cta-panel::after {
+    width: 3px;
+  }
+
+  .cta-kicker {
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+  }
+
+  .cta-kicker::before {
+    width: 20px;
+  }
+}
+
+@media (max-width: 460px) {
+  .cta-btn {
+    width: 100%;
+    margin-top: 26px;
+  }
+}

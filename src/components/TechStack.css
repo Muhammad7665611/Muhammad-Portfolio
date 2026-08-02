@@ -1,62 +1,54 @@
+/* ==========================================================================
+   Tech stack — flat sharp tiles on black, orange border on hover.
+   Brand colours live ONLY on the glyph; all tile chrome is black/grey/orange.
+   ========================================================================== */
+
 .tech-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  gap: 16px;
 }
 
+/* .card supplies surface + 1px line + 0 radius */
 .tech-tile {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 14px;
   padding: 28px 16px 22px;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease),
-    box-shadow 0.35s var(--ease);
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease),
+    background 0.3s var(--ease);
 }
 
 .tech-tile:hover {
-  transform: translateY(-6px);
-  border-color: color-mix(in srgb, var(--t-accent) 45%, transparent);
-  box-shadow: var(--shadow), 0 0 46px -20px var(--t-accent);
+  transform: translateY(-3px);
+  border-color: var(--orange);
+  background: var(--surface-2);
 }
 
-.tech-halo {
-  position: absolute;
-  inset: -50% 0 60% 0;
-  background: radial-gradient(ellipse at 50% 100%, var(--t-accent), transparent 68%);
-  opacity: 0.08;
-  transition: opacity 0.4s var(--ease);
-  pointer-events: none;
-}
-
-.tech-tile:hover .tech-halo {
-  opacity: 0.22;
-}
-
+/* Sharp square holder — the glyph keeps the vendor's brand colour */
 .tech-icon {
   display: grid;
   place-items: center;
-  width: 62px;
-  height: 62px;
-  border-radius: 18px;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--r);
+  border: 1px solid var(--line);
+  background: var(--surface-2);
   color: var(--t-accent);
-  background: rgba(255, 255, 255, 0.045);
-  border: 1px solid var(--stroke);
-  transition: transform 0.4s var(--ease), background 0.35s var(--ease);
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
 }
 
 .tech-tile:hover .tech-icon {
-  transform: scale(1.08) rotate(-5deg);
-  background: color-mix(in srgb, var(--t-accent) 12%, transparent);
+  border-color: var(--line-strong);
+  background: var(--surface-3);
 }
 
 .tech-name {
-  position: relative;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--muted);
   transition: color 0.3s var(--ease);
 }
@@ -69,10 +61,10 @@
 
 .tech-marquee {
   position: relative;
-  margin-top: 40px;
-  padding: 16px 0;
+  margin-top: 44px;
+  padding: 15px 0;
   overflow: hidden;
-  border-block: 1px solid var(--stroke);
+  border-block: 1px solid var(--line);
   mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
@@ -80,9 +72,9 @@
 .tech-marquee-track {
   display: flex;
   align-items: center;
-  gap: 42px;
+  gap: 38px;
   width: max-content;
-  animation: marquee 26s linear infinite;
+  animation: tech-marquee 26s linear infinite;
 }
 
 .tech-marquee:hover .tech-marquee-track {
@@ -92,15 +84,24 @@
 .tech-marquee-item {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  font-size: 13px;
+  gap: 14px;
+  font-size: 12.5px;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  color: var(--dim);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
   white-space: nowrap;
 }
 
-@keyframes marquee {
+/* Small orange square separating each label */
+.tech-marquee-bullet {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  background: var(--orange);
+}
+
+@keyframes tech-marquee {
   to {
     transform: translateX(-50%);
   }
@@ -115,9 +116,16 @@
 @media (max-width: 560px) {
   .tech-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .tech-tile {
+    padding: 22px 12px 18px;
   }
   .tech-icon {
-    width: 54px;
-    height: 54px;
+    width: 52px;
+    height: 52px;
+  }
+  .tech-marquee-track {
+    gap: 28px;
   }
 }

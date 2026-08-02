@@ -1,161 +1,225 @@
+/* ==========================================================================
+   Testimonials — a centre-snapping carousel. One large flat quote panel holds
+   the middle, its neighbours peek in scrimmed at either edge, and a row of
+   short dashes underneath paginates it (active dash orange and wider).
+   ========================================================================== */
+
 .t-track {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  /* Card width drives the side padding below, so it must stay in absolute
+     units (vw/px) — a percentage here would resolve against the padded
+     content box and feed back into itself. */
+  --t-card-w: clamp(300px, 54vw, 700px);
+
+  position: relative; /* offsetLeft of each card is measured against this */
+  display: flex;
+  gap: 22px;
+  /* Half the leftover room on each side, so the first and last card can both
+     come to rest dead centre of the scrollport. */
+  padding: 6px max(0px, calc((100% - var(--t-card-w)) / 2));
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
+
+.t-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* ------------------------------------------------------------------- card */
 
 .t-card {
-  position: relative;
+  flex: 0 0 var(--t-card-w);
+  scroll-snap-align: center;
   display: flex;
   flex-direction: column;
-  padding: 30px 26px 26px;
-  border-radius: var(--radius-md);
+  align-items: center;
+  text-align: center;
+  padding: clamp(32px, 4vw, 48px) clamp(22px, 3.4vw, 46px) clamp(26px, 3vw, 34px);
   overflow: hidden;
-  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease),
-    box-shadow 0.35s var(--ease);
-}
-
-.t-card::after {
-  content: '';
-  position: absolute;
-  inset: -60% 50% 70% -40%;
-  background: radial-gradient(circle, var(--t-accent), transparent 70%);
-  opacity: 0.1;
-  pointer-events: none;
-  transition: opacity 0.4s var(--ease);
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
 }
 
 .t-card:hover {
-  transform: translateY(-6px);
-  border-color: color-mix(in srgb, var(--t-accent) 40%, transparent);
-  box-shadow: var(--shadow), 0 0 48px -22px var(--t-accent);
+  border-color: var(--orange);
+  background: var(--surface-2);
 }
 
-.t-card:hover::after {
-  opacity: 0.2;
+/* Orange rule across the top, drawn out from the centre on the active card */
+.t-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transition: transform 0.45s var(--ease);
 }
+
+.t-card.is-active::before {
+  transform: scaleX(1);
+}
+
+/* Neighbours are scrimmed back toward the page colour rather than faded, so
+   the .reveal opacity animation on the figure itself stays untouched. */
+.t-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  opacity: 0.62;
+  pointer-events: none;
+  transition: opacity 0.45s var(--ease);
+}
+
+.t-card.is-active::after {
+  opacity: 0;
+}
+
+/* --------------------------------------------------------------- contents */
 
 .t-quote {
-  position: relative;
-  color: var(--t-accent);
-  opacity: 0.5;
-  margin-bottom: 16px;
-}
-
-.t-text {
-  position: relative;
-  margin: 0 0 20px;
-  font-size: 14.5px;
-  line-height: 1.7;
-  color: var(--muted);
-  flex: 1;
-}
-
-.t-stars {
-  position: relative;
-  display: flex;
-  gap: 3px;
-  color: #fbbf24;
-  margin-bottom: 20px;
-}
-
-.t-person {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  padding-top: 20px;
-  border-top: 1px solid var(--stroke);
+  position: absolute;
+  top: clamp(16px, 2vw, 24px);
+  right: clamp(16px, 2vw, 26px);
+  color: var(--orange);
+  opacity: 0.16;
+  pointer-events: none;
 }
 
 .t-avatar {
   display: grid;
   place-items: center;
   flex: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  font-family: Sora, sans-serif;
-  font-size: 14px;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%; /* perfect circle — the sanctioned exception */
+  background: var(--surface-3);
+  border: 1px solid var(--line-strong);
+  color: var(--muted);
+  font-size: 19px;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  color: #06070d;
-  background: linear-gradient(
-    140deg,
-    color-mix(in srgb, var(--t-accent) 90%, #fff 20%),
-    var(--t-accent)
-  );
-  box-shadow: 0 8px 22px -12px var(--t-accent);
+  letter-spacing: 0.04em;
+  margin-bottom: clamp(18px, 2.4vw, 26px);
+  transition: background 0.35s var(--ease), border-color 0.35s var(--ease),
+    color 0.35s var(--ease);
 }
 
-.t-meta {
+.t-card.is-active .t-avatar {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+
+.t-text {
+  margin: 0 0 22px;
+  max-width: 52ch;
+  font-size: clamp(15px, 1.35vw, 17px);
+  line-height: 1.85;
+  color: var(--muted);
+}
+
+.t-stars {
+  display: flex;
+  gap: 4px;
+  color: var(--orange);
+  margin-bottom: 20px;
+}
+
+.t-person {
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
 }
 
 .t-name {
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text);
 }
 
 .t-role {
-  font-size: 12.5px;
-  color: var(--dim);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  line-height: 1.6;
+  color: var(--orange);
 }
 
-/* ------------------------------------------------------------------- dots */
+/* ----------------------------------------------------------------- dashes */
 
 .t-dots {
-  display: none;
+  display: flex;
   justify-content: center;
-  gap: 9px;
-  margin-top: 26px;
+  align-items: center;
+  gap: 8px;
+  margin-top: clamp(26px, 3vw, 38px);
 }
 
+/* Transparent padding gives the 3px dash a comfortable tap target */
 .t-dot {
-  width: 8px;
-  height: 8px;
-  padding: 0;
+  display: block;
+  padding: 12px 4px;
   border: 0;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
+  background: none;
+  line-height: 0;
   cursor: pointer;
-  transition: width 0.3s var(--ease), background 0.3s var(--ease);
 }
 
-.t-dot.is-active {
-  width: 26px;
-  background: var(--grad);
+.t-dash {
+  display: block;
+  width: 22px;
+  height: 3px;
+  border-radius: var(--r);
+  background: var(--line-strong);
+  transition: width 0.35s var(--ease), background 0.35s var(--ease);
+}
+
+.t-dot:hover .t-dash {
+  background: var(--muted);
+}
+
+.t-dot.is-active .t-dash {
+  width: 38px;
+  background: var(--orange);
 }
 
 /* --------------------------------------------------------------- responsive */
 
 @media (max-width: 980px) {
   .t-track {
-    grid-template-columns: repeat(3, 82%);
-    grid-auto-flow: column;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    padding-bottom: 4px;
-    margin-inline: -24px;
-    padding-inline: 24px;
+    --t-card-w: 72vw;
+    gap: 18px;
   }
-  .t-track::-webkit-scrollbar {
-    display: none;
+}
+
+@media (max-width: 700px) {
+  .t-track {
+    --t-card-w: 80vw;
   }
-  .t-card {
-    scroll-snap-align: center;
-  }
-  .t-dots {
-    display: flex;
+  /* Neighbours barely show at this width, so lighten the scrim */
+  .t-card::after {
+    opacity: 0.72;
   }
 }
 
 @media (max-width: 560px) {
   .t-track {
-    grid-template-columns: repeat(3, 88%);
+    --t-card-w: 84vw;
+    gap: 14px;
+  }
+  .t-avatar {
+    width: 58px;
+    height: 58px;
+    font-size: 17px;
+  }
+  .t-text {
+    line-height: 1.75;
   }
 }

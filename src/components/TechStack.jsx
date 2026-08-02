@@ -10,30 +10,26 @@ export default function TechStack() {
     <section id="tech" className="section tech" ref={ref}>
       <div className="shell">
         <div className="section-head center reveal">
-          <span className="eyebrow">
-            <span className="dot" />
-            Daily drivers
-          </span>
+          <span className="eyebrow">Daily drivers</span>
           <h2 className="section-title">
             Tech <span className="accent">Stack</span>
           </h2>
-          <p className="section-sub">
-            The technologies behind most of what I ship.
-          </p>
+          <span className="title-rule" />
+          <p className="section-sub">The technologies behind most of what I ship.</p>
         </div>
 
+        {/* Flat rectangular tiles — black chrome, brand-coloured glyph. */}
         <div className="tech-grid">
           {techStack.map((tech, i) => (
             <div
-              className="tech-tile glass reveal"
+              className="tech-tile card reveal"
               key={tech.name}
               style={{ '--t-accent': tech.color, '--reveal-delay': `${i * 55}ms` }}
             >
               <div className="tech-icon">
-                <Icon name={tech.icon} width={34} height={34} />
+                <Icon name={tech.icon} width={32} height={32} />
               </div>
               <span className="tech-name">{tech.name}</span>
-              <span className="tech-halo" aria-hidden="true" />
             </div>
           ))}
         </div>
@@ -43,7 +39,7 @@ export default function TechStack() {
           <div className="tech-marquee-track">
             {[...techStack, ...techStack].map((tech, i) => (
               <span className="tech-marquee-item" key={`${tech.name}-${i}`}>
-                <Icon name={tech.icon} width={18} height={18} style={{ color: tech.color }} />
+                <span className="tech-marquee-bullet" />
                 {tech.name}
               </span>
             ))}

@@ -1,24 +1,23 @@
-.projects-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 26px;
-  margin-bottom: clamp(32px, 4vw, 48px);
-}
+/* ==========================================================================
+   Projects — a tight grid of flat black tiles with hairline seams, one of
+   which is a solid orange feature panel. Filter chips above, CTA below.
+   ========================================================================== */
 
 /* ----------------------------------------------------------------- filter */
 
 .project-filter {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: clamp(26px, 3.4vw, 40px);
 }
 
 .project-filter-label {
-  font-size: 11.5px;
-  letter-spacing: 0.16em;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--dim);
 }
@@ -26,26 +25,23 @@
 .project-filter-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  padding: 6px;
-  border-radius: 999px;
-  background: var(--glass);
-  border: 1px solid var(--stroke);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
+  justify-content: center;
+  gap: 8px;
 }
 
+/* Sharp rectangles: transparent by default, solid orange when selected */
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 8px 15px;
-  border-radius: 999px;
-  border: 1px solid transparent;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--line);
   background: transparent;
   color: var(--muted);
   font-size: 13.5px;
   font-weight: 500;
+  line-height: 1.3;
   cursor: pointer;
   transition: color 0.25s var(--ease), background 0.25s var(--ease),
     border-color 0.25s var(--ease);
@@ -53,26 +49,33 @@
 
 .chip:hover {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--orange);
 }
 
 .chip.is-active {
-  color: #06070d;
-  background: var(--grad);
-  box-shadow: 0 8px 22px -12px rgba(124, 92, 255, 0.95);
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+
+.chip.is-active:hover {
+  background: var(--orange-600);
+  border-color: var(--orange-600);
+  color: #fff;
 }
 
 .chip-count {
+  padding: 1px 6px;
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  color: var(--dim);
   font-size: 10.5px;
   font-weight: 600;
-  padding: 1px 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  color: inherit;
 }
 
 .chip.is-active .chip-count {
-  background: rgba(6, 7, 13, 0.22);
+  background: var(--orange-600);
+  color: #fff;
 }
 
 /* ------------------------------------------------------------------- grid */
@@ -80,37 +83,42 @@
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
+  gap: 0;
 }
 
 .project-card {
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: transform 0.4s var(--ease), border-color 0.4s var(--ease),
-    box-shadow 0.4s var(--ease);
-  animation: card-in 0.5s var(--ease) both;
+  /* Pull neighbours together so touching 1px borders collapse into one seam */
+  margin: 0 -1px -1px 0;
 }
 
-@keyframes card-in {
-  from {
-    opacity: 0;
-    transform: translateY(14px) scale(0.985);
-  }
+/* Per-property delays: the scroll-reveal keeps its stagger, the hover border
+   swap stays instant. (index.css loads last, so `.card` raises specificity.) */
+.project-card.card {
+  transition: opacity 0.6s var(--ease) var(--reveal-delay, 0ms),
+    transform 0.6s var(--ease) var(--reveal-delay, 0ms),
+    border-color 0.25s var(--ease) 0ms;
 }
 
+/* Filtered-out tiles stay mounted (see Projects.jsx) but leave the layout */
+.project-card.is-filtered {
+  display: none;
+}
+
+/* No lift — the tiles share collapsed borders, so the hovered one just raises
+   its stacking order and paints an orange edge over the seam. */
 .project-card:hover {
-  transform: translateY(-6px);
-  border-color: color-mix(in srgb, var(--p-accent) 42%, transparent);
-  box-shadow: var(--shadow-lg), 0 0 60px -26px var(--p-accent);
+  z-index: 2;
+  border-color: var(--orange);
 }
 
 /* ---------------------------------------------------------------- preview */
 
 .project-preview {
   position: relative;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
 }
 
 .project-tags {
@@ -123,16 +131,36 @@
 }
 
 .project-tags span {
-  padding: 4px 11px;
-  border-radius: 999px;
-  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--r-xs);
+  font-size: 10.5px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.project-card:hover .project-tags span {
   color: var(--text);
-  background: rgba(6, 7, 13, 0.62);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-color: var(--line-strong);
+}
+
+.project-index {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+  transition: color 0.25s var(--ease);
+}
+
+.project-card:hover .project-index {
+  color: var(--orange);
 }
 
 /* ------------------------------------------------------------------- body */
@@ -141,25 +169,30 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 22px 10px 8px;
+  padding: 26px 24px 24px;
 }
 
 .project-title {
-  font-size: clamp(18px, 2.2vw, 22px);
+  font-size: clamp(19px, 2.2vw, 23px);
   margin-bottom: 10px;
+  transition: color 0.25s var(--ease);
+}
+
+.project-card:hover .project-title {
+  color: var(--orange);
 }
 
 .project-blurb {
   color: var(--muted);
   font-size: 14.5px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .project-features {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 9px 16px;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .project-features li {
@@ -167,69 +200,147 @@
   align-items: flex-start;
   gap: 8px;
   font-size: 13px;
+  line-height: 1.5;
   color: var(--muted);
 }
 
 .project-features svg {
   flex: none;
   margin-top: 3px;
-  color: var(--p-accent);
+  color: var(--orange);
 }
 
 .project-stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 6px;
   margin-top: auto;
-  padding-bottom: 20px;
+  padding-bottom: 22px;
 }
 
 .project-stack span {
-  padding: 5px 11px;
-  border-radius: 8px;
+  padding: 5px 10px;
+  border-radius: var(--r-xs);
   font-size: 11.5px;
   color: var(--muted);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--stroke);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
 }
 
 .project-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  padding-top: 18px;
-  border-top: 1px solid var(--stroke);
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
 }
+
+/* --------------------------------------------------------- feature panel */
+
+.project-card.is-feature {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+
+.project-card.is-feature:hover {
+  border-color: #fff;
+}
+
+/* The mock keeps a black stage so the wireframe still reads on orange */
+.project-card.is-feature .project-preview {
+  border-bottom-color: var(--orange-600);
+}
+
+.project-card.is-feature .project-title,
+.project-card.is-feature:hover .project-title {
+  color: #fff;
+}
+
+.project-card.is-feature .project-blurb,
+.project-card.is-feature .project-features li {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.project-card.is-feature .project-features svg {
+  color: #fff;
+}
+
+.project-card.is-feature .project-stack span {
+  background: var(--orange-600);
+  border-color: var(--orange-600);
+  color: #fff;
+}
+
+.project-card.is-feature .project-actions {
+  border-top-color: var(--orange-600);
+}
+
+/* Inverted buttons — white fill on orange, then black on hover */
+.project-card.is-feature .btn-primary {
+  background: #fff;
+  border-color: #fff;
+  color: #000;
+}
+
+.project-card.is-feature .btn-primary:hover {
+  background: #000;
+  border-color: #000;
+  color: #fff;
+}
+
+.project-card.is-feature .btn-dark {
+  background: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.project-card.is-feature .btn-dark:hover {
+  background: #fff;
+  border-color: #fff;
+  color: var(--orange);
+}
+
+/* -------------------------------------------------------------- empty/CTA */
 
 .projects-empty {
-  padding: 60px 20px;
+  padding: 56px 20px;
   text-align: center;
   color: var(--dim);
+  border: 1px dashed var(--line);
 }
 
-/* --------------------------------------------------------------- responsive */
+.projects-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(34px, 4vw, 52px);
+}
 
-@media (max-width: 900px) {
+/* ------------------------------------------------------------- responsive */
+
+@media (max-width: 980px) {
   .projects-grid {
     grid-template-columns: 1fr;
   }
-  .projects-head {
-    align-items: flex-start;
-  }
-  .project-filter {
-    align-items: flex-start;
-    width: 100%;
+  .project-card {
+    margin: 0 0 -1px;
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 560px) {
+  .project-body {
+    padding: 22px 18px 20px;
+  }
   .project-features {
     grid-template-columns: 1fr;
   }
   .project-actions .btn {
     flex: 1 1 100%;
   }
-  .project-filter-chips {
-    border-radius: var(--radius-md);
+  .chip {
+    padding: 9px 15px;
+    font-size: 13px;
+  }
+  .projects-cta .btn {
+    width: 100%;
   }
 }

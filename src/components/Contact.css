@@ -1,7 +1,14 @@
+/* ==========================================================================
+   Contact — a flat black form panel beside a details panel. Inputs are dark
+   opaque rectangles that take an orange edge on focus, the submit is a solid
+   orange block, and the social buttons are sharp squares that fill orange.
+   No blur, no glow, no rounding beyond 2px.
+   ========================================================================== */
+
 .contact-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr);
-  gap: 22px;
+  gap: 16px;
   align-items: start;
 }
 
@@ -11,8 +18,7 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  padding: clamp(24px, 3.4vw, 36px);
-  border-radius: var(--radius);
+  padding: clamp(22px, 3.4vw, 34px);
 }
 
 .field {
@@ -21,59 +27,132 @@
   gap: 8px;
 }
 
+/* Small grey uppercase caption above each control */
 .field label {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
 .field input,
 .field textarea {
   width: 100%;
-  padding: 14px 16px;
-  border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--stroke);
+  padding: 13px 15px;
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
   color: var(--text);
   font-size: 14.5px;
   resize: vertical;
-  transition: border-color 0.25s var(--ease), background 0.25s var(--ease),
-    box-shadow 0.25s var(--ease);
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
 }
 
 .field input::placeholder,
 .field textarea::placeholder {
-  color: #5b6379;
+  color: var(--dim);
 }
 
+/* Focus reads as a hard 2px orange edge (border + 1px ring), never a soft halo */
 .field input:focus,
 .field textarea:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(124, 92, 255, 0.6);
-  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.14);
+  background: var(--surface-3);
+  border-color: var(--orange);
+  box-shadow: 0 0 0 1px var(--orange);
 }
 
 .field input[aria-invalid='true'],
 .field textarea[aria-invalid='true'] {
-  border-color: rgba(248, 113, 113, 0.6);
+  border-color: var(--amber);
+}
+
+.field input[aria-invalid='true']:focus,
+.field textarea[aria-invalid='true']:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 1px var(--amber);
 }
 
 .field-error {
   font-size: 12.5px;
-  color: #fca5a5;
+  line-height: 1.45;
+  color: var(--amber);
 }
 
 .contact-submit {
   align-self: flex-start;
   margin-top: 4px;
-  min-width: 170px;
+  min-width: 180px;
 }
 
 .contact-note {
   font-size: 12.5px;
+  line-height: 1.55;
   color: var(--dim);
+}
+
+.contact-note.is-ok {
+  color: var(--orange);
+}
+
+.contact-note.is-error {
+  color: var(--amber);
+}
+
+.contact-note.is-nokey {
+  color: var(--muted);
+}
+
+.contact-note a,
+.contact-copy {
+  color: var(--orange);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Inline text button so "copy it" sits in the sentence like a link */
+.contact-copy {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.contact-copy:hover {
+  color: var(--orange-300);
+}
+
+/* Pulled out of the layout and out of the tab order — bots still fill it */
+.contact-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-submit:disabled {
+  cursor: progress;
+  opacity: 0.72;
+}
+
+.contact-spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: contact-spin 0.7s linear infinite;
+}
+
+@keyframes contact-spin {
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 /* ------------------------------------------------------------------- side */
@@ -85,21 +164,28 @@
 }
 
 .contact-card {
-  padding: clamp(24px, 3vw, 30px);
-  border-radius: var(--radius);
+  padding: clamp(22px, 3vw, 28px);
 }
 
 .contact-card-title {
   font-size: 17px;
-  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.contact-card-rule {
+  display: block;
+  width: 38px;
+  height: 3px;
+  background: var(--orange);
+  margin: 12px 0 22px;
 }
 
 .contact-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   padding-bottom: 22px;
-  border-bottom: 1px solid var(--stroke);
+  border-bottom: 1px solid var(--line);
 }
 
 .contact-list li {
@@ -109,16 +195,23 @@
   min-width: 0;
 }
 
+/* Sharp orange-bordered square holding an orange glyph; inverts on hover */
 .contact-ico {
   display: grid;
   place-items: center;
   flex: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 13px;
-  color: var(--accent-2);
-  background: var(--grad-soft);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--r-xs);
+  color: var(--orange);
+  background: var(--surface-2);
+  border: 1px solid var(--orange);
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.contact-list li:hover .contact-ico {
+  background: var(--orange);
+  color: #fff;
 }
 
 .contact-pair {
@@ -129,6 +222,7 @@
 
 .contact-label {
   font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--dim);
@@ -143,7 +237,7 @@
 }
 
 .contact-pair a:hover {
-  color: var(--accent-2);
+  color: var(--orange);
 }
 
 .contact-socials {
@@ -159,37 +253,40 @@
   gap: 10px;
 }
 
+/* Uniform dark squares — every network fills solid orange on hover */
 .social-btn {
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
-  border-radius: 14px;
+  border-radius: var(--r-xs);
   color: var(--muted);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--stroke);
-  transition: color 0.28s var(--ease), transform 0.28s var(--ease),
-    border-color 0.28s var(--ease), box-shadow 0.28s var(--ease);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  transition: color 0.25s var(--ease), transform 0.25s var(--ease),
+    background 0.25s var(--ease), border-color 0.25s var(--ease);
 }
 
 .social-btn:hover {
-  color: var(--s-accent);
+  color: #fff;
+  background: var(--orange);
+  border-color: var(--orange);
   transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--s-accent) 50%, transparent);
-  box-shadow: 0 12px 26px -14px var(--s-accent);
 }
 
+/* Availability strip — flat panel marked with a solid orange edge */
 .contact-cta {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 20px 22px;
-  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  border-left: 3px solid var(--orange);
 }
 
 .contact-cta strong {
   display: block;
   font-size: 14px;
+  font-weight: 600;
   color: var(--text);
 }
 
@@ -205,7 +302,24 @@
   .contact-grid {
     grid-template-columns: 1fr;
   }
+
   .contact-submit {
     align-self: stretch;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-form {
+    gap: 16px;
+  }
+
+  .contact-ico {
+    width: 38px;
+    height: 38px;
+  }
+
+  .social-btn {
+    width: 42px;
+    height: 42px;
   }
 }
