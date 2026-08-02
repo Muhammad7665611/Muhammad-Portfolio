@@ -1,0 +1,65 @@
+/* App-level chrome: skip link + back-to-top */
+
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 24px;
+  z-index: 200;
+  padding: 11px 20px;
+  border-radius: 0 0 12px 12px;
+  background: var(--grad);
+  color: #06070d;
+  font-size: 14px;
+  font-weight: 600;
+  transition: top 0.25s var(--ease);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+.to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text);
+  background: rgba(9, 11, 20, 0.82);
+  border: 1px solid var(--stroke-strong);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(0.9);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease),
+    visibility 0.3s, border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.to-top svg {
+  transform: rotate(180deg);
+}
+
+.to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.to-top:hover {
+  border-color: rgba(124, 92, 255, 0.6);
+  box-shadow: var(--shadow), 0 0 30px -10px rgba(124, 92, 255, 0.95);
+}
+
+@media (max-width: 560px) {
+  .to-top {
+    right: 16px;
+    bottom: 16px;
+  }
+}

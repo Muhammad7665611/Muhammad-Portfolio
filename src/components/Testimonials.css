@@ -1,0 +1,161 @@
+.t-track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.t-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 26px 26px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
+}
+
+.t-card::after {
+  content: '';
+  position: absolute;
+  inset: -60% 50% 70% -40%;
+  background: radial-gradient(circle, var(--t-accent), transparent 70%);
+  opacity: 0.1;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease);
+}
+
+.t-card:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--t-accent) 40%, transparent);
+  box-shadow: var(--shadow), 0 0 48px -22px var(--t-accent);
+}
+
+.t-card:hover::after {
+  opacity: 0.2;
+}
+
+.t-quote {
+  position: relative;
+  color: var(--t-accent);
+  opacity: 0.5;
+  margin-bottom: 16px;
+}
+
+.t-text {
+  position: relative;
+  margin: 0 0 20px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--muted);
+  flex: 1;
+}
+
+.t-stars {
+  position: relative;
+  display: flex;
+  gap: 3px;
+  color: #fbbf24;
+  margin-bottom: 20px;
+}
+
+.t-person {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-top: 20px;
+  border-top: 1px solid var(--stroke);
+}
+
+.t-avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-family: Sora, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #06070d;
+  background: linear-gradient(
+    140deg,
+    color-mix(in srgb, var(--t-accent) 90%, #fff 20%),
+    var(--t-accent)
+  );
+  box-shadow: 0 8px 22px -12px var(--t-accent);
+}
+
+.t-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.t-name {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.t-role {
+  font-size: 12.5px;
+  color: var(--dim);
+}
+
+/* ------------------------------------------------------------------- dots */
+
+.t-dots {
+  display: none;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 26px;
+}
+
+.t-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: width 0.3s var(--ease), background 0.3s var(--ease);
+}
+
+.t-dot.is-active {
+  width: 26px;
+  background: var(--grad);
+}
+
+/* --------------------------------------------------------------- responsive */
+
+@media (max-width: 980px) {
+  .t-track {
+    grid-template-columns: repeat(3, 82%);
+    grid-auto-flow: column;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    margin-inline: -24px;
+    padding-inline: 24px;
+  }
+  .t-track::-webkit-scrollbar {
+    display: none;
+  }
+  .t-card {
+    scroll-snap-align: center;
+  }
+  .t-dots {
+    display: flex;
+  }
+}
+
+@media (max-width: 560px) {
+  .t-track {
+    grid-template-columns: repeat(3, 88%);
+  }
+}

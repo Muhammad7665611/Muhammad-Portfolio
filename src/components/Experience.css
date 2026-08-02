@@ -1,0 +1,214 @@
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 150px 34px minmax(0, 1fr);
+  align-items: start;
+}
+
+/* ------------------------------------------------------------------- date */
+
+.timeline-date {
+  padding-top: 26px;
+  padding-right: 20px;
+  text-align: right;
+}
+
+.timeline-period {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.timeline-now {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a7f3d0;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.26);
+}
+
+/* ------------------------------------------------------------------ spine */
+
+.timeline-marker {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  padding-top: 28px;
+}
+
+/* The vertical line, drawn behind the dots */
+.timeline-marker::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: -28px;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(255, 255, 255, 0.14) 12%,
+    rgba(255, 255, 255, 0.14) 88%,
+    transparent
+  );
+}
+
+.timeline-item:last-child .timeline-marker::before {
+  bottom: 40%;
+}
+
+.timeline-dot {
+  position: relative;
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #10131f;
+  border: 2px solid rgba(255, 255, 255, 0.28);
+}
+
+.timeline-dot.is-current {
+  border-color: var(--accent-2);
+  background: var(--accent-2);
+  box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.14), 0 0 18px rgba(34, 211, 238, 0.7);
+}
+
+.timeline-dot.is-current::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-2);
+  animation: ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ------------------------------------------------------------------- card */
+
+.timeline-card {
+  margin-left: 20px;
+  padding: 26px 28px;
+  border-radius: var(--radius-md);
+  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+
+.timeline-card:hover {
+  transform: translateX(4px);
+  border-color: var(--stroke-strong);
+}
+
+.timeline-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  margin-bottom: 12px;
+}
+
+.timeline-role {
+  font-size: clamp(17px, 2vw, 21px);
+}
+
+.timeline-company {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-2);
+}
+
+.timeline-company::before {
+  content: '@ ';
+  color: var(--dim);
+}
+
+.timeline-summary {
+  color: var(--muted);
+  font-size: 14.5px;
+  margin-bottom: 16px;
+}
+
+.timeline-points {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.timeline-points li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.timeline-points li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--grad);
+  transform: rotate(45deg);
+}
+
+.timeline-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 18px;
+  border-top: 1px solid var(--stroke);
+}
+
+.timeline-stack span {
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--stroke);
+}
+
+/* --------------------------------------------------------------- responsive */
+
+@media (max-width: 780px) {
+  .timeline-item {
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+  .timeline-date {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: left;
+    padding: 0 0 10px 20px;
+  }
+  .timeline-marker {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    padding-top: 4px;
+  }
+  .timeline-card {
+    grid-column: 2;
+    grid-row: 2;
+    margin-left: 20px;
+    padding: 22px;
+  }
+  .timeline-now {
+    margin: 0 0 0 10px;
+  }
+}
