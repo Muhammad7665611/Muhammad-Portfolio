@@ -1,4 +1,4 @@
-import { profile } from '../data/portfolio'
+import { profile, about } from '../data/portfolio'
 import { useReveal } from '../hooks/useReveal'
 import { Download, ArrowRight, Mail } from './Icons'
 import promoCard from '../assets/my-self.jpeg'
@@ -54,19 +54,15 @@ export default function Hero() {
               {profile.availability}
             </span>
 
+            {/* Driven by about.facts so the hero can't contradict the About
+                section — first three entries only. */}
             <dl className="hero-stats reveal" style={{ '--reveal-delay': '380ms' }}>
-              <div>
-                <dt>3+</dt>
-                <dd>Years experience</dd>
-              </div>
-              <div>
-                <dt>25+</dt>
-                <dd>Projects shipped</dd>
-              </div>
-              <div>
-                <dt>18</dt>
-                <dd>Happy clients</dd>
-              </div>
+              {about.facts.slice(0, 3).map((fact) => (
+                <div key={fact.label}>
+                  <dt>{fact.value}</dt>
+                  <dd>{fact.label}</dd>
+                </div>
+              ))}
             </dl>
           </div>
 
@@ -81,7 +77,9 @@ export default function Hero() {
                 alt={`${profile.name} — ${profile.roles.join(', ')}`}
                 width="816"
                 height="1306"
-                fetchPriority="high"
+                /* lowercase on purpose: React 18 only passes this through as a
+                   raw DOM attribute; the camelCase form landed in React 19 */
+                fetchpriority="high"
               />
             </div>
           </div>

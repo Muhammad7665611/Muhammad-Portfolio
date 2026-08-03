@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment — never commit real keys
+.env
+.env.local
+.env.*.local
+
+# Contact form submissions (contains visitor personal data)
+server/data/

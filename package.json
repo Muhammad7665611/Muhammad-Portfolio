@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:api": "cd server && npm start",
+    "dev:all": "trap 'kill 0' EXIT INT TERM; npm run dev:api & npm run dev",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

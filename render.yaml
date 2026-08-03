@@ -1,0 +1,78 @@
+# Render Blueprint for the portfolio API.
+# Spec: https://render.com/docs/blueprint-spec
+#
+# ---------------------------------------------------------------------------
+# IMPORTANT: the service's Root Directory must stay the REPOSITORY ROOT.
+#
+# The API imports across package boundaries — server/routes/content.js pulls in
+# ../../src/data/portfolio.js, and server/lib/systemPrompt.js pulls in
+# ../../shared/knowledge.js. Point Render's Root Directory at server/ and those
+# paths escape the checkout: the build "succeeds" and the process dies on boot
+# with ERR_MODULE_NOT_FOUND.
+#
+# That is why rootDir is pinned below and why both commands cd into server/
+# themselves. Do not move the cd into Root Directory.
+# ---------------------------------------------------------------------------
+
+services:
+  - type: web
+    name: muhammad-portfolio-api
+    env: node
+    plan: free
+    # Most visitors are in Pakistan / South Asia; Singapore is the nearest region.
+    region: singapore
+    rootDir: .
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    # Answers without touching the LLM, so Render's health probe (and anything
+    # pinging to keep the free instance awake) never spends tokens.
+    healthCheckPath: /api/health
+    envVars:
+      # The code is ESM-only and imports node: builtins throughout.
+      - key: NODE_VERSION
+        value: 20
+
+      # --- Assistant -------------------------------------------------------
+      # Set ONE key. sync: false keeps the value out of git — Render prompts for
+      # it when the blueprint is applied and stores it encrypted.
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      # Only needed to break a tie when both keys are present: openai | anthropic.
+      # Safe to leave blank at the prompt.
+      - key: LLM_PROVIDER
+        sync: false
+
+      # --- CORS ------------------------------------------------------------
+      # Comma-separated. Must include the deployed Vercel URL or every browser
+      # request from the site is rejected. Not knowable until the frontend ships,
+      # hence sync: false rather than a committed value.
+      - key: ALLOWED_ORIGINS
+        sync: false
+
+      # --- Contact form email ----------------------------------------------
+      # Optional. Without these the form still accepts messages, but nothing
+      # reaches an inbox — and on the free tier the JSONL log does not survive
+      # a redeploy, so a message with no email configured is effectively lost.
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_USER
+        sync: false
+      # Gmail: an App Password, never the account password.
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_TO
+        sync: false
+      # Falls back to SMTP_USER when blank — most relays reject a From they
+      # do not own.
+      - key: MAIL_FROM
+        sync: false
+
+      # --- Storage ----------------------------------------------------------
+      # Relative to server/, since that is the working directory at start time.
+      # Ephemeral on the free tier: wiped on every redeploy and cold start.
+      - key: MESSAGES_FILE
+        value: ./data/messages.jsonl

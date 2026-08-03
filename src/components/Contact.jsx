@@ -6,6 +6,20 @@ import './Contact.css'
 
 const EMPTY = { name: '', email: '', message: '' }
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8787'
+
+// Shown when a send succeeds without the server supplying its own wording —
+// i.e. the FormSubmit fallback. Matches what the API returns, so the two paths
+// are indistinguishable to a visitor.
+const SENT_NOTE = 'Thanks — your message has been sent. I usually reply within 24 hours.'
+
+/** The API keys its 400 messages by field name; keep the ones this form renders. */
+const fieldErrorsFrom = (fields = {}) => ({
+  name: fields.name,
+  email: fields.email,
+  message: fields.message,
+})
+
 export default function Contact() {
   const ref = useReveal()
   const [form, setForm] = useState(EMPTY)
@@ -13,6 +27,7 @@ export default function Contact() {
   // idle → sending → sent | error
   const [status, setStatus] = useState('idle')
   const [failure, setFailure] = useState('')
+  const [notice, setNotice] = useState('')
   const [copied, setCopied] = useState(false)
   // Honeypot: real people never see it, bots fill it in.
   const botField = useRef(null)
@@ -52,6 +67,73 @@ export default function Contact() {
     }
   }
 
+  /**
+   * Our own API. Separates "nothing there to talk to" — worth retrying
+   * elsewhere — from "answered, and said no", which the visitor must hear.
+   */
+  const sendViaApi = async (payload) => {
+    let res
+    try {
+      res = await fetch(`${API_URL}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+      })
+    } catch (err) {
+      // fetch() rejects with a TypeError only when the request never reached a
+      // server at all — DNS, CORS, or (usually, in dev) nothing listening.
+      if (err instanceof TypeError) return { unavailable: true }
+      throw err
+    }
+
+    // 503 is the API telling us it has no delivery path configured yet. It is
+    // the only status worth re-sending elsewhere; the rest are ours to own.
+    if (res.status === 503) return { unavailable: true }
+
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok || data.ok !== true)
+      return { message: data.message || `Server responded ${res.status}`, fields: data.fields }
+
+    return { ok: true, message: data.message }
+  }
+
+  /**
+   * Third-party fallback, kept so the form still delivers in deployments where
+   * the API isn't up yet. Resolves on success, throws on anything else.
+   */
+  const sendViaFormSubmit = async ({ name, email, message }) => {
+    const res = await fetch(contactForm.endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        message,
+        _subject: `Portfolio enquiry from ${name}`,
+        _template: 'table',
+        _captcha: 'false',
+        // Ignored by FormSubmit, required by Web3Forms — harmless either way.
+        access_key: contactForm.accessKey,
+      }),
+    })
+
+    const data = await res.json().catch(() => ({}))
+    // FormSubmit returns success as the string "true"; Web3Forms uses a boolean.
+    const ok = res.ok && (data.success === true || data.success === 'true')
+    if (!ok) throw new Error(data.message || `Server responded ${res.status}`)
+  }
+
+  /**
+   * Wipe the fields and any leftover validation errors so the form is genuinely
+   * fresh, not just visually cleared.
+   */
+  const confirm = (message) => {
+    setNotice(message || SENT_NOTE)
+    setStatus('sent')
+    setForm(EMPTY)
+    setErrors({})
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (status === 'sending') return
@@ -60,42 +142,43 @@ export default function Contact() {
     setErrors(next)
     if (Object.keys(next).length) return
 
-    // Silently accept and discard anything that tripped the honeypot.
-    if (botField.current?.value) {
-      setStatus('sent')
-      setForm(EMPTY)
-      return
-    }
-
     setStatus('sending')
     setFailure('')
 
+    // The honeypot travels with the payload: the API answers a tripped one with
+    // a normal-looking success and quietly drops it, which is a better place for
+    // that decision than the client, where a bot can read the code.
+    const payload = {
+      name: form.name,
+      email: form.email,
+      message: form.message,
+      botcheck: botField.current?.value || '',
+    }
+
     try {
-      const res = await fetch(contactForm.endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-          _subject: `Portfolio enquiry from ${form.name}`,
-          _template: 'table',
-          _captcha: 'false',
-          // Ignored by FormSubmit, required by Web3Forms — harmless either way.
-          access_key: contactForm.accessKey,
-        }),
-      })
+      const result = await sendViaApi(payload)
 
-      const data = await res.json().catch(() => ({}))
-      // FormSubmit returns success as the string "true"; Web3Forms uses a boolean.
-      const ok = res.ok && (data.success === true || data.success === 'true')
-      if (!ok) throw new Error(data.message || `Server responded ${res.status}`)
+      if (result.ok) {
+        confirm(result.message)
+        return
+      }
 
-      // Wipe the fields and any leftover validation errors so the form is
-      // genuinely fresh, not just visually cleared.
-      setStatus('sent')
-      setForm(EMPTY)
-      setErrors({})
+      if (!result.unavailable) {
+        // A real answer from our API — 400, 429 or 500. Show it as-is and stop;
+        // falling through would deliver the same message a second time.
+        if (result.fields) setErrors(fieldErrorsFrom(result.fields))
+        throw new Error(result.message)
+      }
+
+      // No API to hand the honeypot to, so make the call here instead: accept
+      // and discard, rather than forwarding a bot into a real inbox.
+      if (payload.botcheck) {
+        confirm()
+        return
+      }
+
+      await sendViaFormSubmit(payload)
+      confirm()
     } catch (err) {
       setFailure(err.message || '')
       setStatus('error')
@@ -217,8 +300,7 @@ export default function Contact() {
               role="status"
               aria-live="polite"
             >
-              {status === 'sent' &&
-                'Thanks — your message has been sent. I usually reply within 24 hours.'}
+              {status === 'sent' && (notice || SENT_NOTE)}
               {status === 'sending' && 'Sending your message…'}
               {status === 'error' && (
                 <>

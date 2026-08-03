@@ -20,117 +20,172 @@ export const profile = {
 export const about = {
   heading: 'About Me',
   paragraphs: [
-    "I'm a passionate full-stack developer with over 3 years of experience turning ideas into production software. I work across the stack — React and React Native on the front, Node.js, Express and Firebase behind them — and I care as much about the details of an interaction as I do about the shape of an API.",
-    'Lately most of my work sits at the intersection of product and AI: wiring language models into real applications, building chat and assistant experiences, and making sure the result is fast, reliable and genuinely useful rather than a demo.',
-    "When I'm not shipping, I'm usually reverse-engineering an interface I admire or writing about what I learned building the last thing.",
+    "I'm a frontend and full-stack developer with hands-on experience in React.js, React Native, JavaScript, HTML and CSS. I build responsive web and mobile applications, integrate RESTful APIs, work with Firebase services, and spend a lot of time on the part most people skip — making the thing actually fast.",
+    'On the backend I work with Python and Django, building and testing REST APIs and wiring them into the front end. I test with Postman, ship with Git, and work in an Agile process alongside UI/UX designers and backend developers.',
+    "I'm committed to continually expanding my expertise across the full stack, with a strong focus on user-centric design and functionality.",
   ],
+  // Every figure below is derived from the CV — roles held, employers, and
+  // certifications listed there. Nothing here is estimated.
   facts: [
-    { label: 'Experience', value: '3+ years' },
-    { label: 'Projects delivered', value: '25+' },
-    { label: 'Happy clients', value: '18' },
+    { label: 'Experience', value: '1.5+ yrs' },
+    { label: 'Roles held', value: '3' },
+    { label: 'Certifications', value: '3' },
     { label: 'Response time', value: '< 24 hrs' },
   ],
   details: [
-    { label: 'Current role', value: 'React Native Developer' },
-  { label: 'Based in', value: 'Islamabad, Pakistan' },
+    { label: 'Current role', value: 'Full Stack Developer' },
+    { label: 'Based in', value: 'Islamabad, Pakistan' },
     { label: 'Languages', value: 'English, Urdu' },
     { label: 'Open to', value: 'Remote / Contract' },
   ],
 }
 
+/** Education — BISE Bahawalpur, as listed on the CV. */
+export const education = [
+   {
+    qualification: 'Bachelor of Cyber Security',
+    institute: 'Allama Iqbal Open University Of Bahawalpur',
+    period: '2026 — Continued',
+    current: true,
+  },
+  {
+    qualification: 'Intermediate of Computer Science (ICS)',
+    institute: 'BISE Bahawalpur',
+    period: '2023 — 2025',
+    current: false,
+  },
+  {
+    qualification: 'Matriculation',
+    institute: 'BISE Bahawalpur',
+    period: '2021 — 2023',
+    current: false,
+  },
+]
+
+/** Certifications listed on the CV. */
+export const certifications = [
+  {
+    title: 'Frontend Development Certificate',
+    detail: 'React.js, JavaScript, HTML & CSS — building responsive interfaces.',
+  },
+  {
+    title: 'Backend Development Certificate',
+    detail: 'Python, Django and RESTful API design, testing and integration.',
+  },
+  {
+    title: 'Web Development Fundamentals',
+    detail: 'Core web platform: semantics, styling, and the request/response model.',
+  },
+]
+
+/**
+ * Skill groups mirror the CV's Technical Skills section. Levels are a personal
+ * proficiency estimate — adjust them freely; the skill names are the part that
+ * should stay honest.
+ */
 export const skillGroups = [
   {
     title: 'Frontend',
-    accent: '#7c5cff',
     skills: [
-      { name: 'React', level: 95 },
-      { name: 'JavaScript / TypeScript', level: 90 },
-      { name: 'Next.js', level: 82 },
-      { name: 'Tailwind CSS', level: 88 },
-    ],
-  },
-  {
-    title: 'Backend',
-    accent: '#22d3ee',
-    skills: [
-      { name: 'Node.js', level: 90 },
-      { name: 'Express', level: 88 },
-      { name: 'REST APIs', level: 92 },
-      { name: 'GraphQL', level: 72 },
-    ],
-  },
-  {
-    title: 'Database',
-    accent: '#34d399',
-    skills: [
-      { name: 'Firebase', level: 92 },
-      { name: 'MongoDB', level: 86 },
-      { name: 'PostgreSQL', level: 74 },
-      { name: 'Redis', level: 68 },
+      { name: 'React.js', level: 90 },
+      { name: 'JavaScript', level: 88 },
+      { name: 'TypeScript', level: 75 },
+      { name: 'HTML & CSS', level: 92 },
     ],
   },
   {
     title: 'Mobile',
-    accent: '#f472b6',
     skills: [
-      { name: 'React Native', level: 93 },
-      { name: 'Expo', level: 88 },
-      { name: 'Native Modules', level: 70 },
-      { name: 'App Store / Play deploys', level: 85 },
+      { name: 'React Native', level: 85 },
+      { name: 'Firebase services', level: 82 },
+      { name: 'REST API integration', level: 88 },
+      { name: 'Responsive layouts', level: 90 },
     ],
   },
   {
-    title: 'AI / ML',
-    accent: '#fbbf24',
+    title: 'Backend',
     skills: [
-      { name: 'Claude & OpenAI APIs', level: 90 },
-      { name: 'RAG / Vector search', level: 80 },
-      { name: 'Prompt engineering', level: 88 },
-      { name: 'LangChain', level: 74 },
+      { name: 'Python', level: 78 },
+      { name: 'Django', level: 75 },
+      { name: 'REST APIs', level: 85 },
+      { name: 'API testing', level: 80 },
+    ],
+  },
+  {
+    title: 'Database & Cloud',
+    skills: [
+      { name: 'Firebase Authentication', level: 85 },
+      { name: 'Realtime Database', level: 82 },
+      { name: 'Firebase Storage', level: 80 },
+      { name: 'Data modelling', level: 72 },
     ],
   },
   {
     title: 'Tools',
-    accent: '#60a5fa',
     skills: [
-      { name: 'Git & GitHub', level: 92 },
-      { name: 'VS Code', level: 95 },
-      { name: 'Figma', level: 78 },
-      { name: 'Docker', level: 70 },
+      { name: 'Git & GitHub', level: 88 },
+      { name: 'Postman', level: 85 },
+      { name: 'VS Code', level: 92 },
+      { name: 'Chrome DevTools', level: 84 },
+    ],
+  },
+  {
+    title: 'Practices',
+    skills: [
+      { name: 'Agile development', level: 82 },
+      { name: 'Cross-functional collaboration', level: 86 },
+      { name: 'Performance optimisation', level: 78 },
+      { name: 'Code review', level: 76 },
     ],
   },
 ]
 
+/**
+ * Roles exactly as listed on the CV — employers, titles and dates are not
+ * embellished. Newest first.
+ */
 export const experience = [
   {
-    role: 'React Native Developer',
-    company: 'Freelance & Contract',
-    period: 'Mar 2023 — Present',
+    role: 'Full Stack Developer',
+    company: 'WebSolLive',
+    period: 'Nov 2025 — Present',
     current: true,
     summary:
-      'Designing and shipping cross-platform mobile apps end to end — from Figma handoff to the store listing.',
+      'Building mobile applications end to end and connecting them to live backend services.',
     points: [
-      'Shipped 6 production React Native apps to the App Store and Play Store, including a fitness tracker with 10k+ installs.',
-      'Cut average cold-start time by 40% by trimming the bundle, lazy-loading routes and moving heavy work off the JS thread.',
-      'Built reusable offline-first data layers on Firebase with optimistic updates and background sync.',
-      'Integrated LLM-powered assistants into two client apps, including streaming responses and tool calling.',
+      'Developed mobile applications using React Native.',
+      'Integrated REST APIs into the app and handled the data layer.',
+      'Utilised Firebase services to enhance user experience and application performance.',
     ],
-    stack: ['React Native', 'Expo', 'Firebase', 'TypeScript', 'Claude API'],
+    stack: ['React Native', 'Firebase', 'REST APIs', 'JavaScript'],
   },
   {
-    role: 'Full Stack Developer',
-    company: 'WebBilt Life',
-    period: 'Apr 2022 — Mar 2023',
+    role: 'Frontend Developer',
+    company: 'Haytrix',
+    period: 'Jan 2025 — Present',
+    current: true,
+    summary:
+      'Building responsive web applications with React.js, working alongside designers and backend developers.',
+    points: [
+      'Developed responsive web applications using React.js.',
+      'Collaborated with UI/UX designers and backend developers on shared features.',
+      'Applied Agile methodologies across planning, delivery and review.',
+    ],
+    stack: ['React.js', 'JavaScript', 'HTML', 'CSS', 'Agile'],
+  },
+  {
+    role: 'Backend Developer',
+    company: 'Haytrix',
+    period: 'Aug 2025 — Sep 2025',
     current: false,
     summary:
-      'Owned features across the stack for a client-facing web platform, working closely with design and QA.',
+      'Short backend rotation building and testing the APIs powering the front end.',
     points: [
-      'Built and maintained React dashboards backed by Node.js and Express services serving 20k+ monthly users.',
-      'Designed the REST API and MongoDB schema for the billing module, including role-based access control.',
-      'Introduced a shared component library that removed roughly 30% of duplicated UI code across three products.',
-      'Set up CI checks and preview deploys, taking release time from a manual afternoon to under ten minutes.',
+      'Created and tested RESTful APIs using Python (Django).',
+      'Performed API testing with Postman.',
+      'Integrated backend services with frontend applications.',
     ],
-    stack: ['React', 'Node.js', 'Express', 'MongoDB', 'AWS'],
+    stack: ['Python', 'Django', 'REST APIs', 'Postman'],
   },
 ]
 
@@ -244,15 +299,14 @@ export const services = [
   },
 ]
 
+/** Only technologies the CV or profile card actually claims. */
 export const techStack = [
   { name: 'React', icon: 'react', color: '#61dafb' },
   { name: 'Node.js', icon: 'node', color: '#68a063' },
   { name: 'Firebase', icon: 'firebase', color: '#ffca28' },
-  { name: 'OpenAI', icon: 'openai', color: '#ffffff' },
-  { name: 'MongoDB', icon: 'mongodb', color: '#4db33d' },
+  { name: 'Python', icon: 'python', color: '#4b8bbe' },
   { name: 'GitHub', icon: 'github', color: '#ffffff' },
   { name: 'VS Code', icon: 'vscode', color: '#3ea7f0' },
-  { name: 'Python', icon: 'python', color: '#4b8bbe' },
 ]
 
 export const testimonials = [
@@ -334,6 +388,7 @@ export const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Education', href: '#education' },
   { label: 'Projects', href: '#projects' },
   { label: 'Services', href: '#services' },
   { label: 'Contact', href: '#contact' },

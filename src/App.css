@@ -18,10 +18,12 @@
   top: 0;
 }
 
+/* Sits above the chat launcher, below the chat panel (which covers it while
+   open — expected, since you're mid-conversation at that point). */
 .to-top {
   position: fixed;
   right: 24px;
-  bottom: 24px;
+  bottom: 84px;
   z-index: 90;
   display: grid;
   place-items: center;
@@ -57,6 +59,6 @@
 @media (max-width: 560px) {
   .to-top {
     right: 16px;
-    bottom: 16px;
+    bottom: 76px;
   }
 }

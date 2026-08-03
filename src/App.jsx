@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import Decor from './components/Decor'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
 import Skills from './components/Skills'
 import Experience from './components/Experience'
+import Credentials from './components/Credentials'
 import Services from './components/Services'
 import Stats from './components/Stats'
 import Projects from './components/Projects'
@@ -15,6 +16,10 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import { ArrowDown } from './components/Icons'
 import './App.css'
+
+// Code-split: the assistant is the only heavy part of the page, and most
+// visitors never open it. Keeping it out of the initial bundle protects LCP.
+const ChatWidget = lazy(() => import('./components/ChatWidget'))
 
 function BackToTop() {
   const [show, setShow] = useState(false)
@@ -55,6 +60,7 @@ export default function App() {
         <About />
         <Skills />
         <Experience />
+        <Credentials />
         <Services />
         <Stats />
         <Projects />
@@ -66,6 +72,10 @@ export default function App() {
 
       <Footer />
       <BackToTop />
+
+      <Suspense fallback={null}>
+        <ChatWidget />
+      </Suspense>
     </>
   )
 }
