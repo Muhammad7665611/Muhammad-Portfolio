@@ -1,10 +1,20 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { SYSTEM_PROMPT } from '../systemPrompt.js'
 
-const client = new Anthropic() // reads ANTHROPIC_API_KEY from the environment
-
 const MODEL = process.env.CLAUDE_MODEL || 'claude-opus-5'
 const EFFORT = process.env.CLAUDE_EFFORT || 'low'
+
+/**
+ * Built on first use, not at module load — see the note in providers/openai.js.
+ * `new Anthropic()` throws without ANTHROPIC_API_KEY, which at module scope
+ * would take the entire serverless function down on cold start.
+ */
+let client = null
+
+function getClient() {
+  if (!client) client = new Anthropic()
+  return client
+}
 
 /**
  * Streams a grounded reply from Claude.
@@ -12,7 +22,7 @@ const EFFORT = process.env.CLAUDE_EFFORT || 'low'
  * @returns {Promise<{ finishReason: string | null }>}
  */
 export async function streamReply({ messages, onDelta, signal }) {
-  const stream = client.messages.stream(
+  const stream = getClient().messages.stream(
     {
       model: MODEL,
       max_tokens: 2000,

@@ -1,9 +1,24 @@
 import OpenAI from 'openai'
 import { SYSTEM_PROMPT } from '../systemPrompt.js'
 
-const client = new OpenAI() // reads OPENAI_API_KEY from the environment
-
 const MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini'
+
+/**
+ * The client is built on first use, not at module load.
+ *
+ * `new OpenAI()` throws when OPENAI_API_KEY is absent. At module scope that
+ * would crash the whole function on cold start — including /api/health and the
+ * content routes, which have nothing to do with the assistant. Deferring it
+ * means a missing key degrades to one failing endpoint instead of a dead API.
+ *
+ * Cached across invocations: on a warm serverless instance this runs once.
+ */
+let client = null
+
+function getClient() {
+  if (!client) client = new OpenAI()
+  return client
+}
 
 /**
  * Streams a grounded reply from OpenAI Chat Completions.
@@ -15,7 +30,7 @@ const MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini'
  * @returns {Promise<{ finishReason: string | null }>}
  */
 export async function streamReply({ messages, onDelta, signal }) {
-  const stream = await client.chat.completions.create(
+  const stream = await getClient().chat.completions.create(
     {
       model: MODEL,
       // Newer param name; `max_tokens` is deprecated on current models.

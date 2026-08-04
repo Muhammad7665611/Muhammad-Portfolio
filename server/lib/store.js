@@ -15,7 +15,15 @@ import { randomUUID } from 'node:crypto'
 import { appendFile, mkdir } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 
-const MESSAGES_FILE = resolve(process.env.MESSAGES_FILE || './data/messages.jsonl')
+/**
+ * On Vercel the deployment filesystem is READ-ONLY. `/tmp` is the only writable
+ * path, and it is per-instance and wiped when the instance is recycled — so on
+ * serverless this log is a short-lived debug trail, nothing more. Defaulting to
+ * /tmp there keeps every write from throwing EROFS; email is the durable path.
+ */
+const DEFAULT_FILE = process.env.VERCEL ? '/tmp/messages.jsonl' : './data/messages.jsonl'
+
+const MESSAGES_FILE = resolve(process.env.MESSAGES_FILE || DEFAULT_FILE)
 
 let dirReady = null
 

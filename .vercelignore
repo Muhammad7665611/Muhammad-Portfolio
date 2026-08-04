@@ -1,0 +1,6 @@
+# Keep the serverless bundle small and the build fast. Vercel already honours
+# .gitignore; these are the extras that only matter at deploy time.
+backend/
+server/node_modules/
+server/data/
+dist/

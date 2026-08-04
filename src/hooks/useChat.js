@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8787'
+import { API_BASE, apiUrl } from '../lib/apiBase'
 
 const GREETING = {
   role: 'assistant',
@@ -56,7 +56,7 @@ export function useChat() {
         })
 
       try {
-        const res = await fetch(`${API_URL}/api/chat`, {
+        const res = await fetch(apiUrl('/api/chat'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ messages: payload }),
@@ -115,7 +115,7 @@ export function useChat() {
 
         if (unreachable && import.meta.env.DEV) {
           console.error(
-            `[chat] Could not reach ${API_URL}. Is the API running? Start it with:\n` +
+            `[chat] Could not reach ${API_BASE || window.location.origin}. Is the API running? Start it with:\n` +
               '  npm run dev:api'
           )
         }

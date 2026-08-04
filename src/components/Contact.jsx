@@ -2,11 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { profile, socials, contactForm } from '../data/portfolio'
 import { useReveal } from '../hooks/useReveal'
 import { Icon, Send, Mail, Phone, MapPin, Check } from './Icons'
+import { apiUrl } from '../lib/apiBase'
 import './Contact.css'
 
 const EMPTY = { name: '', email: '', message: '' }
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8787'
 
 // Shown when a send succeeds without the server supplying its own wording —
 // i.e. the FormSubmit fallback. Matches what the API returns, so the two paths
@@ -74,7 +73,7 @@ export default function Contact() {
   const sendViaApi = async (payload) => {
     let res
     try {
-      res = await fetch(`${API_URL}/api/contact`, {
+      res = await fetch(apiUrl('/api/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
