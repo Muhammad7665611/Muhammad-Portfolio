@@ -1,7 +1,7 @@
 /* ==========================================================================
    Testimonials — a centre-snapping carousel. One large flat quote panel holds
    the middle, its neighbours peek in scrimmed at either edge, and a row of
-   short dashes underneath paginates it (active dash orange and wider).
+   short dashes underneath paginates it (active dash accent and wider).
    ========================================================================== */
 
 .t-track {
@@ -42,17 +42,17 @@
 }
 
 .t-card:hover {
-  border-color: var(--orange);
+  border-color: var(--accent);
   background: var(--surface-2);
 }
 
-/* Orange rule across the top, drawn out from the centre on the active card */
+/* Accent rule across the top, drawn out from the centre on the active card */
 .t-card::before {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
   height: 2px;
-  background: var(--orange);
+  background: var(--accent);
   transform: scaleX(0);
   transition: transform 0.45s var(--ease);
 }
@@ -83,7 +83,7 @@
   position: absolute;
   top: clamp(16px, 2vw, 24px);
   right: clamp(16px, 2vw, 26px);
-  color: var(--orange);
+  color: var(--accent-text);
   opacity: 0.16;
   pointer-events: none;
 }
@@ -107,9 +107,9 @@
 }
 
 .t-card.is-active .t-avatar {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: #fff;
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-text);
 }
 
 .t-text {
@@ -123,7 +123,7 @@
 .t-stars {
   display: flex;
   gap: 4px;
-  color: var(--orange);
+  color: var(--accent-text);
   margin-bottom: 20px;
 }
 
@@ -149,7 +149,7 @@
   text-transform: uppercase;
   letter-spacing: 0.16em;
   line-height: 1.6;
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 /* ----------------------------------------------------------------- dashes */
@@ -187,7 +187,7 @@
 
 .t-dot.is-active .t-dash {
   width: 38px;
-  background: var(--orange);
+  background: var(--accent);
 }
 
 /* --------------------------------------------------------------- responsive */

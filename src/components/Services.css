@@ -1,7 +1,7 @@
 /* ==========================================================================
    Services — a grid of compact horizontal chips. The first chip is solid
-   orange; the rest are flat dark rectangles that take an orange edge and an
-   orange icon tile on hover. Flat opaque surfaces, sharp edges throughout.
+   accent; the rest are flat dark rectangles that take an accent edge and an
+   accent icon tile on hover. Flat opaque surfaces, sharp edges throughout.
    ========================================================================== */
 
 .services-grid {
@@ -26,10 +26,10 @@
 
 .service-chip:hover {
   transform: translateY(-3px);
-  border-color: var(--orange);
+  border-color: var(--accent);
 }
 
-/* Square icon tile — flips to a solid orange block on hover */
+/* Square icon tile — flips to a solid accent block on hover */
 .service-tile {
   flex: 0 0 auto;
   display: grid;
@@ -45,9 +45,9 @@
 }
 
 .service-chip:hover .service-tile {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: #fff;
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-text);
 }
 
 /* min-width:0 lets the clamped copy truncate instead of stretching the grid */
@@ -66,7 +66,7 @@
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: var(--orange);
+  color: var(--accent-text);
   transition: color 0.25s var(--ease);
 }
 
@@ -96,40 +96,40 @@
 }
 
 .service-chip:hover .service-arrow {
-  color: var(--orange);
+  color: var(--accent-text);
   transform: translate(2px, -2px);
 }
 
 /* ---------------------------------------------- the one highlighted chip */
 
 .service-chip.is-active {
-  background: var(--orange);
-  border-color: var(--orange);
+  background: var(--accent-soft);
+  border-color: var(--accent-soft-line);
 }
 
 .service-chip.is-active:hover {
-  background: var(--orange-600);
-  border-color: var(--orange-600);
+  background: var(--accent-soft-hover);
 }
 
 .service-chip.is-active .service-tile,
 .service-chip.is-active:hover .service-tile {
-  background: #fff;
-  border-color: #fff;
-  color: var(--orange);
+  background: var(--surface);
+  border-color: var(--accent-soft-line);
+  color: var(--accent-text);
 }
 
 .service-chip.is-active .service-index {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--accent-text);
+  opacity: 0.75;
 }
 
 .service-chip.is-active .service-text {
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--muted);
 }
 
 .service-chip.is-active .service-arrow,
 .service-chip.is-active:hover .service-arrow {
-  color: #fff;
+  color: var(--accent-text);
 }
 
 /* ------------------------------------------------------ centred CTA below */

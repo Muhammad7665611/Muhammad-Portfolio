@@ -1,14 +1,15 @@
-import { experience, certifications } from '../data/portfolio'
+import { about, experience, certifications } from '../data/portfolio'
 import { useReveal } from '../hooks/useReveal'
 import './Stats.css'
 
-/* Bare numbers band — no heading, just four boxes, exactly one solid orange.
-   Counts are derived from the CV data so they can never drift out of sync;
-   only the tenure figure is written by hand (first role started Jan 2025). */
+/* Bare numbers band — no heading, just four boxes, exactly one solid accent.
+   Roles, companies and certifications are counted from the CV data so they can
+   never drift out of sync. The tenure figure is hand-set and mirrors
+   `about.facts` — change it in one place and both follow. */
 const companies = new Set(experience.map((job) => job.company)).size
 
 const STATS = [
-  { value: '1.5+', label: 'Years Experience' },
+  { value: about.facts[0].value.replace(/\s*yrs?$/i, ''), label: 'Years Experience' },
   { value: String(experience.length), label: 'Roles Held', highlight: true },
   { value: String(companies), label: 'Companies' },
   { value: String(certifications.length), label: 'Certifications' },

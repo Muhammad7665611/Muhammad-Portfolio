@@ -1,7 +1,7 @@
 /* ==========================================================================
    Footer — a flat black slab closing the page.
    No card, no radial bloom: one hairline rule separates it from the content
-   above, then four plain columns of grey links that snap orange on hover.
+   above, then four plain columns of grey links that snap accent on hover.
    ========================================================================== */
 
 .footer {
@@ -30,9 +30,9 @@
   transition: color 0.25s var(--ease);
 }
 
-/* The orange square mark itself lives in Navbar.css (.nav-mark). */
+/* The accent square mark itself lives in Navbar.css (.nav-mark). */
 .footer-logo:hover {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .footer-role {
@@ -40,7 +40,7 @@
   font-size: 12.5px;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .footer-blurb {
@@ -78,9 +78,9 @@
   transition: color 0.25s var(--ease), transform 0.25s var(--ease);
 }
 
-/* Icons inherit currentColor, so they turn orange with their label. */
+/* Icons inherit currentColor, so they turn accent with their label. */
 .footer-col a:hover {
-  color: var(--orange);
+  color: var(--accent-text);
   transform: translateX(4px);
 }
 
@@ -110,7 +110,7 @@
   width: 8px;
   height: 8px;
   border-radius: var(--r);
-  background: var(--orange);
+  background: var(--accent);
 }
 
 /* --------------------------------------------------------------- responsive */

@@ -80,7 +80,7 @@ export function buildKnowledgeBase() {
     experience
       .map((job) =>
         [
-          `${job.role} — ${job.company} (${job.period})${job.current ? ' [current]' : ''}`,
+          `${job.role} — ${job.company}${job.location ? `, ${job.location}` : ''} (${job.period})${job.current ? ' [current]' : ''}`,
           `  ${job.summary}`,
           list(job.points),
           `  Tech: ${job.stack.join(', ')}`,
@@ -96,7 +96,16 @@ export function buildKnowledgeBase() {
 
   const certs = section(
     'Certifications',
-    certifications.map((c) => `${c.title} — ${c.detail}`).join('\n')
+    certifications
+      .map((c) =>
+        [
+          c.title,
+          c.issuer ? ` (${c.issuer}${c.period ? `, ${c.period}` : ''})` : '',
+          ` — ${c.detail}`,
+          c.credentialId ? ` [credential ID ${c.credentialId}]` : '',
+        ].join('')
+      )
+      .join('\n')
   )
 
   const work = section(

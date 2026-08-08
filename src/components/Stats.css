@@ -1,7 +1,7 @@
 /* ==========================================================================
    Stats — a bare band of four flat rectangles between two hairlines. Three sit
-   dark with a 1px line edge and take an orange border on hover; the second one
-   is filled solid orange. No heading, no glow, sharp corners throughout.
+   dark with a 1px line edge and take an accent border on hover; the second one
+   is filled solid accent. No heading, no glow, sharp corners throughout.
    ========================================================================== */
 
 .stats {
@@ -35,7 +35,7 @@
 
 .stat-box:hover {
   transform: translateY(-3px);
-  border-color: var(--orange);
+  border-color: var(--accent);
 }
 
 .stat-value {
@@ -52,7 +52,7 @@
 .stat-rule {
   width: 22px;
   height: 2px;
-  background: var(--orange);
+  background: var(--accent);
   transition: width 0.25s var(--ease);
 }
 
@@ -74,27 +74,28 @@
   color: var(--text);
 }
 
-/* ------------------------------------------------ the single orange box */
+/* ------------------------------------------------ the single accent box */
 
 .stat-box.is-highlight {
-  background: var(--orange);
-  border-color: var(--orange);
+  background: var(--accent-soft);
+  border-color: var(--accent-soft-line);
 }
 
 .stat-box.is-highlight:hover {
-  background: var(--orange-600);
-  border-color: var(--orange-600);
+  background: var(--accent-soft-hover);
 }
 
-/* Inside the fill everything reads white, including the rule */
+/* Inside a translucent fill white is unreadable — the accent text colour is
+   what stays legible in both themes. The rule keeps the solid accent: it is a
+   2px graphic, not text, and a tint would erase it. */
 .stat-box.is-highlight .stat-value,
 .stat-box.is-highlight .stat-label,
 .stat-box.is-highlight:hover .stat-label {
-  color: #fff;
+  color: var(--accent-text);
 }
 
 .stat-box.is-highlight .stat-rule {
-  background: #fff;
+  background: var(--accent);
 }
 
 /* ------------------------------------------------------------ responsive */

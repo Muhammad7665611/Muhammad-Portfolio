@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react'
-import { navLinks } from '../data/portfolio'
+import { navLinks, profile } from '../data/portfolio'
 import { useActiveSection } from '../hooks/useReveal'
 import { Menu, Close } from './Icons'
+import ThemeToggle from './ThemeToggle'
 import './Navbar.css'
 
 const sectionIds = navLinks.map((l) => l.href.slice(1))
+
+/* Surname carries the accent. Split from profile.name so the wordmark follows
+   the data file rather than hardcoding the spelling in two places. */
+const nameParts = profile.name.trim().split(/\s+/)
+const surname = nameParts.length > 1 ? nameParts.pop() : ''
+const forenames = nameParts.join(' ')
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -43,13 +50,37 @@ export default function Navbar() {
 
   return (
     <header className={`nav ${scrolled ? 'is-scrolled' : ''}`}>
-      <div className="nav-inner shell">
-        {/* Plain wordmark, single orange letter — no container, no pill. */}
+      <div className="nav-top shell">
+        {/* Plain wordmark, single accent letter — no container, no pill. */}
         <a href="#home" className="nav-brand" onClick={() => setOpen(false)}>
-          Muhamm<span className="nav-brand-accent">a</span>d
+          <span className="nav-brand-text">
+            {forenames} <span className="nav-brand-accent">{surname}</span>
+          </span>
         </a>
 
         <div className="nav-end">
+
+          <a href="#contact" className="nav-cta">
+            Hire Me!
+          </a>
+
+          {/* Last in the row so it sits hard right, past the CTA. */}
+          <ThemeToggle />
+
+          <button
+            className="nav-toggle"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="nav-sheet"
+          >
+            {open ? <Close /> : <Menu />}
+          </button>
+        </div>
+      </div>
+
+      {/* Second row: the links, boxed. Hidden on mobile — the sheet covers it. */}
+      <div className="nav-row shell">
           <nav className="nav-links" aria-label="Primary">
             {navLinks.map((link) => {
               const isActive = active === link.href.slice(1)
@@ -65,21 +96,6 @@ export default function Navbar() {
               )
             })}
           </nav>
-
-          <a href="#contact" className="nav-cta">
-            Hire Me!
-          </a>
-
-          <button
-            className="nav-toggle"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-            aria-controls="nav-sheet"
-          >
-            {open ? <Close /> : <Menu />}
-          </button>
-        </div>
       </div>
 
       <div id="nav-sheet" className={`nav-sheet ${open ? 'is-open' : ''}`}>
@@ -103,6 +119,9 @@ export default function Navbar() {
         <a href="#contact" className="btn btn-primary nav-sheet-cta" onClick={() => setOpen(false)}>
           Hire Me!
         </a>
+
+        {/* The desktop toggle is hidden at this width, so the sheet needs its own. */}
+        <ThemeToggle className="is-block" />
       </div>
     </header>
   )

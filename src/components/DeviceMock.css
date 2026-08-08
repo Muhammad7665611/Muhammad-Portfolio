@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Abstract device previews — greyscale wireframes on black, orange as the
+   Abstract device previews — greyscale wireframes on black, accent as the
    single highlight. Ignores the inline --mock-accent on purpose so every
    preview stays on-system whatever the data file passes in.
    ========================================================================== */
@@ -17,14 +17,14 @@
   border: 0;
 }
 
-/* Was a coloured radial glow — now a single orange tick on the baseline */
+/* Was a coloured radial glow — now a single accent tick on the baseline */
 .mock-glow {
   position: absolute;
   left: 0;
   bottom: 0;
   width: 54px;
   height: 2px;
-  background: var(--orange);
+  background: var(--accent);
   pointer-events: none;
 }
 
@@ -95,7 +95,7 @@
 
 .project-card:hover .mock-phones .mock-phone:last-child {
   transform: rotate(2deg) translateY(-6px);
-  border-color: var(--orange);
+  border-color: var(--accent);
 }
 
 .mock-notch {
@@ -141,7 +141,7 @@
   width: 16px;
   height: 6px;
   border-radius: var(--r-xs);
-  background: var(--orange);
+  background: var(--accent);
   flex: none;
 }
 
@@ -176,7 +176,7 @@
 .mock-bars span {
   flex: 1;
   border-radius: var(--r-xs) var(--r-xs) 0 0;
-  background: linear-gradient(180deg, var(--amber), var(--orange));
+  background: linear-gradient(180deg, var(--warn), var(--accent));
 }
 
 .mock-tiles {
@@ -223,7 +223,7 @@
 
 .bubble.out {
   align-self: flex-end;
-  background: var(--orange);
+  background: var(--accent);
 }
 
 .mock-composer {
@@ -242,7 +242,7 @@
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background: var(--orange);
+  background: var(--accent);
   flex: none;
 }
 
@@ -264,7 +264,7 @@
 }
 
 .mock-tabbar span.is-active {
-  background: var(--orange);
+  background: var(--accent);
 }
 
 /* ---------------------------------------------------------------- desktop */
@@ -285,7 +285,7 @@
 
 .project-card:hover .mock-desktop {
   transform: translateY(-6px);
-  border-color: var(--orange);
+  border-color: var(--accent);
 }
 
 .mock-chrome {
@@ -347,11 +347,11 @@
 .mock-side .mock-logo {
   height: 11px;
   margin-bottom: 4px;
-  background: var(--orange);
+  background: var(--accent);
 }
 
 .mock-side span.is-active {
-  background: var(--orange-600);
+  background: var(--accent-soft-hover);
 }
 
 .mock-main {
@@ -375,7 +375,7 @@
 }
 
 .mock-kpis span:first-child {
-  border-color: var(--orange);
+  border-color: var(--accent);
 }
 
 .mock-chart {
@@ -385,7 +385,7 @@
   border-radius: var(--r-xs);
   background: var(--surface-2);
   border: 1px solid var(--line);
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .mock-chart svg {
@@ -394,7 +394,7 @@
   display: block;
 }
 
-/* Keep the area fill a whisper so the orange stroke stays the highlight */
+/* Keep the area fill a whisper so the accent stroke stays the highlight */
 .mock-chart svg path:last-of-type {
   opacity: 0.09;
 }
@@ -466,7 +466,7 @@
 }
 
 .mock-site-btns span.filled {
-  background: var(--orange);
+  background: var(--accent);
 }
 
 .mock-site-cards {

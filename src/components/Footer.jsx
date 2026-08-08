@@ -74,7 +74,7 @@ export default function Footer() {
           </span>
           <span className="footer-built">
             Built with React &amp; Vite
-            {/* Small solid orange square — the old pulsing gradient dot. */}
+            {/* Small solid accent square — the old pulsing gradient dot. */}
             <span className="footer-mark" aria-hidden="true" />
           </span>
         </div>

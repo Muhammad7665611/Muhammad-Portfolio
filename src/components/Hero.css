@@ -5,7 +5,10 @@
 
 .hero {
   position: relative;
-  padding-top: clamp(112px, 15vh, 168px);
+  /* Floor is derived from the nav's own height tokens, not a guessed number —
+     the bar is two rows on desktop (118px) and a hand-picked 112px used to
+     slide underneath it. */
+  padding-top: clamp(calc(var(--nav-h) + 24px), 15vh, 168px);
   padding-bottom: clamp(48px, 7vw, 88px);
 }
 
@@ -34,7 +37,7 @@
 }
 
 .hero-title .hero-dot {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .hero-roles {
@@ -45,7 +48,7 @@
 }
 
 .hero-roles .sep {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 /* Blinking terminal caret at the end of the role line */
@@ -55,7 +58,7 @@
   height: 0.82em;
   margin-left: 6px;
   vertical-align: -0.06em;
-  background: var(--orange);
+  background: var(--accent);
   animation: caret-blink 1.1s steps(1) infinite;
 }
 
@@ -84,7 +87,7 @@
   margin-top: 34px;
 }
 
-/* Availability pill — flat chip, orange status dot */
+/* Availability pill — flat chip, accent status dot */
 .hero-status {
   display: inline-flex;
   align-items: center;
@@ -105,7 +108,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--orange);
+  background: var(--accent);
 }
 
 .pulse::after {
@@ -113,7 +116,7 @@
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  border: 1px solid var(--orange);
+  border: 1px solid var(--accent);
   animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
@@ -186,7 +189,7 @@
   border-radius: var(--r);
 }
 
-/* Thin orange corner brackets */
+/* Thin accent corner brackets */
 .hero-portrait::before,
 .hero-portrait::after {
   content: '';
@@ -199,15 +202,15 @@
 .hero-portrait::before {
   top: 14px;
   left: 14px;
-  border-top: 2px solid var(--orange);
-  border-left: 2px solid var(--orange);
+  border-top: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
 }
 
 .hero-portrait::after {
   right: 14px;
   bottom: 14px;
-  border-right: 2px solid var(--orange);
-  border-bottom: 2px solid var(--orange);
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
 }
 
 /* `cover` is safe here because the frame above shares the image's ratio — it
@@ -220,20 +223,9 @@
   object-fit: cover;
   object-position: center;
 
-  /* Black-and-orange duotone. The card ships with a navy-blue background that
-     fights the palette; grayscale flattens it, sepia lays down a warm base,
-     and the hue/saturate pair pulls that base onto the brand orange. Hovering
-     restores the original so the tech logos stay legible. */
-  filter: grayscale(1) sepia(1) hue-rotate(-20deg) saturate(2.6) contrast(1.06)
-    brightness(0.92);
-  transition: filter 0.5s var(--ease);
+  /* Shown in its natural colours — the card's own artwork carries the palette. */
 }
-
-.hero-portrait:hover .portrait-photo {
-  filter: none;
-}
-
-/* Keep the orange corner brackets above the photo */
+/* Keep the accent corner brackets above the photo */
 .hero-portrait::before,
 .hero-portrait::after {
   z-index: 2;
@@ -262,7 +254,7 @@
 }
 
 .hero-scroll:hover {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 /* Mouse glyph — the one place a 12px radius is intentional */
@@ -272,7 +264,7 @@
   width: 22px;
   height: 34px;
   padding-top: 6px;
-  border: 1.5px solid var(--orange);
+  border: 1.5px solid var(--accent);
   border-radius: 12px;
 }
 
@@ -280,7 +272,7 @@
   width: 3px;
   height: 6px;
   border-radius: 2px;
-  background: var(--orange);
+  background: var(--accent);
   animation: mouse-nudge 1.9s var(--ease) infinite;
 }
 
@@ -344,5 +336,12 @@
 @media (max-width: 480px) {
   .hero-actions .btn {
     flex: 1 1 100%;
+  }
+}
+
+/* Row 2 is hidden below 940px, so the hero can move back up. */
+@media (max-width: 940px) {
+  .hero {
+    padding-top: clamp(calc(var(--nav-h) + 24px), 14vh, 140px);
   }
 }

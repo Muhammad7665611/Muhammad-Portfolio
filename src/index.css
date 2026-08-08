@@ -1,36 +1,90 @@
 /* ==========================================================================
-   "Coder" design system — pure black canvas, vivid orange accent, sharp edges.
+   "Coder" design system — indigo/cyan accent, sharp edges, flat surfaces.
    No glassmorphism, no blur, no rounded cards.
+
+   THEMING
+   Dark is the default and lives on :root. Light overrides only the surface and
+   text ramp in the [data-theme='light'] block below — the accent, geometry and
+   easing are shared, so both themes are recognisably the same design.
+
+   The theme is applied as data-theme on <html> by an inline script in
+   index.html that runs BEFORE first paint, so there is no flash of the wrong
+   theme on load. See src/hooks/useTheme.js for the runtime toggle.
+
+   Adding a colour? Reach for a token. A literal #fff is only correct when it
+   sits on the --accent fill (identical in both themes) — anywhere else it will
+   be invisible in one of them.
    ========================================================================== */
 
 :root {
-  /* accent */
-  --orange: #ff4d00;
-  --orange-600: #e04300;
-  --orange-300: #ff7a3d;
-  --amber: #ffb800;
-  --bar: linear-gradient(90deg, #ff4d00 0%, #ffb800 100%);
+  /* Accent — a two-colour system, split by JOB not by preference.
+     `--accent` carries fills that hold white text, so it must be dark enough:
+     white on the neon cyan #06b6d4 is 2.43:1 and fails outright, while indigo
+     electric violet #6d4aff gives 5.15:1. Cyan therefore appears only where
+     nothing sits on top of it — the gradient bar and the background glow. */
+  --accent: #6d4aff;
+  --accent-600: #5b34e8;
+  --accent-300: #a493ff;
+  --accent-2: #06b6d4;
 
-  /* Surfaces — flat and opaque. The page is dark charcoal, NOT pure black, and
-     panels sit LIGHTER than the page so cards read as raised. True black is
-     reserved for wells (image panels, the nav sheet). */
-  --ink: #0f0f0f;
-  --bg: #1a1a1a;
-  --surface: #222222;
-  --surface-2: #292929;
-  --surface-3: #333333;
-  --line: #343434;
-  --line-strong: #4a4a4a;
+  /* Accent used as TEXT rather than as a fill — needs its own value per theme. */
+  --accent-text: #a493ff;
+
+  /* Translucent accent fills. 18% is the ceiling that still clears AA for
+     --accent-text in BOTH themes (5.92 dark / 5.03 light); past 24% the light
+     theme slips under AA. Note white text is unusable on these — it falls to
+     1.37 on light — so anything using them must switch to --accent-text. */
+  --accent-soft: rgba(109, 74, 255, 0.18);
+  --accent-soft-line: rgba(109, 74, 255, 0.45);
+  /* Hover for borderless soft controls. 26% still clears AA for the icon in
+     dark and AA-large in light — fine for a transient state. */
+  --accent-soft-hover: rgba(109, 74, 255, 0.26);
+
+  /* Form errors stay warm so they never read as "just another accent". */
+  --warn: #f59e0b;
+
+  --bar: linear-gradient(90deg, #6d4aff 0%, #06b6d4 100%);
+
+  /* Surfaces — a slate ramp. Panels sit LIGHTER than the page so cards read as
+     raised; --ink is the deepest well (image mats, the footer slab). */
+  --ink: #0a0f1c;
+  --bg: #0f172a;
+  --surface: #182236;
+  --surface-2: #1e2942;
+  --surface-3: #27324d;
+  --line: #2a3550;
+  --line-strong: #3e4c6e;
 
   /* text */
-  --text: #ffffff;
-  --muted: #9b9b9b;
-  --dim: #6e6e6e;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --dim: #8593ac;
 
-  /* geometry — sharp by default */
-  --r: 0px;
-  --r-xs: 2px;
-  --r-sm: 4px;
+  /* Geometry. Every component reads these, so the whole site's corner
+     treatment is set here — nothing hardcodes a radius. */
+  --r: 16px;
+  --r-xs: 10px;
+  --r-sm: 12px;
+
+  /* Background texture. Drawn ON the page, so it flips with the theme. */
+  --grid-dot: rgba(148, 163, 184, 0.18);
+  --hatch: rgba(255, 255, 255, 0.03);
+
+  /* Nav is two rows on desktop; row 2 is hidden on mobile. Anchor scrolling,
+     the mobile sheet and the chat panel all derive from these — read --nav-h,
+     never the rows, so nothing has to know how many rows there currently are.
+     (The chat panel sliding under the nav came from subtracting only row 1.) */
+  --nav-row-1: 64px;
+  --nav-row-2: 54px;
+  --nav-h: calc(var(--nav-row-1) + var(--nav-row-2));
+
+  /* Stacking order, decided in ONE place. Picking z-index per component is what
+     put the chat panel (96) underneath the nav (100) in the first place. */
+  --z-decor: -1;
+  --z-totop: 90;
+  --z-nav: 100;
+  --z-chat: 110;
+  --z-skip: 200;
 
   --maxw: 1200px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -44,6 +98,50 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* --------------------------------------------------------------------------
+   Light theme — surfaces and text only.
+   The relationship is preserved, not copied: in dark, panels sit LIGHTER than
+   the page to read as raised; in light they sit lighter too (white on grey),
+   so cards keep reading as raised rather than inverting the hierarchy.
+   -------------------------------------------------------------------------- */
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --ink: #eef2f7;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #ffffff;
+  --surface-3: #f1f5f9;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+
+  --text: #0f172a;
+  --muted: #475569;
+  --dim: #64748b;
+
+  /* Indigo #818cf8 is only 2.1:1 on this background; the base #4f46e5 is 6.01. */
+  --accent-text: #5b34e8;
+
+  --grid-dot: rgba(15, 23, 42, 0.12);
+  --hatch: rgba(15, 23, 42, 0.04);
+
+  /* A near-opaque black shadow reads as a smudge on a light page. */
+  --shadow: 0 16px 40px -24px rgba(20, 20, 30, 0.28);
+}
+
+/* Colour transition on the toggle only — a blanket `transition: background` on
+   every element would make scroll-reveal and hover states feel laggy. */
+:root.theme-switching,
+:root.theme-switching body,
+:root.theme-switching .card,
+:root.theme-switching header,
+:root.theme-switching footer,
+:root.theme-switching section {
+  transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease),
+    color 0.25s var(--ease);
+}
+
 *,
 *::before,
 *::after {
@@ -52,7 +150,16 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 90px;
+  /* Clears the fixed nav so an anchored section never lands under it. */
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+}
+
+/* Row 2 is hidden here, so the nav is one row tall. Overriding the token rather
+   than each consumer keeps anchor scrolling and the chat panel in agreement. */
+@media (max-width: 940px) {
+  :root {
+    --nav-h: var(--nav-row-1);
+  }
 }
 
 body {
@@ -103,12 +210,12 @@ ul {
 }
 
 ::selection {
-  background: var(--orange);
+  background: var(--accent);
   color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--orange);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 0;
 }
@@ -124,7 +231,7 @@ ul {
   border: 2px solid var(--bg);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--orange);
+  background: var(--accent);
 }
 
 /* ==========================================================================
@@ -180,8 +287,9 @@ ul {
   display: inline-block;
   padding: 7px 18px;
   border-radius: var(--r-xs);
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-line);
+  color: var(--accent-text);
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -191,8 +299,8 @@ ul {
 /* Muted variant for section labels that shouldn't shout */
 .eyebrow.ghost {
   background: transparent;
-  color: var(--orange);
-  border: 1px solid var(--orange);
+  color: var(--accent-text);
+  border: 1px solid var(--accent);
 }
 
 .section-title {
@@ -201,7 +309,7 @@ ul {
 }
 
 .section-title .accent {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .section-sub {
@@ -215,12 +323,12 @@ ul {
   margin-inline: auto;
 }
 
-/* Short orange rule under centred titles */
+/* Short accent rule under centred titles */
 .title-rule {
   display: block;
   width: 54px;
   height: 3px;
-  background: var(--orange);
+  background: var(--accent);
   margin: 16px 0 0;
 }
 
@@ -253,26 +361,33 @@ ul {
   transform: translateY(1px);
 }
 
+/* THE accent button. Every accent-filled control on the site — .btn-primary,
+   the nav CTA, the active nav pill, active filter chips — uses exactly this
+   pairing so they read as one component family.
+
+   Hover deepens the SAME tint. It must never flip to a solid fill: the label is
+   --accent-text, which in the light theme is the identical hex to --accent-600,
+   so a solid hover made the text disappear (1.00 contrast). */
 .btn-primary {
-  background: var(--orange);
-  color: #fff;
-  border-color: var(--orange);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  border-color: transparent;
 }
 
 .btn-primary:hover {
-  background: var(--orange-600);
-  border-color: var(--orange-600);
+  background: var(--accent-soft-hover);
 }
 
 .btn-outline {
   background: transparent;
   color: var(--text);
-  border-color: #ffffff;
+  border-color: var(--text);
 }
 
+/* Inverts against the page rather than assuming it is dark. */
 .btn-outline:hover {
-  background: #ffffff;
-  color: #000;
+  background: var(--text);
+  color: var(--bg);
 }
 
 /* Dark chip button sitting on black */
@@ -283,8 +398,8 @@ ul {
 }
 
 .btn-dark:hover {
-  border-color: var(--orange);
-  color: var(--orange);
+  border-color: var(--accent);
+  color: var(--accent-text);
 }
 
 .btn-sm {

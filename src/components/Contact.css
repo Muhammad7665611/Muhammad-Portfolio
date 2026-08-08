@@ -1,7 +1,7 @@
 /* ==========================================================================
    Contact — a flat black form panel beside a details panel. Inputs are dark
-   opaque rectangles that take an orange edge on focus, the submit is a solid
-   orange block, and the social buttons are sharp squares that fill orange.
+   opaque rectangles that take an accent edge on focus, the submit is a solid
+   accent block, and the social buttons are sharp squares that fill accent.
    No blur, no glow, no rounding beyond 2px.
    ========================================================================== */
 
@@ -55,30 +55,30 @@
   color: var(--dim);
 }
 
-/* Focus reads as a hard 2px orange edge (border + 1px ring), never a soft halo */
+/* Focus reads as a hard 2px accent edge (border + 1px ring), never a soft halo */
 .field input:focus,
 .field textarea:focus {
   outline: none;
   background: var(--surface-3);
-  border-color: var(--orange);
-  box-shadow: 0 0 0 1px var(--orange);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
 }
 
 .field input[aria-invalid='true'],
 .field textarea[aria-invalid='true'] {
-  border-color: var(--amber);
+  border-color: var(--warn);
 }
 
 .field input[aria-invalid='true']:focus,
 .field textarea[aria-invalid='true']:focus {
-  border-color: var(--amber);
-  box-shadow: 0 0 0 1px var(--amber);
+  border-color: var(--warn);
+  box-shadow: 0 0 0 1px var(--warn);
 }
 
 .field-error {
   font-size: 12.5px;
   line-height: 1.45;
-  color: var(--amber);
+  color: var(--warn);
 }
 
 .contact-submit {
@@ -94,11 +94,11 @@
 }
 
 .contact-note.is-ok {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .contact-note.is-error {
-  color: var(--amber);
+  color: var(--warn);
 }
 
 .contact-note.is-nokey {
@@ -107,7 +107,7 @@
 
 .contact-note a,
 .contact-copy {
-  color: var(--orange);
+  color: var(--accent-text);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -122,7 +122,7 @@
 }
 
 .contact-copy:hover {
-  color: var(--orange-300);
+  color: var(--accent-300);
 }
 
 /* Pulled out of the layout and out of the tab order — bots still fill it */
@@ -176,7 +176,7 @@
   display: block;
   width: 38px;
   height: 3px;
-  background: var(--orange);
+  background: var(--accent);
   margin: 12px 0 22px;
 }
 
@@ -195,7 +195,7 @@
   min-width: 0;
 }
 
-/* Sharp orange-bordered square holding an orange glyph; inverts on hover */
+/* Sharp accent-bordered square holding an accent glyph; inverts on hover */
 .contact-ico {
   display: grid;
   place-items: center;
@@ -203,15 +203,15 @@
   width: 42px;
   height: 42px;
   border-radius: var(--r-xs);
-  color: var(--orange);
+  color: var(--accent-text);
   background: var(--surface-2);
-  border: 1px solid var(--orange);
+  border: 1px solid var(--accent);
   transition: background 0.25s var(--ease), color 0.25s var(--ease);
 }
 
 .contact-list li:hover .contact-ico {
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent-soft);
+  color: var(--accent-text);
 }
 
 .contact-pair {
@@ -237,7 +237,7 @@
 }
 
 .contact-pair a:hover {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .contact-socials {
@@ -253,7 +253,7 @@
   gap: 10px;
 }
 
-/* Uniform dark squares — every network fills solid orange on hover */
+/* Uniform dark squares — every network fills solid accent on hover */
 .social-btn {
   display: grid;
   place-items: center;
@@ -268,19 +268,19 @@
 }
 
 .social-btn:hover {
-  color: #fff;
-  background: var(--orange);
-  border-color: var(--orange);
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  border-color: var(--accent);
   transform: translateY(-3px);
 }
 
-/* Availability strip — flat panel marked with a solid orange edge */
+/* Availability strip — flat panel marked with a solid accent edge */
 .contact-cta {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 18px 20px;
-  border-left: 3px solid var(--orange);
+  border-left: 3px solid var(--accent);
 }
 
 .contact-cta strong {

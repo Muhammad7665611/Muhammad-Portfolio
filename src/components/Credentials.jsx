@@ -1,6 +1,6 @@
 import { education, certifications } from '../data/portfolio'
 import { useReveal } from '../hooks/useReveal'
-import { Check } from './Icons'
+import { Check, ArrowUpRight } from './Icons'
 import './Credentials.css'
 
 /**
@@ -88,8 +88,44 @@ export default function Credentials() {
                   </span>
 
                   <div className="cred-body">
+                    {/* Only the documented certificates carry a period. */}
+                    {item.period && <span className="cred-period">{item.period}</span>}
+
                     <h4 className="cred-title">{item.title}</h4>
+
+                    {item.issuer && <p className="cred-issuer">{item.issuer}</p>}
+
                     <p className="cred-meta">{item.detail}</p>
+
+                    {item.credentialId && (
+                      <p className="cred-id">
+                        Credential ID <span>{item.credentialId}</span>
+                      </p>
+                    )}
+
+                    {/* Certificates backed by a scan get a real preview —
+                        clicking opens the full-size document in a new tab. */}
+                    {item.documentUrl && (
+                      <a
+                        className="cred-doc"
+                        href={item.documentUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`${item.documentLabel || 'View document'}: ${item.title}`}
+                      >
+                        {item.documentType === 'image' && (
+                          <img
+                            src={item.documentUrl}
+                            alt={`${item.title} certificate issued by ${item.issuer}`}
+                            loading="lazy"
+                          />
+                        )}
+                        <span className="cred-doc-cta">
+                          {item.documentLabel || 'View document'}
+                          <ArrowUpRight width={14} height={14} />
+                        </span>
+                      </a>
+                    )}
                   </div>
                 </li>
               ))}

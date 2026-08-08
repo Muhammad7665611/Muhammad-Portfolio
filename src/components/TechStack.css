@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Tech stack — flat sharp tiles on black, orange border on hover.
-   Brand colours live ONLY on the glyph; all tile chrome is black/grey/orange.
+   Tech stack — flat sharp tiles on black, accent border on hover.
+   Brand colours live ONLY on the glyph; all tile chrome is black/grey/accent.
    ========================================================================== */
 
 .tech-grid {
@@ -22,7 +22,7 @@
 
 .tech-tile:hover {
   transform: translateY(-3px);
-  border-color: var(--orange);
+  border-color: var(--accent);
   background: var(--surface-2);
 }
 
@@ -93,12 +93,12 @@
   white-space: nowrap;
 }
 
-/* Small orange square separating each label */
+/* Small accent square separating each label */
 .tech-marquee-bullet {
   width: 6px;
   height: 6px;
   flex: none;
-  background: var(--orange);
+  background: var(--accent);
 }
 
 @keyframes tech-marquee {

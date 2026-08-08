@@ -1,43 +1,99 @@
 /* ==========================================================================
-   Decor — fixed background furniture: flat orange geometry over the dark
-   canvas. Sharp edges only, no blur, no radial gradients, no twinkle.
+   Decor — fixed background: a fine dot grid over soft indigo/cyan glow.
+
+   Both layers are pure CSS. An 8K background image would be 2-4MB, would blur
+   on high-DPI screens, and would need a separate file per theme. This costs
+   nothing to download, stays sharp at any resolution, and flips with the
+   `--grid-dot` token automatically.
    ========================================================================== */
 
 .decor {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: var(--z-decor);
   overflow: hidden;
   pointer-events: none;
 }
 
-/* Faint technical grid, masked with linear fades on all four sides so it never
-   crowds the content column or collides with the blocks below. */
+/* --------------------------------------------------------------------------
+   Dot grid.
+
+   One radial-gradient tiled by background-size — the closest CSS gets to the
+   "fine dot grid" in the brief. Masked so it dissolves before reaching the
+   edges and never crowds the content column.
+   -------------------------------------------------------------------------- */
+
 .decor-grid {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 72px 72px;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 20%, #000 80%, transparent 100%),
-    linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 20%, #000 80%, transparent 100%),
-    linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+  background-size: 26px 26px;
+  background-position: -1px -1px;
+
+  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 40%, #000 30%, transparent 78%);
+  mask-image: radial-gradient(ellipse 85% 75% at 50% 40%, #000 30%, transparent 78%);
 }
 
 /* --------------------------------------------------------------------------
-   Hairline orange rules
+   Glow blobs.
+
+   Deliberately faint (0.05-0.09). The reference art is a full-bleed hero image;
+   here the same colours sit BEHIND text that has to stay readable, so this is
+   a suggestion of light rather than the gradient mesh itself.
    -------------------------------------------------------------------------- */
 
+.decor-glow {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
+}
+
+.decor-glow-1 {
+  top: -12%;
+  left: -8%;
+  width: 46vw;
+  height: 46vw;
+  max-width: 720px;
+  max-height: 720px;
+  background: var(--accent-2); /* cyan */
+  opacity: 0.09;
+  animation: decor-drift 68s var(--ease) infinite;
+}
+
+.decor-glow-2 {
+  top: 24%;
+  right: -14%;
+  width: 42vw;
+  height: 42vw;
+  max-width: 660px;
+  max-height: 660px;
+  background: var(--accent); /* indigo */
+  opacity: 0.08;
+  animation: decor-drift 84s var(--ease) infinite reverse;
+}
+
+.decor-glow-3 {
+  bottom: -14%;
+  left: 26%;
+  width: 38vw;
+  height: 38vw;
+  max-width: 580px;
+  max-height: 580px;
+  background: var(--accent-2);
+  opacity: 0.05;
+  animation: decor-drift 96s var(--ease) infinite;
+}
+
+/* Hairline accent rules, echoing the layout gutters */
 .decor-rule {
   position: absolute;
   top: 0;
   bottom: 0;
   width: 1px;
-  background: var(--orange);
-  opacity: 0.12;
+  background: var(--accent);
+  opacity: 0.14;
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
   mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
 }
@@ -50,94 +106,20 @@
   right: 11%;
 }
 
-/* --------------------------------------------------------------------------
-   Bleeding blocks — flat orange rectangles hanging past the viewport edges.
-   Opacity stays inside 0.06–0.12 so they read as architecture behind the
-   content rather than as foreground graphics.
-   -------------------------------------------------------------------------- */
-
-.decor-block {
-  position: absolute;
-  display: block;
-  background: var(--orange);
-  border-radius: var(--r);
-  will-change: transform;
-}
-
-.decor-block-l1 {
-  top: 7%;
-  left: -84px;
-  width: 260px;
-  height: 128px;
-  opacity: 0.1;
-  animation: decor-drift 64s var(--ease) infinite;
-}
-
-.decor-block-l2 {
-  top: 58%;
-  left: -56px;
-  width: 148px;
-  height: 300px;
-  opacity: 0.07;
-  animation: decor-drift 88s var(--ease) infinite reverse;
-}
-
-.decor-block-r1 {
-  top: 24%;
-  right: -110px;
-  width: 320px;
-  height: 168px;
-  opacity: 0.09;
-  animation: decor-drift 76s var(--ease) infinite reverse;
-}
-
-.decor-block-r2 {
-  bottom: 5%;
-  right: -60px;
-  width: 190px;
-  height: 210px;
-  opacity: 0.06;
-  animation: decor-drift 96s var(--ease) infinite;
-}
-
-/* One solid square and one hollow outline, both fully inside the viewport */
-.decor-chip {
-  position: absolute;
-  display: block;
-  top: 41%;
-  left: 6%;
-  width: 46px;
-  height: 46px;
-  background: var(--orange);
-  border-radius: var(--r);
-  opacity: 0.12;
-}
-
-.decor-outline {
-  position: absolute;
-  display: block;
-  bottom: 16%;
-  left: 22%;
-  width: 96px;
-  height: 96px;
-  border: 1px solid var(--orange);
-  border-radius: var(--r);
-  opacity: 0.1;
-}
-
-/* A single very slow vertical nudge — nothing else moves */
+/* A single very slow drift — nothing else moves */
 @keyframes decor-drift {
   0%,
   100% {
     transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translate3d(0, -22px, 0);
+    transform: translate3d(2%, -4%, 0);
   }
 }
 
 /* --------------------------------------------------------------------------
-   Responsive — fewer, smaller, quieter shapes as the viewport narrows
+   Responsive — a 90px blur across three large blobs is the most expensive
+   thing on this page, so narrow screens get fewer of them.
    -------------------------------------------------------------------------- */
 
 @media (max-width: 960px) {
@@ -148,47 +130,25 @@
   .decor-rule-r {
     right: 6%;
   }
-
-  .decor-block-r1 {
-    width: 240px;
-    height: 140px;
-  }
-
-  .decor-outline {
-    left: 12%;
-  }
 }
 
 @media (max-width: 720px) {
   .decor-grid {
-    background-size: 56px 56px;
+    background-size: 22px 22px;
   }
 
-  .decor-block-l1 {
-    width: 180px;
-    height: 96px;
-  }
-
-  .decor-block-l2 {
-    width: 104px;
-    height: 200px;
-    opacity: 0.06;
-  }
-
-  .decor-block-r1 {
-    width: 170px;
-    height: 116px;
-  }
-
-  .decor-block-r2,
-  .decor-outline,
+  .decor-glow-3,
   .decor-rule-l {
     display: none;
+  }
+
+  .decor-glow {
+    filter: blur(70px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .decor-block {
+  .decor-glow {
     animation: none;
   }
 }

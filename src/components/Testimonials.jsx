@@ -98,7 +98,7 @@ export default function Testimonials() {
           ))}
         </div>
 
-        {/* Pagination: short dashes, the active one orange and twice as wide */}
+        {/* Pagination: short dashes, the active one accent and twice as wide */}
         <div className="t-dots" role="group" aria-label="Choose a testimonial">
           {testimonials.map((t, i) => (
             <button

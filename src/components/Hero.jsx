@@ -85,7 +85,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Scroll cue — orange mouse glyph with a dot that nudges downward */}
+        {/* Scroll cue — accent mouse glyph with a dot that nudges downward */}
         <a className="hero-scroll" href="#about" aria-label="Scroll to about section">
           <span className="mouse" aria-hidden="true">
             <span className="mouse-dot" />

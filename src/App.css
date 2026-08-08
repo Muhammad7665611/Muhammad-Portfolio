@@ -4,11 +4,11 @@
   position: absolute;
   top: -60px;
   left: 24px;
-  z-index: 200;
+  z-index: var(--z-skip);
   padding: 12px 22px;
   border-radius: 0;
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent-soft);
+  color: var(--accent-text);
   font-size: 14px;
   font-weight: 600;
   transition: top 0.25s var(--ease);
@@ -18,22 +18,24 @@
   top: 0;
 }
 
-/* Sits above the chat launcher, below the chat panel (which covers it while
-   open — expected, since you're mid-conversation at that point). */
+/* Sits directly above the chat launcher. Retracts while the chat is open —
+   see the :has() rule below. */
 .to-top {
   position: fixed;
   right: 24px;
   bottom: 84px;
-  z-index: 90;
+  z-index: var(--z-totop);
   display: grid;
   place-items: center;
   width: 46px;
   height: 46px;
   border-radius: var(--r-xs);
   cursor: pointer;
-  color: #fff;
-  background: var(--orange);
-  border: 1px solid var(--orange);
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  /* No outline — matches the chat launcher it stacks above. */
+  border: 0;
+  box-shadow: var(--shadow);
   opacity: 0;
   visibility: hidden;
   transform: translateY(14px);
@@ -51,9 +53,19 @@
   transform: none;
 }
 
+/* The open panel starts at bottom:96px but this button starts at 84px, so its
+   bottom 12px poked out underneath as a stray accent sliver. Retract it — there
+   is nothing to scroll back to while you're mid-conversation.
+   Specificity (0,3,1) beats .to-top.is-visible (0,2,0), so this wins. */
+body:has(.chat-panel.is-open) .to-top {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  pointer-events: none;
+}
+
 .to-top:hover {
-  background: var(--orange-600);
-  border-color: var(--orange-600);
+  background: var(--accent-soft-hover);
 }
 
 @media (max-width: 560px) {

@@ -56,10 +56,10 @@ export default function Projects() {
 
         {/* Every card stays mounted — filtering only toggles `is-filtered`, so the
             scroll-reveal observer (which runs once) never loses track of a tile and
-            the orange feature panel keeps its slot in the grid. */}
+            the accent feature panel keeps its slot in the grid. */}
         <div className="projects-grid">
           {projects.map((project, i) => {
-            const isFeature = (i + 1) % 4 === 0 // every 4th tile = solid orange panel
+            const isFeature = (i + 1) % 4 === 0 // every 4th tile = solid accent panel
             const isHidden = !visible.includes(project)
 
             return (

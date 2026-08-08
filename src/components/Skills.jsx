@@ -3,7 +3,7 @@ import { useReveal, useInView } from '../hooks/useReveal'
 import './Skills.css'
 
 /**
- * One group panel — a flat rectangle with a small orange uppercase title and a
+ * One group panel — a flat rectangle with a small accent uppercase title and a
  * stack of thin gradient bars that fill once the card scrolls into view.
  */
 function SkillCard({ group, index }) {

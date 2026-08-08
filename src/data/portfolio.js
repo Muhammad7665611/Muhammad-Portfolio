@@ -17,29 +17,6 @@ export const profile = {
   cvUrl: '/cv/Muhammad-Ali-Khan-CV.pdf',
 }
 
-export const about = {
-  heading: 'About Me',
-  paragraphs: [
-    "I'm a frontend and full-stack developer with hands-on experience in React.js, React Native, JavaScript, HTML and CSS. I build responsive web and mobile applications, integrate RESTful APIs, work with Firebase services, and spend a lot of time on the part most people skip — making the thing actually fast.",
-    'On the backend I work with Python and Django, building and testing REST APIs and wiring them into the front end. I test with Postman, ship with Git, and work in an Agile process alongside UI/UX designers and backend developers.',
-    "I'm committed to continually expanding my expertise across the full stack, with a strong focus on user-centric design and functionality.",
-  ],
-  // Every figure below is derived from the CV — roles held, employers, and
-  // certifications listed there. Nothing here is estimated.
-  facts: [
-    { label: 'Experience', value: '1.5+ yrs' },
-    { label: 'Roles held', value: '3' },
-    { label: 'Certifications', value: '3' },
-    { label: 'Response time', value: '< 24 hrs' },
-  ],
-  details: [
-    { label: 'Current role', value: 'Full Stack Developer' },
-    { label: 'Based in', value: 'Islamabad, Pakistan' },
-    { label: 'Languages', value: 'English, Urdu' },
-    { label: 'Open to', value: 'Remote / Contract' },
-  ],
-}
-
 /** Education — BISE Bahawalpur, as listed on the CV. */
 export const education = [
    {
@@ -62,8 +39,26 @@ export const education = [
   },
 ]
 
-/** Certifications listed on the CV. */
+/**
+ * Certifications. `issuer`, `period` and `credentialId` are optional — the
+ * first entry is backed by an actual certificate document, the rest are the
+ * generic lines carried over from the CV. Fill in provenance as you locate it;
+ * a credential a reader can verify is worth several that they cannot.
+ */
 export const certifications = [
+  {
+    title: 'Frontend Development Internship',
+    issuer: 'CodeAlpha',
+    period: 'Aug 2025 — Sep 2025',
+    credentialId: 'CA/UDFI/1134146',
+    detail:
+      'Virtual internship programme in frontend development, completed as an active participant.',
+    // Scanned certificate in public/documents — rendered as a preview and
+    // opened full size in a new tab.
+    documentUrl: '/documents/codealpha-frontend-internship.jpeg',
+    documentType: 'image',
+    documentLabel: 'View certificate',
+  },
   {
     title: 'Frontend Development Certificate',
     detail: 'React.js, JavaScript, HTML & CSS — building responsive interfaces.',
@@ -77,6 +72,32 @@ export const certifications = [
     detail: 'Core web platform: semantics, styling, and the request/response model.',
   },
 ]
+
+export const about = {
+  heading: 'About Me',
+  paragraphs: [
+    "I'm a frontend and full-stack developer with hands-on experience in React.js, React Native, JavaScript, HTML and CSS. I build responsive web and mobile applications, integrate RESTful APIs, work with Firebase services, and spend a lot of time on the part most people skip — making the thing actually fast.",
+    'On the backend I work with Python and Django, building and testing REST APIs and wiring them into the front end. I test with Postman, ship with Git, and work in an Agile process alongside UI/UX designers and backend developers.',
+    "I'm committed to continually expanding my expertise across the full stack, with a strong focus on user-centric design and functionality.",
+  ],
+  // Roles and certifications below are counted from the CV data further down
+  // this file. The experience figure is the one hand-set value: it covers all
+  // development work, including freelance and self-directed projects that
+  // predate the first listed employer.
+  facts: [
+    { label: 'Experience', value: '3+ yrs' },
+    { label: 'Roles held', value: '3' },
+    { label: 'Certifications', value: String(certifications.length) },
+    { label: 'Response time', value: '< 24 hrs' },
+  ],
+  details: [
+    { label: 'Current role', value: 'Full Stack Developer' },
+    { label: 'Based in', value: 'Islamabad, Pakistan' },
+    { label: 'Languages', value: 'English, Urdu' },
+    { label: 'Open to', value: 'Remote / Contract' },
+  ],
+}
+
 
 /**
  * Skill groups mirror the CV's Technical Skills section. Levels are a personal
@@ -160,24 +181,12 @@ export const experience = [
     stack: ['React Native', 'Firebase', 'REST APIs', 'JavaScript'],
   },
   {
-    role: 'Frontend Developer',
-    company: 'Haytrix',
-    period: 'Jan 2025 — Present',
-    current: true,
-    summary:
-      'Building responsive web applications with React.js, working alongside designers and backend developers.',
-    points: [
-      'Developed responsive web applications using React.js.',
-      'Collaborated with UI/UX designers and backend developers on shared features.',
-      'Applied Agile methodologies across planning, delivery and review.',
-    ],
-    stack: ['React.js', 'JavaScript', 'HTML', 'CSS', 'Agile'],
-  },
-  {
     role: 'Backend Developer',
-    company: 'Haytrix',
+    company: 'Haytrix (Pvt) Ltd',
+    location: 'Islamabad, ICT',
     period: 'Aug 2025 — Sep 2025',
     current: false,
+    letterUrl: '/documents/haytrix-experience-letter.pdf',
     summary:
       'Short backend rotation building and testing the APIs powering the front end.',
     points: [
@@ -186,6 +195,24 @@ export const experience = [
       'Integrated backend services with frontend applications.',
     ],
     stack: ['Python', 'Django', 'REST APIs', 'Postman'],
+  },
+  {
+    // Dates, title and company taken from the Haytrix experience letter signed
+    // by Umar Hayat (CEO), dated 25 Oct 2025 — it supersedes the CV summary.
+    role: 'Frontend Developer',
+    company: 'Haytrix (Pvt) Ltd',
+    location: 'Islamabad, ICT',
+    period: 'Mar 2025 — Sep 2025',
+    current: false,
+    letterUrl: '/documents/haytrix-experience-letter.pdf',
+    summary:
+      'Building responsive web applications with React.js, working alongside designers and backend developers.',
+    points: [
+      'Developed responsive web applications using React.js.',
+      'Collaborated with UI/UX designers and backend developers on shared features.',
+      'Applied Agile methodologies across planning, delivery and review.',
+    ],
+    stack: ['React.js', 'JavaScript', 'HTML', 'CSS', 'Agile'],
   },
 ]
 

@@ -352,7 +352,7 @@ export default function Contact() {
 
               <div className="contact-socials">
                 <span className="contact-label">Find me online</span>
-                {/* Uniform orange-fill squares — no per-network brand colouring. */}
+                {/* Uniform accent-fill squares — no per-network brand colouring. */}
                 <div className="social-row">
                   {socials.map((s) => (
                     <a

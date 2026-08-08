@@ -2,6 +2,30 @@ import { useEffect, useRef, useState } from 'react'
 import { profile } from '../data/portfolio'
 import { useChat } from '../hooks/useChat'
 import { Send, Close, Spark } from './Icons'
+
+/**
+ * Chat bubble with three dots — the launcher reads as "message" at a glance,
+ * which is a shape people already know how to use. Local to this file: it is
+ * the only place that needs it.
+ */
+function MessageBubble(props) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+      {...props}
+    >
+      <path d="M20.6 11.4a8.2 8.2 0 0 1-8.8 8.2 9.3 9.3 0 0 1-2.7-.4l-4.6 1.5 1.5-4.2a8 8 0 0 1-1.6-5.1 8.2 8.2 0 0 1 8.2-8.2 8.2 8.2 0 0 1 8 8.2Z" />
+      <path d="M8.6 11.4h.01M12.2 11.4h.01M15.8 11.4h.01" />
+    </svg>
+  )
+}
 import './ChatWidget.css'
 
 const SUGGESTIONS = [
@@ -54,13 +78,15 @@ export default function ChatWidget() {
     <>
       <button
         className={`chat-fab ${open ? 'is-open' : ''}`}
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? 'Close AI assistant' : 'Open AI assistant'}
+        onClick={() => setOpen(true)}
+        aria-label="Open AI assistant"
         aria-expanded={open}
         aria-controls="chat-panel"
       >
-        {open ? <Close width={20} height={20} /> : <Spark width={20} height={20} />}
-        {!open && <span className="chat-fab-label">Ask AI</span>}
+        <MessageBubble width={23} height={23} />
+        {/* Unread-style dot — the one thing that pulls the eye to a launcher
+            that is otherwise a quiet, translucent circle. */}
+        <span className="chat-fab-dot" aria-hidden="true" />
       </button>
 
       <div
@@ -76,7 +102,7 @@ export default function ChatWidget() {
           </span>
           <div className="chat-head-text">
             <strong>Ask about {profile.name.split(' ')[0]}</strong>
-            <span>AI assistant · answers from his portfolio only</span>
+            <span>Answers from his portfolio only</span>
           </div>
           <button className="chat-close" onClick={() => setOpen(false)} aria-label="Close">
             <Close width={17} height={17} />

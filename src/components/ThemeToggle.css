@@ -1,0 +1,120 @@
+/* ==========================================================================
+   Theme toggle — a sharp square that matches the nav's other controls, with a
+   clock-hand sweep around its edge on hover.
+   ========================================================================== */
+
+.theme-toggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  /* A sanctioned exception to the sharp-edge rule, alongside avatars and the
+     hero's mouse glyph: this is a clock face, and the sweep below only reads
+     as a second hand when it travels a true circle. */
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.22s var(--ease), border-color 0.22s var(--ease),
+    background 0.22s var(--ease);
+}
+
+.theme-toggle:hover {
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   The clock hand.
+
+   A conic gradient paints a filled pie, not a ring — the mask below punches the
+   middle out so only a 1px band survives. What is left is a single accent arc
+   travelling the perimeter like a sweeping second hand.
+   -------------------------------------------------------------------------- */
+
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    var(--accent) 0deg,
+    var(--accent) 35deg,
+    transparent 90deg,
+    transparent 360deg
+  );
+
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+
+  opacity: 0;
+  transition: opacity 0.2s var(--ease);
+  pointer-events: none;
+}
+
+.theme-toggle:hover::before {
+  opacity: 1;
+  animation: theme-sweep 1.4s linear infinite;
+}
+
+@keyframes theme-sweep {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   The glyph — a full clock-hands rotation on hover, plus the quarter-turn
+   wind-in that plays when the icon swaps after a click.
+   -------------------------------------------------------------------------- */
+
+.theme-toggle-glyph {
+  display: grid;
+  place-items: center;
+  animation: theme-glyph-in 0.28s var(--ease);
+  transition: transform 0.6s var(--ease);
+}
+
+.theme-toggle:hover .theme-toggle-glyph {
+  transform: rotate(360deg);
+}
+
+@keyframes theme-glyph-in {
+  from {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.7);
+  }
+}
+
+/* Full-width variant for the mobile sheet, where it sits in the link stack.
+   A 100%-wide element cannot be a circle, so this one keeps the square idiom
+   of the buttons it sits beneath. */
+.theme-toggle.is-block {
+  width: 100%;
+  height: 44px;
+  gap: 10px;
+  grid-auto-flow: column;
+  margin-top: 14px;
+  border-radius: var(--r-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-glyph,
+  .theme-toggle:hover .theme-toggle-glyph {
+    animation: none;
+    transform: none;
+  }
+
+  /* Keep the ring as a static outline rather than dropping the affordance. */
+  .theme-toggle:hover::before {
+    animation: none;
+  }
+}

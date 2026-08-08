@@ -1,6 +1,6 @@
 /* ==========================================================================
    Skills — flat rectangular group panels, each holding a stack of thin
-   uppercase-labelled bars filled with the orange→amber gradient.
+   uppercase-labelled bars filled with the indigo→cyan gradient.
    ========================================================================== */
 
 .skills-grid {
@@ -16,7 +16,7 @@
     background 0.3s var(--ease);
 }
 
-/* Hairline orange rule across the top, drawn in from the left on hover */
+/* Hairline accent rule across the top, drawn in from the left on hover */
 .skill-card::before {
   content: '';
   position: absolute;
@@ -56,7 +56,7 @@
   line-height: 1.4;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .skill-count {
@@ -105,7 +105,7 @@
 }
 
 .skill-item:hover .skill-pct {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 /* Very thin, square-ended track — the fill is the only chromatic element */

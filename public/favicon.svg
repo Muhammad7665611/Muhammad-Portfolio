@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#000000" />
-  <rect x="4" y="4" width="56" height="56" fill="none" stroke="#ff4d00" stroke-width="3" />
-  <text x="32" y="43" font-family="Poppins, Inter, system-ui, sans-serif" font-size="30"
-        font-weight="700" text-anchor="middle" fill="#ff4d00">M</text>
-</svg>

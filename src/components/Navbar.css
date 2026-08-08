@@ -1,6 +1,6 @@
 /* ==========================================================================
    Navbar — slim black bar
-   Simple flex row: wordmark hard left, links + solid orange CTA hard right.
+   Simple flex row: wordmark hard left, links + solid accent CTA hard right.
    Transparent over the hero, opaque black once the page scrolls.
    ========================================================================== */
 
@@ -9,7 +9,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: var(--z-nav);
   background: transparent;
   border-bottom: 1px solid transparent;
   transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
@@ -20,21 +20,32 @@
   border-bottom-color: var(--line);
 }
 
-.nav-inner {
+/* Row 1 — wordmark left, CTA + theme toggle right. */
+.nav-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  height: 72px;
+  height: var(--nav-row-1);
+}
+
+/* Row 2 — the links, inside their own bordered strip, centred in the row. */
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--nav-row-2);
+  padding-bottom: 10px;
 }
 
 /* ------------------------------------------------------------- 1. wordmark */
 
+/* inline-block, NOT flex. The name renders as bare text nodes around the accent
+   span, and under flex each one becomes its own item — `gap` then wedges space
+   inside the word itself ("Muhamm a d"). */
 .nav-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 21px;
+  display: inline-block;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--text);
@@ -42,9 +53,13 @@
   transition: color 0.25s var(--ease);
 }
 
-/* The one orange letter — the whole logo idea in a single span. */
+.nav-brand-text {
+  white-space: nowrap;
+}
+
+/* The one accent word — the whole logo idea in a single span. */
 .nav-brand-accent {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .nav-brand:hover {
@@ -52,10 +67,10 @@
 }
 
 .nav-brand:hover .nav-brand-accent {
-  color: var(--orange-300);
+  color: var(--accent-300);
 }
 
-/* Sharp orange square mark. Rendered by the footer logo, kept here so the
+/* Sharp accent square mark. Rendered by the footer logo, kept here so the
    two lockups stay in sync. */
 .nav-mark {
   display: grid;
@@ -64,8 +79,8 @@
   width: 34px;
   height: 34px;
   border-radius: var(--r);
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent-soft);
+  color: var(--accent-text);
   font-size: 17px;
   font-weight: 700;
   line-height: 1;
@@ -79,48 +94,54 @@
   gap: 26px;
 }
 
+/* The bordered box — links sit INSIDE the line, not under a full-width rule,
+   so the row reads as one deliberate element. It shrink-wraps its contents,
+   which is what lets the parent centre it.
+
+   The pill radius is a deliberate exception to the sharp-edge rule: a 999px
+   capsule is the one shape that makes a floating strip read as a single
+   control rather than a stray box. The active pill inside matches it. */
 .nav-links {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 26px;
+  gap: 4px;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
 }
 
 .nav-links a {
   position: relative;
-  padding: 6px 0;
+  padding: 8px 16px;
+  border-radius: 999px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--text);
-  transition: color 0.22s var(--ease);
+  color: var(--muted);
+  white-space: nowrap;
+  transition: color 0.22s var(--ease), background 0.22s var(--ease);
 }
 
 .nav-links a:hover {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .nav-links a.is-active {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
-/* Tight orange tick under the current section — no glow, no pill. */
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 2px;
-  background: var(--orange);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.25s var(--ease);
+/* Inside the box a solid fill reads better than an underline tick. */
+.nav-links a:hover {
+  color: var(--text);
+  background: var(--surface-3);
 }
 
-.nav-links a.is-active::after {
-  transform: scaleX(1);
+.nav-links a.is-active {
+  color: var(--accent-text);
+  background: var(--accent-soft);
 }
 
-/* ------------------------------------------------------- 3. solid orange CTA */
+/* -------------------------------------------------------------- 3. nav CTA */
 
 .nav-cta {
   display: inline-flex;
@@ -128,9 +149,9 @@
   justify-content: center;
   padding: 11px 24px;
   border-radius: var(--r-xs);
-  border: 1px solid var(--orange);
-  background: var(--orange);
-  color: #fff;
+  border: 1px solid transparent;
+  background: var(--accent-soft);
+  color: var(--accent-text);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -140,8 +161,7 @@
 }
 
 .nav-cta:hover {
-  background: var(--orange-600);
-  border-color: var(--orange-600);
+  background: var(--accent-soft-hover);
   transform: translateY(-2px);
 }
 
@@ -168,15 +188,15 @@
 
 .nav-toggle:hover {
   background: var(--surface-3);
-  border-color: var(--orange);
-  color: var(--orange);
+  border-color: var(--accent);
+  color: var(--accent-text);
 }
 
 /* ---------------------------------------------------------- 5. mobile sheet */
 
 .nav-sheet {
   position: fixed;
-  inset: 72px 0 auto 0;
+  inset: var(--nav-row-1) 0 auto 0;
   padding: 22px 24px 28px;
   display: flex;
   flex-direction: column;
@@ -224,7 +244,7 @@
 }
 
 .nav-sheet a.is-active {
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .nav-sheet-cta {
@@ -235,17 +255,14 @@
 /* ------------------------------------------------------------- responsive */
 
 @media (max-width: 1080px) {
-  .nav-end,
-  .nav-links {
-    gap: 20px;
-  }
   .nav-links a {
+    padding: 8px 13px;
     font-size: 13.5px;
   }
 }
 
 @media (max-width: 940px) {
-  .nav-links,
+  .nav-row,
   .nav-cta {
     display: none;
   }
@@ -260,8 +277,14 @@
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 620px) {
   .nav-brand {
-    font-size: 19px;
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 380px) {
+  .nav-brand {
+    font-size: 15px;
   }
 }

@@ -31,7 +31,7 @@ function PortraitWire() {
   )
 }
 
-/** Which fact in the strip is rendered as the solid-orange highlight cell. */
+/** Which fact in the strip is rendered as the solid-accent highlight cell. */
 const HIGHLIGHT_FACT = 1
 
 export default function About() {

@@ -1,4 +1,5 @@
 import { experience } from '../data/portfolio'
+import { ArrowUpRight } from './Icons'
 import { useReveal } from '../hooks/useReveal'
 import './Experience.css'
 
@@ -40,6 +41,7 @@ export default function Experience() {
                 <header className="timeline-head">
                   <h3 className="timeline-role">{job.role}</h3>
                   <span className="timeline-company">{job.company}</span>
+                  {job.location && <span className="timeline-location">{job.location}</span>}
                 </header>
 
                 <p className="timeline-summary">{job.summary}</p>
@@ -55,6 +57,19 @@ export default function Experience() {
                     <span key={tech}>{tech}</span>
                   ))}
                 </div>
+
+                {/* Roles covered by a signed letter link straight to it. */}
+                {job.letterUrl && (
+                  <a
+                    className="timeline-letter"
+                    href={job.letterUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View experience letter
+                    <ArrowUpRight width={14} height={14} />
+                  </a>
+                )}
               </article>
             </li>
           ))}

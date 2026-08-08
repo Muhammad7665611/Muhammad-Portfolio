@@ -30,7 +30,7 @@
   border-radius: var(--r);
 }
 
-/* Thin orange corner bracket, top-right */
+/* Thin accent corner bracket, top-right */
 .about-portrait::after {
   content: '';
   position: absolute;
@@ -38,8 +38,8 @@
   right: 14px;
   width: 46px;
   height: 46px;
-  border-top: 2px solid var(--orange);
-  border-right: 2px solid var(--orange);
+  border-top: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
   pointer-events: none;
 }
 
@@ -102,7 +102,7 @@
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .about-badge-label {
@@ -166,7 +166,7 @@
 
 .about-tick {
   flex: none;
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .about-detail-label {
@@ -212,12 +212,12 @@
 
 .about-meta svg {
   flex: none;
-  color: var(--orange);
+  color: var(--accent-text);
 }
 
 .about-meta a:hover {
   color: var(--text);
-  border-color: var(--orange);
+  border-color: var(--accent);
 }
 
 .about-actions {
@@ -228,7 +228,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Stat strip — flat rectangles, one filled solid orange
+   Stat strip — flat rectangles, one filled solid accent
    -------------------------------------------------------------------------- */
 
 .about-facts {
@@ -250,7 +250,7 @@
 
 .about-fact:hover {
   transform: translateY(-4px);
-  border-color: var(--orange);
+  border-color: var(--accent);
 }
 
 .about-fact-value {
@@ -273,21 +273,21 @@
 
 /* The highlighted cell anchors the strip */
 .about-fact.is-highlight {
-  background: var(--orange);
-  border-color: var(--orange);
+  background: var(--accent-soft);
+  border-color: var(--accent-soft-line);
 }
 
 .about-fact.is-highlight:hover {
-  background: var(--orange-600);
-  border-color: var(--orange-600);
+  background: var(--accent-soft-hover);
 }
 
 .about-fact.is-highlight .about-fact-value {
-  color: #fff;
+  color: var(--accent-text);
 }
 
 .about-fact.is-highlight .about-fact-label {
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--accent-text);
+  opacity: 0.8;
 }
 
 /* --------------------------------------------------------------------------

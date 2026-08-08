@@ -3,7 +3,7 @@ import './CTABanner.css'
 
 /**
  * Full-width availability band. Stands in for the reference's photographic
- * panel with a flat textured surface, a hairline border and one solid orange
+ * panel with a flat textured surface, a hairline border and one solid accent
  * call to action.
  */
 export default function CTABanner() {
