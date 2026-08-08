@@ -96,8 +96,9 @@
   width: min(392px, calc(100vw - 48px));
   /* 48px = the 24px `bottom` offset + a 24px gap under the nav. The 280px
      floor keeps a short window usable; it may cross into the nav, which is
-     exactly why the panel stacks above it. */
-  height: clamp(280px, calc(100dvh - var(--nav-h) - 48px), 560px);
+     exactly why the panel stacks above it. The 680px cap stops a tall monitor
+     from stretching the panel into a full-height column. */
+  height: clamp(280px, calc(100dvh - var(--nav-h) - 48px), 680px);
 
   background: var(--surface);
   border: 1px solid var(--line);
@@ -410,7 +411,7 @@
     bottom: 0;
     width: auto;
     /* Leaves the nav visible above the sheet. */
-    height: min(78dvh, calc(100dvh - var(--nav-h) - 16px));
+    height: min(85dvh, calc(100dvh - var(--nav-h) - 16px));
     border-radius: var(--r) var(--r) 0 0;
     border-bottom: 0;
     /* Clears the home indicator on iOS. */
