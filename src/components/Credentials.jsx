@@ -29,6 +29,27 @@ function Cap(props) {
   )
 }
 
+function Shield(props) {
+  return (
+    <svg
+      width={38}
+      height={38}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+      {...props}
+    >
+      <path d="M12 2.5 20 5.5v5.3c0 5-3.4 8.6-8 10.7-4.6-2.1-8-5.7-8-10.7V5.5l8-3Z" />
+      <path d="m8.5 11.8 2.3 2.3 4.8-5" />
+    </svg>
+  )
+}
+
 export default function Credentials() {
   const ref = useReveal()
 
@@ -42,95 +63,154 @@ export default function Credentials() {
           </h2>
           <span className="title-rule" />
           <p className="section-sub">
-            Where the formal grounding comes from, and what I&apos;ve certified along the way.
+            Continuous learning. Practical growth.
           </p>
         </div>
 
         <div className="cred-grid">
           {/* ---------- Education ---------- */}
-          <div className="cred-col">
-            <h3 className="cred-col-title reveal">Education</h3>
+          <section className="cred-panel cred-education">
+            <header className="cred-panel-head reveal">
+              <span className="cred-panel-icon" aria-hidden="true">
+                <Cap width={38} height={38} />
+              </span>
+              <div>
+                <h3 className="cred-panel-title">Education</h3>
+                <p className="cred-panel-subtitle">Building a strong foundation for a secure future.</p>
+              </div>
+            </header>
 
-            <ol className="cred-list">
+            <ol className="cred-timeline">
               {education.map((item, i) => (
                 <li
-                  className="cred-item reveal"
+                  className={`cred-education-item reveal ${item.current ? 'is-current' : ''}`}
                   key={item.qualification}
                   style={{ '--reveal-delay': `${i * 90}ms` }}
                 >
-                  <span className="cred-icon" aria-hidden="true">
-                    <Cap />
-                  </span>
-
-                  <div className="cred-body">
-                    <span className="cred-period">{item.period}</span>
+                  <span className="cred-timeline-dot" aria-hidden="true" />
+                  <div className="cred-education-content">
+                    <span className="cred-education-period">{item.period}</span>
                     <h4 className="cred-title">{item.qualification}</h4>
                     <p className="cred-meta">{item.institute}</p>
+                    <span className={`cred-education-status ${item.current ? 'is-current' : ''}`}>
+                      {item.current ? 'Currently Pursuing' : 'Completed'}
+                    </span>
                   </div>
                 </li>
               ))}
             </ol>
-          </div>
+          </section>
 
           {/* ---------- Certifications ---------- */}
-          <div className="cred-col">
-            <h3 className="cred-col-title reveal">Certifications</h3>
+          <section className="cred-panel cred-certifications">
+            <header className="cred-panel-head reveal">
+              <span className="cred-panel-icon" aria-hidden="true">
+                <Shield />
+              </span>
+              <div>
+                <h3 className="cred-panel-title">Certifications</h3>
+                <p className="cred-panel-subtitle">
+                  Hands-on learning from industry-leading programs.
+                </p>
+              </div>
+            </header>
 
-            <ul className="cred-list">
+            <ul className="cred-cert-list">
               {certifications.map((item, i) => (
                 <li
-                  className="cred-item is-cert reveal"
+                  className="cred-certificate-card reveal"
                   key={item.title}
                   style={{ '--reveal-delay': `${i * 90}ms` }}
                 >
-                  <span className="cred-icon" aria-hidden="true">
-                    <Check width={20} height={20} />
-                  </span>
-
-                  <div className="cred-body">
-                    {/* Only the documented certificates carry a period. */}
-                    {item.period && <span className="cred-period">{item.period}</span>}
-
-                    <h4 className="cred-title">{item.title}</h4>
-
-                    {item.issuer && <p className="cred-issuer">{item.issuer}</p>}
-
-                    <p className="cred-meta">{item.detail}</p>
-
-                    {item.credentialId && (
-                      <p className="cred-id">
-                        Credential ID <span>{item.credentialId}</span>
-                      </p>
-                    )}
-
-                    {/* Certificates backed by a scan get a real preview —
-                        clicking opens the full-size document in a new tab. */}
-                    {item.documentUrl && (
-                      <a
-                        className="cred-doc"
-                        href={item.documentUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={`${item.documentLabel || 'View document'}: ${item.title}`}
-                      >
-                        {item.documentType === 'image' && (
-                          <img
-                            src={item.documentUrl}
-                            alt={`${item.title} certificate issued by ${item.issuer}`}
-                            loading="lazy"
-                          />
-                        )}
-                        <span className="cred-doc-cta">
-                          {item.documentLabel || 'View document'}
-                          <ArrowUpRight width={14} height={14} />
+                  {item.program && (
+                    <div className="cred-program-progress">
+                      <div className="cred-program-title-row">
+                        <h4>{item.program}</h4>
+                        <span className="cred-program-status">In Progress</span>
+                      </div>
+                      <div className="cred-progress-labels">
+                        <span>
+                          {item.programCompleted} of {item.programTotal} courses completed
                         </span>
-                      </a>
-                    )}
+                        <span>
+                          {Math.round((item.programCompleted / item.programTotal) * 100)}%
+                        </span>
+                      </div>
+                      <progress
+                        className="cred-progress"
+                        value={item.programCompleted}
+                        max={item.programTotal}
+                        aria-label={`${item.program}: ${item.programCompleted} of ${item.programTotal} courses completed`}
+                      />
+                    </div>
+                  )}
+
+                  <div className="cred-course">
+                    <span
+                      className={`cred-provider-mark${item.issuer === 'Google' ? ' is-google' : ''}${item.issuerLogo ? ' is-codealpha' : ''}`}
+                    >
+                      {item.issuerLogo ? (
+                        <img src={item.issuerLogo} alt={`${item.issuer} logo`} />
+                      ) : (
+                        <span aria-hidden="true">
+                          {item.issuer === 'Google' ? 'G' : <Check width={24} height={24} />}
+                        </span>
+                      )}
+                    </span>
+
+                    <div className="cred-course-content">
+                      <div className="cred-course-heading">
+                        <div>
+                          <p className="cred-course-provider">
+                            {item.issuer}
+                            {item.platform && <><span aria-hidden="true"> · </span>{item.platform}</>}
+                            {item.period && !item.platform && <><span aria-hidden="true"> · </span>{item.period}</>}
+                          </p>
+                          <h4 className="cred-title">{item.title}</h4>
+                        </div>
+                        <div className="cred-badges">
+                          {item.grade && (
+                            <span className="cred-grade" aria-label={`Course grade ${item.grade}`}>
+                              {item.grade}
+                            </span>
+                          )}
+                          {(item.status || item.documentUrl) && (
+                            <span className="cred-status">
+                              <Check width={13} height={13} />
+                              {item.status || 'Completed'}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {item.completedAt && (
+                        <p className="cred-completed-date">Completed {item.completedAt}</p>
+                      )}
+
+                      {item.detail && item.program && (
+                        <p className="cred-meta">
+                          Fundamentals of security, threats, risks, and vulnerabilities.
+                        </p>
+                      )}
+
+                      {item.certificateUrl || item.documentUrl ? (
+                        <a
+                          className="cred-certificate-link"
+                          href={item.certificateUrl || item.documentUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`View certificate: ${item.title}`}
+                        >
+                          View Certificate
+                          <ArrowUpRight width={15} height={15} />
+                        </a>
+                      ) : null}
+                    </div>
                   </div>
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
         </div>
       </div>
     </section>

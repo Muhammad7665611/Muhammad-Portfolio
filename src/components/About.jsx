@@ -84,11 +84,12 @@ export default function About() {
             </div>
 
             <h3 className="about-heading reveal" style={{ '--reveal-delay': '80ms' }}>
-              Full Stack Developer building for web &amp; mobile
+              Building full-stack products with a security-minded perspective
             </h3>
 
             <p className="about-lead reveal" style={{ '--reveal-delay': '120ms' }}>
-              A short version of the story — what I build, how I work, and where I am right now.
+              I bring frontend, backend, mobile, and AI work together to turn product ideas into
+              useful applications.
             </p>
 
             {about.paragraphs.map((text, i) => (

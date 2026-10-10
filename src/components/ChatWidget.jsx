@@ -29,9 +29,9 @@ function MessageBubble(props) {
 import './ChatWidget.css'
 
 const SUGGESTIONS = [
-  'What has he worked on?',
-  'Which projects suit my startup?',
-  'What are his strongest skills?',
+  'What technologies does he work with?',
+  'Tell me about Nura AI',
+  'What experience does he have?',
   'How do I hire him?',
 ]
 

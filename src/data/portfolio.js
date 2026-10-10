@@ -5,28 +5,28 @@
 
 export const profile = {
   name: 'Muhammad Ali Khan',
-  roles: ['Full Stack Developer', 'React Native Developer', 'AI Integration Specialist'],
+  roles: ['Full-Stack Developer', 'AI Engineer', 'Cybersecurity Student'],
   tagline:
-    'I build modern web and mobile applications using React, React Native, Node.js, Firebase and AI technologies — fast, accessible products that feel great to use.',
+    'Full-stack developer and cybersecurity student building modern web and mobile applications with React, Next.js, Node.js, Express.js, PostgreSQL, Prisma and AI-powered features.',
   // City only — the CV carries the full street address, which does not belong
   // on a public page.
   location: 'Bahawalpur, Pakistan',
   email: 'alikhan.webdev.11@gmail.com',
   phone: '+92 328 766 5611',
-  availability: 'Available for freelance & full-time work',
+  availability: 'Available for freelance, contract & full-time opportunities',
   cvUrl: '/cv/Muhammad-Ali-Khan-CV.pdf',
 }
 
-/** Education — BISE Bahawalpur, as listed on the CV. */
+/** Education — follows the updated CV exactly. */
 export const education = [
-   {
-    qualification: 'Bachelor of Cyber Security',
-    institute: 'Allama Iqbal Open University Of Bahawalpur',
-    period: '2026 — Continued',
+  {
+    qualification: 'Bachelor of Science in Cybersecurity',
+    institute: 'Allama Iqbal Open University, Islamabad',
+    period: '2026 — 2030',
     current: true,
   },
   {
-    qualification: 'Intermediate of Computer Science (ICS)',
+    qualification: 'Intermediate in Computer Science (ICS)',
     institute: 'BISE Bahawalpur',
     period: '2023 — 2025',
     current: false,
@@ -39,12 +39,7 @@ export const education = [
   },
 ]
 
-/**
- * Certifications. `issuer`, `period` and `credentialId` are optional — the
- * first entry is backed by an actual certificate document, the rest are the
- * generic lines carried over from the CV. Fill in provenance as you locate it;
- * a credential a reader can verify is worth several that they cannot.
- */
+/** Completed courses and credentials shown in the portfolio. */
 export const certifications = [
   {
     title: 'Frontend Development Internship',
@@ -53,6 +48,7 @@ export const certifications = [
     credentialId: 'CA/UDFI/1134146',
     detail:
       'Virtual internship programme in frontend development, completed as an active participant.',
+    issuerLogo: '/documents/codealpha-frontend-internship.jpeg',
     // Scanned certificate in public/documents — rendered as a preview and
     // opened full size in a new tab.
     documentUrl: '/documents/codealpha-frontend-internship.jpeg',
@@ -60,44 +56,48 @@ export const certifications = [
     documentLabel: 'View certificate',
   },
   {
-    title: 'Frontend Development Certificate',
-    detail: 'React.js, JavaScript, HTML & CSS — building responsive interfaces.',
-  },
-  {
-    title: 'Backend Development Certificate',
-    detail: 'Python, Django and RESTful API design, testing and integration.',
-  },
-  {
-    title: 'Web Development Fundamentals',
-    detail: 'Core web platform: semantics, styling, and the request/response model.',
+    title: 'Foundations of Cybersecurity',
+    issuer: 'Google',
+    platform: 'Coursera',
+    completedAt: 'October 2026',
+    status: 'Completed',
+    grade: '98.02%',
+    detail:
+      "Successfully completed the first course in Google's Cybersecurity Professional Certificate program. Developed foundational knowledge of cybersecurity principles, common security threats, risk management, security operations, and protecting digital assets.",
+    program: 'Google Cybersecurity Professional Certificate',
+    programCompleted: 1,
+    programTotal: 9,
+    skills: [
+      'Cybersecurity Fundamentals',
+      'Threat Identification',
+      'Risk Management',
+      'Security Principles',
+      'Security Operations',
+    ],
+    certificateUrl: 'https://coursera.org/verify/4H4XEPFHQONU',
   },
 ]
 
 export const about = {
   heading: 'About Me',
   paragraphs: [
-    "I'm a frontend and full-stack developer with hands-on experience in React.js, React Native, JavaScript, HTML and CSS. I build responsive web and mobile applications, integrate RESTful APIs, work with Firebase services, and spend a lot of time on the part most people skip — making the thing actually fast.",
-    'On the backend I work with Python and Django, building and testing REST APIs and wiring them into the front end. I test with Postman, ship with Git, and work in an Agile process alongside UI/UX designers and backend developers.',
-    "I'm committed to continually expanding my expertise across the full stack, with a strong focus on user-centric design and functionality.",
+    'I am a Full-Stack Developer and Cybersecurity student who builds modern web and mobile applications. My work spans responsive interfaces, backend APIs, databases, and product integrations using React.js, Next.js, Node.js, Express.js, PostgreSQL, Prisma, and React Native.',
+    'I enjoy taking a product from its frontend through its backend: connecting REST APIs, shaping database architecture, and preparing applications for deployment. I also develop AI-powered applications and conversational experiences using LLM APIs.',
+    'Alongside software development, I am studying cybersecurity and building a practical foundation in security principles, threat identification, risk management, Linux, and web and network security. I care about making software useful, reliable, and security-conscious.',
   ],
-  // Roles and certifications below are counted from the CV data further down
-  // this file. The experience figure is the one hand-set value: it covers all
-  // development work, including freelance and self-directed projects that
-  // predate the first listed employer.
   facts: [
-    { label: 'Experience', value: '3+ yrs' },
+    { label: 'Experience', value: '2+ yrs' },
     { label: 'Roles held', value: '3' },
     { label: 'Certifications', value: String(certifications.length) },
     { label: 'Response time', value: '< 24 hrs' },
   ],
   details: [
-    { label: 'Current role', value: 'Full Stack Developer' },
-    { label: 'Based in', value: 'Islamabad, Pakistan' },
+    { label: 'Current role', value: 'Full-Stack Developer' },
+    { label: 'Based in', value: 'Bahawalpur, Pakistan' },
     { label: 'Languages', value: 'English, Urdu' },
-    { label: 'Open to', value: 'Remote / Contract' },
+    { label: 'Open to', value: 'Remote / Contract / Full-time' },
   ],
 }
-
 
 /**
  * Skill groups mirror the CV's Technical Skills section. Levels are a personal
@@ -108,87 +108,87 @@ export const skillGroups = [
   {
     title: 'Frontend',
     skills: [
-      { name: 'React.js', level: 90 },
-      { name: 'JavaScript', level: 88 },
-      { name: 'TypeScript', level: 75 },
-      { name: 'HTML & CSS', level: 92 },
-    ],
-  },
-  {
-    title: 'Mobile',
-    skills: [
-      { name: 'React Native', level: 85 },
-      { name: 'Firebase services', level: 82 },
-      { name: 'REST API integration', level: 88 },
-      { name: 'Responsive layouts', level: 90 },
+      { name: 'React.js', level: 92 },
+      { name: 'Next.js', level: 85 },
+      { name: 'React Native', level: 86 },
+      { name: 'Vue.js', level: 68 },
+      { name: 'JavaScript', level: 90 },
+      { name: 'HTML5', level: 92 },
+      { name: 'CSS3', level: 90 },
     ],
   },
   {
     title: 'Backend',
     skills: [
+      { name: 'Node.js', level: 88 },
+      { name: 'Express.js', level: 86 },
+      { name: 'REST APIs', level: 90 },
       { name: 'Python', level: 78 },
-      { name: 'Django', level: 75 },
-      { name: 'REST APIs', level: 85 },
-      { name: 'API testing', level: 80 },
+      { name: 'Django', level: 72 },
     ],
   },
   {
-    title: 'Database & Cloud',
+    title: 'Databases',
     skills: [
-      { name: 'Firebase Authentication', level: 85 },
-      { name: 'Realtime Database', level: 82 },
-      { name: 'Firebase Storage', level: 80 },
-      { name: 'Data modelling', level: 72 },
+      { name: 'PostgreSQL', level: 80 },
+      { name: 'Prisma', level: 78 },
+      { name: 'Firebase', level: 82 },
+      { name: 'Database integration', level: 84 },
     ],
   },
   {
-    title: 'Tools',
+    title: 'AI & Automation',
     skills: [
-      { name: 'Git & GitHub', level: 88 },
-      { name: 'Postman', level: 85 },
-      { name: 'VS Code', level: 92 },
-      { name: 'Chrome DevTools', level: 84 },
+      { name: 'LLM Applications', level: 84 },
+      { name: 'AI Assistants', level: 82 },
+      { name: 'Prompt Engineering', level: 80 },
+      { name: 'AI APIs', level: 85 },
+      { name: 'AI Agents', level: 76 },
+      { name: 'Automation', level: 78 },
     ],
   },
   {
-    title: 'Practices',
+    title: 'Cybersecurity',
     skills: [
-      { name: 'Agile development', level: 82 },
-      { name: 'Cross-functional collaboration', level: 86 },
-      { name: 'Performance optimisation', level: 78 },
-      { name: 'Code review', level: 76 },
+      { name: 'Cybersecurity Fundamentals', level: 78 },
+      { name: 'Network Security', level: 76 },
+      { name: 'Web Security', level: 75 },
+      { name: 'Linux Security', level: 74 },
+      { name: 'Security Analysis', level: 72 },
+    ],
+  },
+  {
+    title: 'Tools & Platforms',
+    skills: [
+      { name: 'Git', level: 88 },
+      { name: 'GitHub', level: 88 },
+      { name: 'Linux', level: 80 },
+      { name: 'Ubuntu', level: 78 },
+      { name: 'API Integration', level: 90 },
+      { name: 'Deployment', level: 82 },
     ],
   },
 ]
 
-/**
- * Roles exactly as listed on the CV — employers, titles and dates are not
- * embellished. Newest first.
- */
+/** Roles and bullet points follow the uploaded CV. */
 export const experience = [
   {
-    role: 'Full Stack Developer',
-    company: 'WebSolLive',
-    period: 'Nov 2025 — Present',
-    current: true,
-    summary:
-      'Building mobile applications end to end and connecting them to live backend services.',
+    role: 'Frontend Developer',
+    company: 'Haytrix',
+    period: 'January 2025 — August 2025',
+    current: false,
     points: [
-      'Developed mobile applications using React Native.',
-      'Integrated REST APIs into the app and handled the data layer.',
-      'Utilised Firebase services to enhance user experience and application performance.',
+      'Developed responsive web applications using React.js.',
+      'Collaborated with UI/UX designers and backend developers.',
+      'Worked within Agile development methodologies.',
     ],
-    stack: ['React Native', 'Firebase', 'REST APIs', 'JavaScript'],
+    stack: ['React.js', 'JavaScript', 'HTML5', 'CSS3', 'Agile'],
   },
   {
     role: 'Backend Developer',
-    company: 'Haytrix (Pvt) Ltd',
-    location: 'Islamabad, ICT',
-    period: 'Aug 2025 — Sep 2025',
+    company: 'Haytrix',
+    period: 'August 2025 — September 2025',
     current: false,
-    letterUrl: '/documents/haytrix-experience-letter.pdf',
-    summary:
-      'Short backend rotation building and testing the APIs powering the front end.',
     points: [
       'Created and tested RESTful APIs using Python (Django).',
       'Performed API testing with Postman.',
@@ -197,22 +197,16 @@ export const experience = [
     stack: ['Python', 'Django', 'REST APIs', 'Postman'],
   },
   {
-    // Dates, title and company taken from the Haytrix experience letter signed
-    // by Umar Hayat (CEO), dated 25 Oct 2025 — it supersedes the CV summary.
-    role: 'Frontend Developer',
-    company: 'Haytrix (Pvt) Ltd',
-    location: 'Islamabad, ICT',
-    period: 'Mar 2025 — Sep 2025',
-    current: false,
-    letterUrl: '/documents/haytrix-experience-letter.pdf',
-    summary:
-      'Building responsive web applications with React.js, working alongside designers and backend developers.',
+    role: 'Full Stack Developer',
+    company: 'WebSolLive',
+    period: 'November 2025 — Present',
+    current: true,
     points: [
-      'Developed responsive web applications using React.js.',
-      'Collaborated with UI/UX designers and backend developers on shared features.',
-      'Applied Agile methodologies across planning, delivery and review.',
+      'Developed mobile applications using React Native.',
+      'Integrated APIs and Firebase services.',
+      'Worked on application functionality and user experience.',
     ],
-    stack: ['React.js', 'JavaScript', 'HTML', 'CSS', 'Agile'],
+    stack: ['React Native', 'Firebase', 'REST APIs', 'JavaScript'],
   },
 ]
 
@@ -220,76 +214,58 @@ export const projectFilters = ['All', 'Web', 'Mobile', 'AI', 'Full Stack']
 
 export const projects = [
   {
-    title: 'Fitness App',
-    tags: ['Mobile', 'Full Stack'],
-    device: 'phone',
-    variant: 'feed',
-    accent: '#7c5cff',
-    blurb:
-      'A cross-platform fitness companion with guided workouts, streak tracking and a social feed. Works offline and syncs the moment you reconnect.',
-    features: [
-      'Workout builder with rest timers',
-      'Offline-first sync on Firebase',
-      'Progress charts & streaks',
-      'Push notifications',
-    ],
-    stack: ['React Native', 'Expo', 'Firebase', 'Reanimated'],
-    demo: '#',
-    repo: '#',
-  },
-  {
-    title: 'AI Chat Application',
-    tags: ['AI', 'Web'],
-    device: 'phone',
+    title: 'Nura AI',
+    featured: true,
+    tags: ['AI', 'Full Stack', 'Web'],
+    device: 'desktop',
     variant: 'chat',
     accent: '#22d3ee',
     blurb:
-      'A streaming AI assistant with conversation memory, file attachments and tool calling — built on the Claude API with a typed backend.',
+      'An AI assistant platform bringing conversational AI and full-stack product engineering together across web and mobile experiences.',
     features: [
-      'Token-by-token streaming',
-      'RAG over uploaded documents',
-      'Conversation history & search',
-      'Markdown + code rendering',
+      'AI-powered conversational experience',
+      'Frontend, backend, database and AI integration',
+      'Chat functionality for interacting with AI models',
+      'Designed with future agents and automation in mind',
     ],
-    stack: ['React', 'Node.js', 'Claude API', 'Postgres'],
-    demo: '#',
-    repo: '#',
+    stack: ['Next.js', 'React', 'Node.js', 'Express.js', 'PostgreSQL', 'Prisma', 'React Native', 'LLM APIs'],
+    demo: 'https://nura-ai-blush.vercel.app/',
+    repo: 'https://github.com/Muhammad7665611/Nura-AI',
+    previewUrl: 'https://nura-ai-blush.vercel.app/',
   },
   {
-    title: 'Admin Dashboard',
-    tags: ['Web', 'Full Stack'],
-    device: 'desktop',
-    variant: 'dash',
-    accent: '#34d399',
-    blurb:
-      'An analytics and operations dashboard with role-based access, live charts and a bulk data editor that handles tens of thousands of rows.',
-    features: [
-      'Role-based access control',
-      'Realtime charts & KPIs',
-      'CSV import / export',
-      'Audit log for every change',
-    ],
-    stack: ['React', 'Express', 'MongoDB', 'Recharts'],
-    demo: '#',
-    repo: '#',
-  },
-  {
-    title: 'Portfolio Website',
-    tags: ['Web'],
+    title: 'Muhammad Ali Khan — Portfolio',
+    tags: ['Web', 'Full Stack', 'AI'],
     device: 'desktop',
     variant: 'site',
     accent: '#f472b6',
     blurb:
-      'This site — a glassmorphic, motion-aware portfolio built with React and Vite. No UI framework, no runtime cost, 100 on Lighthouse.',
+      'A responsive developer portfolio with a content API, contact form, and a streaming AI assistant grounded in my portfolio data.',
     features: [
-      'Glassmorphism design system',
-      'Scroll-reveal animations',
-      'Fully responsive layout',
-      'Accessible & keyboard-friendly',
+      'Responsive, accessible React single-page experience',
+      'Express API for portfolio content and contact submissions',
+      'Streaming AI assistant grounded in portfolio information',
+      'Light and dark themes with reduced-motion-aware reveals',
     ],
-    stack: ['React', 'Vite', 'CSS'],
-    demo: '#',
-    repo: '#',
+    stack: ['React 18', 'Vite', 'CSS', 'Node.js', 'Express', 'OpenAI', 'Anthropic'],
+    demo: 'https://muhammad-portfolio-snowy.vercel.app/',
+    repo: 'https://github.com/Muhammad7665611/Muhammad-Portfolio',
+    previewUrl: 'https://muhammad-portfolio-snowy.vercel.app/',
+  },
+  {
+    title: 'McGee',
+    label: 'First Project · Collaborative',
+    tags: ['Web'],
+    device: 'desktop',
+    variant: 'site',
+    accent: '#34d399',
+    blurb:
+      'My first project, built collaboratively with Ahmad Arif. The deployed McGee application includes a login experience.',
+    features: [],
+    stack: [],
+    demo: 'https://mc-gee.vercel.app',
+    repo: 'https://github.com/AhmadArif98/mc-gee',
+    previewUrl: 'https://mc-gee.vercel.app',
   },
 ]
 
@@ -297,43 +273,116 @@ export const services = [
   {
     icon: 'stack',
     title: 'Full Stack Development',
-    text: 'End-to-end web applications — React on the front, Node.js and a database behind it, deployed and monitored.',
+    text: 'End-to-end web applications and product experiences from frontend architecture to API and database integration.',
+  },
+  {
+    icon: 'spark',
+    title: 'AI & LLM App Development',
+    text: 'Conversational assistants, AI-powered features and operational automation built around modern LLM APIs and product workflows.',
   },
   {
     icon: 'mobile',
     title: 'React Native Apps',
-    text: 'One codebase, both stores. Native-feeling iOS and Android apps with offline support and smooth 60fps motion.',
+    text: 'Cross-platform mobile products built with React Native, focused on usability, performance and smooth integration.',
   },
   {
-    icon: 'spark',
-    title: 'AI Integration',
-    text: 'Chat assistants, RAG pipelines and LLM-powered features wired into your product with streaming and tool use.',
+    icon: 'server',
+    title: 'REST API & Database Design',
+    text: 'Secure, scalable backend services with Node.js, Express.js, PostgreSQL and Prisma for modern application needs.',
   },
   {
     icon: 'window',
     title: 'Web App Development',
-    text: 'Dashboards, portals and SaaS front-ends built as fast, accessible single-page apps that scale with your team.',
-  },
-  {
-    icon: 'server',
-    title: 'Backend & APIs',
-    text: 'REST and GraphQL APIs, auth, payments and background jobs — documented, tested and ready for production.',
+    text: 'Responsive single-page and product-focused web experiences designed for speed, accessibility and business value.',
   },
   {
     icon: 'gauge',
-    title: 'Performance & Refactors',
-    text: 'Audits and rescues for slow or tangled codebases: faster loads, smaller bundles, code you can keep working in.',
+    title: 'Cybersecurity-Aware Development',
+    text: 'Secure application thinking grounded in Linux, network and web security fundamentals while shipping reliable software.',
   },
 ]
 
-/** Only technologies the CV or profile card actually claims. */
+/** Technologies and tools used across the profile, projects, and skill groups. */
 export const techStack = [
-  { name: 'React', icon: 'react', color: '#61dafb' },
+  { name: 'JavaScript', icon: 'javascript', color: '#f7df1e' },
+  { name: 'TypeScript', icon: 'typescript', color: '#3178c6' },
+  { name: 'HTML5', icon: 'html', color: '#e34f26' },
+  { name: 'CSS3', icon: 'css', color: '#1572b6' },
+  { name: 'React.js', icon: 'react', color: '#61dafb' },
+  { name: 'Next.js', icon: 'next', color: '#ffffff' },
+  { name: 'React Native', icon: 'react', color: '#61dafb' },
+  { name: 'Expo', icon: 'expo', color: '#ffffff' },
+  { name: 'Flutter', icon: 'flutter', color: '#54c5f8' },
   { name: 'Node.js', icon: 'node', color: '#68a063' },
-  { name: 'Firebase', icon: 'firebase', color: '#ffca28' },
+  { name: 'Express.js', icon: 'node', color: '#68a063' },
   { name: 'Python', icon: 'python', color: '#4b8bbe' },
+  { name: 'Django', icon: 'django', color: '#44b78b' },
+  { name: 'PostgreSQL', icon: 'database', color: '#336791' },
+  { name: 'Prisma', icon: 'database', color: '#2d3748' },
+  { name: 'Firebase', icon: 'firebase', color: '#ffca28' },
+  { name: 'Codex', icon: 'codex', color: '#10a37f' },
+  { name: 'Claude', icon: 'claude', color: '#d97757' },
+  { name: 'Cursor', icon: 'cursor', color: '#ffffff' },
+  { name: 'OpenAI API', icon: 'openai', color: '#10a37f' },
+  { name: 'VS Code', icon: 'vscode', color: '#007acc' },
+  { name: 'Git', icon: 'git', color: '#f05032' },
   { name: 'GitHub', icon: 'github', color: '#ffffff' },
-  { name: 'VS Code', icon: 'vscode', color: '#3ea7f0' },
+  { name: 'Linux', icon: 'linux', color: '#f5b301' },
+  { name: 'Ubuntu', icon: 'ubuntu', color: '#e95420' },
+  { name: 'Security Fundamentals', icon: 'security', color: '#22d3ee' },
+  { name: 'Security Domains', icon: 'domains', color: '#60a5fa' },
+  { name: 'Threats', icon: 'threats', color: '#f87171' },
+  { name: 'Risks', icon: 'risks', color: '#fbbf24' },
+  { name: 'Vulnerabilities', icon: 'vulnerabilities', color: '#a78bfa' },
+]
+
+export const techStackGroups = [
+  {
+    title: 'Frontend',
+    description: 'Web languages and frameworks',
+    technologies: ['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'React.js', 'Next.js'],
+  },
+  {
+    title: 'Mobile Development',
+    description: 'Cross-platform mobile applications',
+    technologies: ['React Native', 'Expo', 'Flutter'],
+  },
+  {
+    title: 'Backend',
+    description: 'Server-side development',
+    technologies: ['Node.js', 'Express.js', 'Python', 'Django'],
+  },
+  {
+    title: 'Database & Storage',
+    description: 'Data persistence and services',
+    technologies: ['PostgreSQL', 'Prisma', 'Firebase'],
+  },
+  {
+    title: 'AI Coding Tools',
+    description: 'AI-assisted development',
+    technologies: ['Codex', 'Claude', 'Cursor'],
+  },
+  {
+    title: 'AI Integration',
+    description: 'AI services integrated in projects',
+    technologies: ['OpenAI API'],
+  },
+  {
+    title: 'Development Tools',
+    description: 'Editor, version control, and systems',
+    technologies: ['VS Code', 'Git', 'GitHub', 'Ubuntu', 'Linux'],
+  },
+  {
+    title: 'Cybersecurity Knowledge',
+    description: 'Foundational cybersecurity concepts',
+    technologies: [
+      'Security Fundamentals',
+      'Security Domains',
+      'Threats',
+      'Risks',
+      'Vulnerabilities',
+    ],
+  },
 ]
 
 export const testimonials = [
@@ -363,6 +412,46 @@ export const testimonials = [
     rating: 5,
     quote:
       'We needed an AI assistant embedded in our product and Ali handled the whole thing — streaming, tool calls, evals. The code was clean enough that our team picked it up immediately.',
+  },
+  {
+    name: 'Ahmad Arif',
+    role: 'Senior Developer & Supervisor',
+    company: 'WebSolLive',
+    initials: 'A',
+    accent: '#34d399',
+    email: 'ahmadarifdev786@gmail.com',
+    relationship:
+      'My senior and direct supervisor, who guided me on professional development projects including Erafit.',
+    status: 'Awaiting approval',
+  },
+  {
+    name: 'Umar Hayat',
+    role: 'Chief Executive Officer',
+    company: 'Haytrix (Pvt) Ltd',
+    location: 'Islamabad, ICT',
+    initials: 'UH',
+    accent: '#60a5fa',
+    relationship: 'CEO of the company that issued my experience letter.',
+    status: 'Awaiting approval',
+  },
+  {
+    name: 'Dilshad Ahmad',
+    role: 'CO',
+    company: 'BISE Bahawalpur',
+    initials: 'DA',
+    accent: '#fbbf24',
+    quote:
+      'Muhammad Ali Khan is a dedicated developer with a strong willingness to learn. His thoughtful approach to problem-solving and commitment to improving his skills are qualities I appreciate.',
+  },
+  {
+    name: 'Muhammad Arshad',
+    role: 'UDC',
+    company: 'Allama Iqbal Open University',
+    initials: 'MA',
+    accent: '#c084fc',
+    quote:
+      'Ali brings curiosity and dedication to his work. He welcomes feedback, approaches challenges thoughtfully, and keeps improving his development skills. His willingness to learn makes him a valuable team member.',
+    status: 'Awaiting approval',
   },
 ]
 

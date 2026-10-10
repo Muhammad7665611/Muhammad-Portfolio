@@ -20,8 +20,9 @@ import {
   experience,
   projects,
   services,
-  techStack,
+  techStackGroups,
   socials,
+  testimonials,
 } from '../src/data/portfolio.js'
 
 const list = (items) => items.map((i) => `  - ${i}`).join('\n')
@@ -71,8 +72,10 @@ export function buildKnowledgeBase() {
   )
 
   const stack = section(
-    'Core technologies',
-    techStack.map((t) => t.name).join(', ')
+    'Technology stack',
+    techStackGroups
+      .map((group) => `${group.title}:\n${list(group.technologies)}`)
+      .join('\n')
   )
 
   const roles = section(
@@ -81,7 +84,7 @@ export function buildKnowledgeBase() {
       .map((job) =>
         [
           `${job.role} — ${job.company}${job.location ? `, ${job.location}` : ''} (${job.period})${job.current ? ' [current]' : ''}`,
-          `  ${job.summary}`,
+          ...(job.summary ? [`  ${job.summary}`] : []),
           list(job.points),
           `  Tech: ${job.stack.join(', ')}`,
         ].join('\n')
@@ -128,6 +131,29 @@ export function buildKnowledgeBase() {
     services.map((s) => `${s.title}: ${s.text}`).join('\n')
   )
 
+  const endorsements = section(
+    'Testimonials',
+    testimonials
+      .map((t) => {
+        const identity = `${t.name}${t.role ? ` — ${t.role}` : ''}${
+          t.company ? `, ${t.company}` : ''
+        }${t.location ? `, ${t.location}` : ''}`
+
+        if (t.status) {
+          return [
+            `${identity} [${t.status}; not an approved endorsement]`,
+            ...(t.relationship ? [`  Relationship: ${t.relationship}`] : []),
+            ...(t.quote
+              ? [`  Draft quote (not approved; do not present as an endorsement): "${t.quote}"`]
+              : []),
+          ].join('\n')
+        }
+
+        return t.quote ? `${identity}\n  "${t.quote}"` : identity
+      })
+      .join('\n\n')
+  )
+
   return [
     identity,
     summary,
@@ -139,6 +165,7 @@ export function buildKnowledgeBase() {
     certs,
     work,
     offering,
+    endorsements,
     contact,
   ].join('\n\n')
 }

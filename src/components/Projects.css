@@ -1,179 +1,150 @@
-/* ==========================================================================
-   Projects — a tight grid of flat black tiles with hairline seams, one of
-   which is a solid accent feature panel. Filter chips above, CTA below.
-   ========================================================================== */
+/* Projects — featured product showcase followed by a compact project grid. */
 
-/* ----------------------------------------------------------------- filter */
+.project-heading {
+  max-width: 680px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+.project-heading .section-title {
+  font-size: clamp(28px, 4vw, 42px);
+}
+
+.project-heading .section-sub {
+  margin-top: 6px;
+  text-align: center;
+}
 
 .project-filter {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  margin-bottom: clamp(26px, 3.4vw, 40px);
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
 }
 
 .project-filter-label {
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  flex: none;
   color: var(--dim);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .project-filter-chips {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
+  justify-content: flex-end;
+  gap: 7px;
 }
 
-/* Sharp rectangles: transparent by default, solid accent when selected */
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border-radius: var(--r-xs);
+  gap: 7px;
+  padding: 7px 11px;
   border: 1px solid var(--line);
+  border-radius: var(--r-xs);
   background: transparent;
   color: var(--muted);
-  font-size: 13.5px;
+  font-size: 11.5px;
   font-weight: 500;
   line-height: 1.3;
   cursor: pointer;
-  transition: color 0.25s var(--ease), background 0.25s var(--ease),
-    border-color 0.25s var(--ease);
+  transition: color 0.2s var(--ease), background 0.2s var(--ease),
+    border-color 0.2s var(--ease);
 }
 
 .chip:hover {
-  color: var(--text);
   border-color: var(--accent);
+  color: var(--text);
 }
 
 .chip.is-active {
+  border-color: var(--accent-soft-line);
   background: var(--accent-soft);
-  border-color: transparent;
   color: var(--accent-text);
-}
-
-.chip.is-active:hover {
-  background: var(--accent-soft-hover);
 }
 
 .chip-count {
-  padding: 1px 6px;
-  border-radius: var(--r-xs);
-  background: var(--surface-2);
   color: var(--dim);
-  font-size: 10.5px;
-  font-weight: 600;
+  font-size: 10px;
 }
 
 .chip.is-active .chip-count {
-  background: var(--accent-soft-hover);
   color: var(--accent-text);
 }
-
-/* ------------------------------------------------------------------- grid */
 
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0;
+  gap: 14px;
 }
 
 .project-card {
   display: flex;
+  min-width: 0;
   flex-direction: column;
-  /* Pull neighbours together so touching 1px borders collapse into one seam */
-  margin: 0 -1px -1px 0;
+  overflow: hidden;
+  border-radius: var(--r);
 }
 
-/* Per-property delays: the scroll-reveal keeps its stagger, the hover border
-   swap stays instant. (index.css loads last, so `.card` raises specificity.) */
 .project-card.card {
-  transition: opacity 0.6s var(--ease) var(--reveal-delay, 0ms),
-    transform 0.6s var(--ease) var(--reveal-delay, 0ms),
-    border-color 0.25s var(--ease) 0ms;
+  transition: border-color 0.25s var(--ease);
 }
 
-/* Filtered-out tiles stay mounted (see Projects.jsx) but leave the layout */
 .project-card.is-filtered {
   display: none;
 }
 
-/* No lift — the tiles share collapsed borders, so the hovered one just raises
-   its stacking order and paints an accent edge over the seam. */
 .project-card:hover {
   z-index: 2;
-  border-color: var(--accent);
+  border-color: var(--accent-soft-line);
 }
 
-/* ---------------------------------------------------------------- preview */
-
-.project-preview {
-  position: relative;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
+.project-card.is-featured {
+  grid-column: 1 / -1;
 }
 
-.project-tags {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+.project-feature-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.28fr);
+  align-items: center;
+  min-height: 470px;
 }
-
-.project-tags span {
-  padding: 4px 10px;
-  border-radius: var(--r-xs);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
-}
-
-.project-card:hover .project-tags span {
-  color: var(--text);
-  border-color: var(--line-strong);
-}
-
-.project-index {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--dim);
-  transition: color 0.25s var(--ease);
-}
-
-.project-card:hover .project-index {
-  color: var(--accent-text);
-}
-
-/* ------------------------------------------------------------------- body */
 
 .project-body {
   display: flex;
-  flex-direction: column;
+  min-width: 0;
   flex: 1;
-  padding: 26px 24px 24px;
+  flex-direction: column;
+  padding: 23px 20px 20px;
+}
+
+.is-featured .project-body {
+  padding: clamp(22px, 3vw, 34px);
+}
+
+.project-eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent-2);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
 .project-title {
-  font-size: clamp(19px, 2.2vw, 23px);
-  margin-bottom: 10px;
+  margin-bottom: 6px;
+  font-size: clamp(18px, 2.2vw, 22px);
   transition: color 0.25s var(--ease);
+}
+
+.is-featured .project-title {
+  font-size: clamp(26px, 3vw, 34px);
 }
 
 .project-card:hover .project-title {
@@ -181,31 +152,16 @@
 }
 
 .project-blurb {
+  margin-bottom: 14px;
   color: var(--muted);
-  font-size: 14.5px;
-  margin-bottom: 20px;
-}
-
-.project-features {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 9px 16px;
-  margin-bottom: 22px;
-}
-
-.project-features li {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
   font-size: 13px;
-  line-height: 1.5;
-  color: var(--muted);
+  line-height: 1.6;
 }
 
-.project-features svg {
-  flex: none;
-  margin-top: 3px;
-  color: var(--accent-text);
+.is-featured .project-blurb {
+  max-width: 410px;
+  margin-bottom: 16px;
+  font-size: 14px;
 }
 
 .project-stack {
@@ -213,104 +169,210 @@
   flex-wrap: wrap;
   gap: 6px;
   margin-top: auto;
-  padding-bottom: 22px;
+  padding-bottom: 16px;
 }
 
 .project-stack span {
-  padding: 5px 10px;
-  border-radius: var(--r-xs);
-  font-size: 11.5px;
-  color: var(--muted);
-  background: var(--surface-2);
+  padding: 5px 9px;
   border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.3;
 }
 
 .project-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
+  gap: 9px;
+  padding-top: 4px;
 }
 
-/* --------------------------------------------------------- feature panel */
-
-.project-card.is-feature {
-  background: var(--accent-soft);
-  border-color: var(--accent-soft-line);
+.project-actions .btn-sm {
+  padding: 9px 13px;
+  font-size: 11.5px;
 }
 
-.project-card.is-feature:hover {
-  border-color: var(--accent);
+.project-feature-preview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 100%;
+  min-height: 430px;
+  margin: 12px;
+  padding: 10px;
+  overflow: hidden;
+  /* border: 1px solid var(--line); */
+  border-radius: var(--r-sm);
+  background: var(--surface);
 }
 
-.project-card.is-feature .project-preview {
-  border-bottom-color: var(--accent-soft-line);
+.project-feature-preview .mock {
+  width: 100%;
+  height: 100%;
+  min-height: 270px;
+  padding: 14px;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
 }
 
-.project-card.is-feature .project-title,
-.project-card.is-feature:hover .project-title {
-  color: var(--text);
+.project-feature-preview .mock-desktop {
+  max-height: 100%;
 }
 
-.project-card.is-feature .project-blurb,
-.project-card.is-feature .project-features li {
-  color: var(--muted);
+.project-live-preview {
+  display: block;
+  width: 100%;
+  height: 408px;
+  min-height: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  background: var(--bg);
 }
 
-.project-card.is-feature .project-features svg {
-  color: var(--accent-text);
+.project-preview {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
 }
 
-.project-card.is-feature .project-stack span {
-  background: var(--accent-soft-hover);
-  color: var(--accent-text);
+.project-preview .mock {
+  padding: 32px 18px 16px;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 0;
 }
 
-.project-card.is-feature .project-actions {
-  border-top-color: var(--accent-soft-line);
+.project-preview .project-live-preview {
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  overflow: auto;
 }
 
-/* -------------------------------------------------------------- empty/CTA */
+.project-preview-caption {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+  z-index: 2;
+  padding: 3px 7px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  color: var(--dim);
+  font-size: 9px;
+  line-height: 1.3;
+}
 
 .projects-empty {
-  padding: 56px 20px;
-  text-align: center;
-  color: var(--dim);
+  padding: 48px 20px;
   border: 1px dashed var(--line);
+  color: var(--dim);
+  text-align: center;
 }
 
 .projects-cta {
   display: flex;
   justify-content: center;
-  margin-top: clamp(34px, 4vw, 52px);
+  margin-top: clamp(26px, 4vw, 44px);
 }
 
-/* ------------------------------------------------------------- responsive */
+@media (max-width: 900px) {
+  .project-feature-layout {
+    grid-template-columns: minmax(220px, 0.85fr) minmax(0, 1.15fr);
+    min-height: 410px;
+  }
 
-@media (max-width: 980px) {
+  .project-feature-preview {
+    min-height: 370px;
+  }
+
+  .project-live-preview {
+    height: 348px;
+  }
+}
+
+@media (max-width: 700px) {
   .projects-grid {
     grid-template-columns: 1fr;
   }
-  .project-card {
-    margin: 0 0 -1px;
+
+  .project-card.is-featured {
+    grid-column: auto;
+  }
+
+  .project-feature-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .project-feature-preview {
+    grid-row: 1;
+    min-height: 340px;
+  }
+
+  .project-feature-preview .mock {
+    min-height: 230px;
+  }
+
+  .project-live-preview {
+    height: 318px;
+  }
+
+  .project-filter {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .project-filter-chips {
+    justify-content: flex-start;
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 520px) {
+  .project-heading .section-title {
+    font-size: 30px;
+  }
+
+  .project-feature-preview {
+    min-height: 280px;
+    margin: 8px;
+    padding: 7px;
+  }
+
+  .project-live-preview {
+    height: 264px;
+  }
+
+  .project-feature-preview .mock {
+    padding: 8px;
+  }
+
+  .project-preview .mock {
+    padding: 28px 12px 12px;
+  }
+
+  .is-featured .project-body,
   .project-body {
-    padding: 22px 18px 20px;
+    padding: 19px 16px;
   }
-  .project-features {
-    grid-template-columns: 1fr;
-  }
+
   .project-actions .btn {
-    flex: 1 1 100%;
+    flex: 1 1 auto;
   }
+
   .chip {
-    padding: 9px 15px;
-    font-size: 13px;
+    padding: 7px 9px;
+    font-size: 10.5px;
   }
+
   .projects-cta .btn {
     width: 100%;
   }

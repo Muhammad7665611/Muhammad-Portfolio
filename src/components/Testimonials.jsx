@@ -31,8 +31,14 @@ export default function Testimonials() {
   useEffect(() => {
     const track = trackRef.current
     if (!track) return
+    const frame = requestAnimationFrame(syncActive)
     track.addEventListener('scroll', syncActive, { passive: true })
-    return () => track.removeEventListener('scroll', syncActive)
+    window.addEventListener('resize', syncActive)
+    return () => {
+      cancelAnimationFrame(frame)
+      track.removeEventListener('scroll', syncActive)
+      window.removeEventListener('resize', syncActive)
+    }
   }, [syncActive])
 
   // Bring the chosen card to the middle of the track. Measuring the card itself
@@ -63,7 +69,7 @@ export default function Testimonials() {
         </div>
 
         <div
-          className="t-track"
+          className="t-track reveal"
           ref={trackRef}
           tabIndex={0}
           role="group"
@@ -71,28 +77,53 @@ export default function Testimonials() {
         >
           {testimonials.map((t, i) => (
             <figure
-              className={`t-card card reveal ${active === i ? 'is-active' : ''}`}
+              className={`t-card card ${active === i ? 'is-active' : ''}${
+                t.status ? ' is-pending' : ''
+              }`}
               key={t.name}
-              style={{ '--reveal-delay': `${i * 90}ms` }}
             >
-              <Quote className="t-quote" width={46} height={46} aria-hidden="true" />
+              {t.quote && (
+                <Quote className="t-quote" width={46} height={46} aria-hidden="true" />
+              )}
 
               {/* Circle is the one allowed exception to the sharp-edge rule */}
               <span className="t-avatar" aria-hidden="true">
                 {t.initials}
               </span>
 
-              <blockquote className="t-text">{t.quote}</blockquote>
+              {t.quote ? (
+                <>
+                  {t.status && <span className="t-pending-status">{t.status}</span>}
+                  <blockquote className="t-text">{t.quote}</blockquote>
+                </>
+              ) : (
+                <div className="t-pending">
+                  <span className="t-pending-status">{t.status}</span>
+                  <p className="t-pending-text">{t.relationship}</p>
+                  {t.email && (
+                    <a className="t-contact" href={`mailto:${t.email}`}>
+                      {t.email}
+                    </a>
+                  )}
+                </div>
+              )}
 
-              <div className="t-stars" role="img" aria-label={`${t.rating} out of 5 stars`}>
-                {Array.from({ length: 5 }, (_, s) => (
-                  <Star key={s} width={15} height={15} filled={s < t.rating} />
-                ))}
-              </div>
+              {Number.isFinite(t.rating) && (
+                <div className="t-stars" role="img" aria-label={`${t.rating} out of 5 stars`}>
+                  {Array.from({ length: 5 }, (_, s) => (
+                    <Star key={s} width={15} height={15} filled={s < t.rating} />
+                  ))}
+                </div>
+              )}
 
               <figcaption className="t-person">
                 <span className="t-name">{t.name}</span>
                 <span className="t-role">{t.role}</span>
+                {(t.company || t.location) && (
+                  <span className="t-company">
+                    {[t.company, t.location].filter(Boolean).join(' · ')}
+                  </span>
+                )}
               </figcaption>
             </figure>
           ))}

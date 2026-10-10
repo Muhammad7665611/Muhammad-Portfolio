@@ -411,6 +411,132 @@
   background: var(--surface-3);
 }
 
+/* desktop — Nura AI conversational workspace */
+
+.mock-ai-chat {
+  display: grid;
+  grid-template-columns: minmax(82px, 0.24fr) minmax(0, 0.76fr);
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.mock-ai-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 10px 8px;
+  border-right: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.mock-ai-sidebar span {
+  overflow: hidden;
+  padding: 5px 6px;
+  border-radius: var(--r-xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mock-ai-sidebar .mock-ai-brand {
+  margin-bottom: 5px;
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.mock-ai-sidebar span.is-active {
+  background: var(--accent-soft-hover);
+  color: var(--accent-text);
+}
+
+.mock-ai-main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+  padding: 9px 10px;
+  overflow: hidden;
+}
+
+.mock-ai-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: auto;
+  color: var(--text);
+  font-size: 10px;
+  text-align: center;
+}
+
+.mock-ai-heading span {
+  color: var(--dim);
+  font-size: 7px;
+}
+
+.mock-ai-message {
+  max-width: 78%;
+  padding: 7px 9px;
+  border-radius: var(--r-xs);
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.mock-ai-message.is-user {
+  align-self: flex-end;
+  background: var(--surface-2);
+}
+
+.mock-ai-message.is-assistant {
+  align-self: flex-start;
+  background: var(--surface-2);
+}
+
+.mock-ai-message.is-assistant span {
+  display: block;
+  width: 95%;
+  height: 3px;
+  margin-top: 5px;
+  border-radius: var(--r-xs);
+  background: var(--line-strong);
+}
+
+.mock-ai-message.is-assistant span:last-child {
+  width: 66%;
+}
+
+.mock-ai-composer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  background: var(--surface-2);
+  color: var(--dim);
+  font-size: 8px;
+}
+
+.mock-ai-composer b {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 4px;
+  background: var(--accent);
+  color: white;
+  font-size: 14px;
+  line-height: 1;
+}
+
 /* desktop — marketing site variant */
 
 .mock-site {

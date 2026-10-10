@@ -100,6 +100,34 @@ function DesktopScreen({ variant }) {
               <span />
             </div>
           </div>
+        ) : variant === 'chat' ? (
+          <div className="mock-ai-chat">
+            <aside className="mock-ai-sidebar">
+              <span className="mock-ai-brand">Nura AI</span>
+              <span className="is-active">New Chat</span>
+              <span>Search</span>
+              <span>Library</span>
+              <span>Prompts</span>
+              <span>Settings</span>
+            </aside>
+            <div className="mock-ai-main">
+              <div className="mock-ai-heading">
+                <strong>How can I help you today?</strong>
+                <span>Chat, plan, write, and get things done.</span>
+              </div>
+              <div className="mock-ai-message is-user">Help me brainstorm ideas for a productivity app.</div>
+              <div className="mock-ai-message is-assistant">
+                Here are a few ideas to help you get started.
+                <span />
+                <span />
+                <span />
+              </div>
+              <div className="mock-ai-composer">
+                <span>Message Nura AI...</span>
+                <b aria-hidden="true">›</b>
+              </div>
+            </div>
+          </div>
         ) : (
           <div className="mock-dash">
             <aside className="mock-side">
