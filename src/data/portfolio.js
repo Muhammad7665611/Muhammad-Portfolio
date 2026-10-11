@@ -269,6 +269,186 @@ export const projects = [
   },
 ]
 
+/** Educational cybersecurity work, separate from professional client projects. */
+export const cybersecurityProjects = [
+  {
+    id: 'botium-toys-security-audit',
+    title: 'Botium Toys — Security Audit',
+    category: 'Cybersecurity / Risk Assessment / Compliance',
+    projectType: 'Simulated Security Audit (Google Cybersecurity Certificate Activity)',
+    status: 'Completed',
+    description:
+      "Completed a simulated internal security audit for Botium Toys as part of my Google Cybersecurity Professional Certificate studies. Reviewed organizational assets, evaluated security controls, assessed compliance best practices, identified security gaps, and documented recommendations to strengthen the organization's security posture.",
+    riskScore: 8,
+    riskLevel: 'High',
+    tags: ['NIST CSF', 'PCI DSS', 'GDPR', 'SOC 1 / SOC 2'],
+    skills: [
+      'Security Auditing',
+      'Risk Assessment',
+      'NIST Cybersecurity Framework (CSF)',
+      'Security Controls Assessment',
+      'PCI DSS',
+      'GDPR',
+      'SOC 1 / SOC 2 Concepts',
+      'Security Documentation',
+      'Security Recommendations',
+    ],
+    overview:
+      'A simulated internal audit of Botium Toys, a fictional organization, completed as an educational activity in the Google Cybersecurity Professional Certificate program. The review assessed the organization’s described assets, controls, and compliance practices; it was not a client engagement, penetration test, or independent certification.',
+    objectives: [
+      'Review the organization’s described assets and internal security controls.',
+      'Identify security-control gaps and consider their potential risks.',
+      'Compare described practices with relevant security and compliance concepts.',
+      'Document practical recommendations to improve the security posture.',
+    ],
+    scope: [
+      'Internal network',
+      'Employee devices',
+      'IT systems',
+      'Organizational assets',
+      'Data storage',
+      'Security controls',
+      'Compliance practices',
+    ],
+    riskSummary:
+      'The simulated assessment identified gaps in security controls and compliance practices. The overall score reflects the supplied case-study assessment, not a measured production environment or external audit opinion.',
+    riskScoreSource: 'Botium Toys Scope, Goals, and Risk Assessment Report',
+    riskPriorities: [
+      {
+        risk: 'Unencrypted customer payment information',
+        impact: 'Exposure of sensitive payment data and increased privacy or payment-security risk.',
+        mitigation: 'Encrypt sensitive payment information in storage and transit.',
+        priority: 'Critical',
+      },
+      {
+        risk: 'Missing least privilege and separation of duties',
+        impact: 'Excessive or conflicting access may enable unauthorized activity or make it harder to detect.',
+        mitigation: 'Apply role-based least privilege and separate incompatible responsibilities.',
+        priority: 'High',
+      },
+      {
+        risk: 'No critical backups or disaster recovery plan',
+        impact: 'Data loss or a significant interruption may make recovery difficult.',
+        mitigation: 'Create protected, regular backups and document and test recovery procedures.',
+        priority: 'High',
+      },
+      {
+        risk: 'No intrusion detection system',
+        impact: 'Suspicious network activity may go undetected for longer.',
+        mitigation: 'Deploy IDS monitoring and define an alert review and escalation process.',
+        priority: 'High',
+      },
+      {
+        risk: 'Weak passwords and no centralized password management',
+        impact: 'Account compromise may provide unauthorized access to systems or data.',
+        mitigation: 'Strengthen password requirements and introduce centralized password management.',
+        priority: 'High',
+      },
+    ],
+    existingControls: [
+      'Firewall',
+      'Antivirus software',
+      'Physical security locks',
+      'CCTV surveillance',
+      'Fire detection and prevention systems',
+      'Data integrity and availability controls',
+    ],
+    complianceAssessment: [
+      {
+        name: 'NIST Cybersecurity Framework (CSF)',
+        detail:
+          'Used as a best-practice reference for considering security controls and areas for improvement.',
+      },
+      {
+        name: 'PCI DSS',
+        detail:
+          'Considered payment-data protection practices, including the need to encrypt sensitive customer information.',
+      },
+      {
+        name: 'GDPR',
+        detail:
+          'Reviewed data-protection concepts relevant to safeguarding customer information.',
+      },
+      {
+        name: 'SOC 1 / SOC 2',
+        detail:
+          'Considered high-level assurance and control concepts; no formal SOC audit or attestation was performed.',
+      },
+    ],
+    findings: [
+      {
+        title: 'Access governance',
+        detail: 'Least-privilege access controls and separation of duties were missing.',
+        recommendation:
+          'Implement role-based access controls, least privilege, and separation of duties.',
+      },
+      {
+        title: 'Customer payment data',
+        detail: 'Customer payment information lacked encryption.',
+        recommendation: 'Encrypt sensitive customer information in storage and transit.',
+      },
+      {
+        title: 'Detection and response',
+        detail: 'No intrusion detection system (IDS) was in place.',
+        recommendation: 'Implement IDS monitoring and establish a process to review alerts.',
+      },
+      {
+        title: 'Resilience and recovery',
+        detail: 'Disaster recovery plans and critical data backups were missing.',
+        recommendation:
+          'Establish and test backup and disaster recovery procedures for critical data.',
+      },
+      {
+        title: 'Authentication',
+        detail:
+          'Password requirements were weak and there was no centralized password management system.',
+        recommendation:
+          'Strengthen password policies and introduce centralized password management.',
+      },
+      {
+        title: 'Asset management',
+        detail: 'Asset inventory management was inadequate.',
+        recommendation: 'Maintain an accurate, regularly reviewed asset inventory.',
+      },
+      {
+        title: 'Legacy systems',
+        detail: 'Legacy system maintenance schedules needed formalization.',
+        recommendation: 'Formalize and track maintenance schedules for legacy systems.',
+      },
+    ],
+    documentation: [
+      { label: 'Controls and Compliance Checklist (PDF)', url: '/cv/Botium_Toys_Security_Audit.pdf' },
+      { label: 'Risk Assessment Summary (PDF)', url: '/documents/Botium_Toys_Risk_Assessment_Summary.pdf' },
+      { label: 'GitHub Repository', url: null },
+    ],
+  },
+  {
+    id: 'linux-file-permissions',
+    title: 'Linux File Permissions',
+    status: 'Planned',
+  },
+  {
+    id: 'sql-security-queries',
+    title: 'SQL Security Queries',
+    status: 'Planned',
+  },
+  {
+    id: 'network-security-analysis',
+    title: 'Network Security Analysis',
+    status: 'Planned',
+  },
+  {
+    id: 'incident-handlers-journal',
+    title: "Incident Handler's Journal",
+    status: 'Planned',
+  },
+  {
+    id: 'python-security-automation',
+    title: 'Python Security Automation',
+    status: 'Planned',
+  },
+]
+
 export const services = [
   {
     icon: 'stack',
